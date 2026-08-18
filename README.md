@@ -52,13 +52,14 @@ Each contract and trainset will also have an immutable generated `uid`, independ
 
 ## Contracts and inheritance
 
-A contract contains shared/default specifications for trainsets supplied under it. These may include fields such as manufacturer, signalling technology, number of cars, gauge and intended line(s).
+A contract contains its awardee and shared/default specifications for trainsets supplied under it. The awardee describes the entity awarded the procurement contract and is not inherited by trainsets. Default fields may include manufacturer, signalling technology, number of cars, gauge and intended line(s).
 
 ```json
 "bmrcl-4rs-dm": { // bmrcl cbtc yellow line and dtg green/purple line rolling stock contract
   "uid": "contract_...",
+  "awardee": "CRRC Nanjing Puzhen",
   "defaults": {
-    "manufacturer": "CRRC/Titagarh",
+    "manufacturer": "Titagarh Rail Systems",
     "signalling": "CBTC", // set default as cbtc
     "cars_per_trainset": 6,
     "gauge_mm": 1435,
