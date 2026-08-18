@@ -15,6 +15,22 @@
           "yellow"
         ]
       }
+    },
+    "bmrcl-5rs-dm": {
+      "uid": "ecfca714-b042-46e7-8e2e-8b5eea674c7e",
+      "awardee": "BEML",
+      "defaults": {
+        "manufacturer": "BEML",
+        "signalling": "CBTC",
+        "cars_per_trainset": 6,
+        "gauge_mm": 1435,
+        "traction_power": "750 V DC third rail",
+        "carbody": "stainless steel",
+        "intended_lines": [
+          "pink",
+          "blue"
+        ]
+      }
     }
   },
   "trainsets": {
