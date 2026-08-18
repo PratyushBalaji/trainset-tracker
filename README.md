@@ -55,14 +55,14 @@ Each contract and trainset will also have an immutable generated `uid`, independ
 A contract contains shared/default specifications for trainsets supplied under it. These may include fields such as manufacturer, signalling technology, number of cars, gauge and intended line(s).
 
 ```json
-"bmrcl-4rs-dm": {
+"bmrcl-4rs-dm": { // bmrcl cbtc yellow line and dtg green/purple line rolling stock contract
   "uid": "contract_...",
   "defaults": {
-    "manufacturer": "...",
-    "signalling": "...",
+    "manufacturer": "CRRC/Titagarh",
+    "signalling": "CBTC", // set default as cbtc
     "cars_per_trainset": 6,
     "gauge_mm": 1435,
-    "intended_lines": ["..."]
+    "intended_lines": ["yellow"] // set default as yellow line
   }
 }
 ```
@@ -70,12 +70,13 @@ A contract contains shared/default specifications for trainsets supplied under i
 Trainsets inherit only fields explicitly defined as inheritable by the program. A trainset may override an inherited value when its specification differs from the contract default.
 
 ```json
-"bmrcl-4rs-dm-ts017": {
+"bmrcl-4rs-dm-ts017": { // ts17 in the 4rs contract was a green line train
   "uid": "train_...",
   "contract": "bmrcl-4rs-dm",
   "trainset_number": "TS017",
-  "overrides": {
-    "signalling": "..."
+  "overrides": { // this particular trainset differs from the default we set earlier
+    "signalling": "DTG",
+    "intended_lines": ["green", "purple"]
   },
   "milestones": {}
 }
