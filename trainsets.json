@@ -1,5 +1,169 @@
 {
   "schema_version": "1.0.0",
-  "contracts": {},
-  "trainsets": {}
+  "contracts": {
+    "bmrcl-4rs-dm": {
+      "uid": "a5988fd8-a64d-4fa5-ae39-64969242adef",
+      "awardee": "CRRC Nanjing Puzhen",
+      "defaults": {
+        "manufacturer": "Titagarh Rail Systems",
+        "signalling": "CBTC",
+        "cars_per_trainset": 6,
+        "gauge_mm": 1435,
+        "traction_power": "750 V DC third rail",
+        "carbody": "stainless steel",
+        "intended_lines": [
+          "yellow"
+        ]
+      }
+    }
+  },
+  "trainsets": {
+    "bmrcl-4rs-dm-ts001": {
+      "uid": "cfda87c9-2a92-4a4e-a133-cc2939e4cae1",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS001",
+      "overrides": {
+        "manufacturer": "CRRC Nanjing Puzhen"
+      },
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts002": {
+      "uid": "f21c9c3f-c5dc-4cef-9468-91411ed2a5de",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS002",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts003": {
+      "uid": "0772f2ac-81f1-4301-aadf-14f1edbd494e",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS003",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts004": {
+      "uid": "4fec8600-f8b8-432c-aa11-9f74bcda7f96",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS004",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts005": {
+      "uid": "707c0145-6dd5-453c-905a-c4d1877e6da3",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS005",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts006": {
+      "uid": "f530c455-fb2d-4646-b8f0-fc0bb43335b1",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS006",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts007": {
+      "uid": "d1521a9c-3475-47e3-992a-7e3e18659a31",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS007",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts008": {
+      "uid": "f968a1a8-11e9-4870-b65b-7bdc31818a89",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS008",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts009": {
+      "uid": "87fa479c-fffa-48a4-afd0-8841f1d682e8",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS009",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts010": {
+      "uid": "b7280f99-a1f8-4258-b066-1b2035df2f0d",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS010",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts011": {
+      "uid": "37a25f86-8b97-453c-82ca-2916aef41769",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS011",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts012": {
+      "uid": "afe322f8-f6d4-4a8d-9894-7832343e48f3",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS012",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts013": {
+      "uid": "180cdac6-bf64-4f1b-8dd3-7db26731a6ce",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS013",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts014": {
+      "uid": "6656d5ac-2add-4f0d-a49a-380781a06ee3",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS014",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts015": {
+      "uid": "91823019-a2bb-4559-a372-5f3e28e994d8",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS015",
+      "overrides": {},
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts016": {
+      "uid": "1c7cf813-8139-49af-97df-e0c1dcaeb6a7",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS016",
+      "overrides": {
+        "manufacturer": "CRRC Nanjing Puzhen",
+        "signalling": "DTG",
+        "intended_lines": [
+          "purple",
+          "green"
+        ]
+      },
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts017": {
+      "uid": "9404988a-15c2-43a1-9a8e-82d6bd389b36",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS017",
+      "overrides": {
+        "signalling": "DTG",
+        "intended_lines": [
+          "purple",
+          "green"
+        ]
+      },
+      "milestones": {}
+    },
+    "bmrcl-4rs-dm-ts018": {
+      "uid": "deeb6d6f-35e3-4b77-b38b-c6334ec20f88",
+      "contract": "bmrcl-4rs-dm",
+      "trainset_number": "TS018",
+      "overrides": {
+        "signalling": "DTG",
+        "intended_lines": [
+          "purple",
+          "green"
+        ]
+      },
+      "milestones": {}
+    }
+  }
 }
