@@ -4,17 +4,12 @@
     "bmrcl-4rs-dm": {
       "uid": "a5988fd8-a64d-4fa5-ae39-64969242adef",
       "awardee": "CRRC Nanjing Puzhen",
-      "rolling_stock": [
-        "bmrcl-4rs-dm-cbtc",
-        "bmrcl-4rs-dm-dtg"
-      ]
+      "rolling_stock": ["bmrcl-4rs-dm-cbtc", "bmrcl-4rs-dm-dtg"]
     },
     "bmrcl-5rs-dm": {
       "uid": "ecfca714-b042-46e7-8e2e-8b5eea674c7e",
       "awardee": "BEML",
-      "rolling_stock": [
-        "bmrcl-5rs-dm"
-      ]
+      "rolling_stock": ["bmrcl-5rs-dm"]
     }
   },
   "rolling_stock": {
@@ -24,9 +19,7 @@
       "gauge_mm": 1435,
       "traction_power": "750 V DC third rail",
       "carbody": "stainless steel",
-      "intended_lines": [
-        "yellow"
-      ]
+      "intended_lines": ["yellow"]
     },
     "bmrcl-4rs-dm-dtg": {
       "signalling": "DTG",
@@ -34,10 +27,7 @@
       "gauge_mm": 1435,
       "traction_power": "750 V DC third rail",
       "carbody": "stainless steel",
-      "intended_lines": [
-        "purple",
-        "green"
-      ]
+      "intended_lines": ["purple", "green"]
     },
     "bmrcl-5rs-dm": {
       "signalling": "CBTC",
@@ -45,10 +35,7 @@
       "gauge_mm": 1435,
       "traction_power": "750 V DC third rail",
       "carbody": "stainless steel",
-      "intended_lines": [
-        "pink",
-        "blue"
-      ]
+      "intended_lines": ["pink", "blue"]
     }
   },
   "trainsets": {
@@ -58,143 +45,68 @@
       "rolling_stock": "bmrcl-4rs-dm-cbtc",
       "trainset_number": "TS001",
       "manufacturer": "CRRC Nanjing Puzhen",
-      "milestones": {}
+      "milestones": {
+        "factory_dispatch": {
+          "date": "2024-01-24",
+          "sources": [
+            "https://www.moneycontrol.com/news/technology/bengaluru-metros-first-driverless-train-arrives-at-chennai-port-from-china-12204161.html",
+            "https://www.news9live.com/city/bengaluru/first-driverless-metro-train-coaches-to-be-operated-on-yellow-line-reaches-bengaluru-video-2438278",
+            "https://themetrorailguy.com/2024/03/08/bangalore-metro-begins-trial-runs-on-yellow-line-along-hosur-road/"
+          ]
+        },
+        "depot_arrival": {
+          "date": "2024-02-14",
+          "sources": [
+            "https://indianexpress.com/article/cities/bangalore/driverless-metro-train-coaches-from-china-reach-bengaluru-9160873/",
+            "https://timesofindia.indiatimes.com/city/bengaluru/china-made-prototype-of-driverless-metro-train-reaches-hebbagodi-depot-bengaluru/amp_articleshow/107705725.cms",
+            "https://www.deccanherald.com/india/karnataka/bengaluru/first-driverless-chinese-train-for-namma-metro-arrives-in-bengaluru-2893796",
+            "https://www.railwaygazette.com/metro/bengaluru-receives-first-automated-metro-trainset/65944.article"
+          ]
+        },
+        "first_mainline_run": {
+          "date": "2024-03-07",
+          "sources": [
+            "https://www.moneycontrol.com/news/technology/bengaluru-metro-begins-1st-trial-run-of-driverless-train-on-electronics-city-line-12421911.html",
+            "https://themetrorailguy.com/2024/03/08/bangalore-metro-begins-trial-runs-on-yellow-line-along-hosur-road/",
+            "https://metrorailnews.in/bangalore-metro-conducts-trial-run-of-the-driveerless-trains-on-the-yellow-line-along-hosur-road/",
+            "https://x.com/OfficialBMRCL/status/1765757462773456934",
+            "https://x.com/ChristinMP_/status/1765769903666344023"
+          ]
+        },
+        "mainline_testing": {
+          "date": "2024-06-13",
+          "sources": [
+            "https://timesofindia.indiatimes.com/city/bengaluru/yellow-line-trial-runs-begin-today-more-coaches-in-aug/articleshow/110952052.cms",
+            "https://indianexpress.com/article/cities/bangalore/titagarh-rail-systems-begins-production-of-train-sets-for-bmrcl-9393296/",
+            "https://www.moneycontrol.com/technology/bengalurus-first-double-decker-flyover-is-finally-ready-article-12747223.html"
+          ]
+        },
+        "revenue_induction": {
+          "date": "2025-08-11",
+          "sources": [
+            "https://www.deccanherald.com/india/karnataka/bengaluru/coach-for-yellow-lines-fourth-train-arrives-3679729",
+            "https://indianexpress.com/article/cities/bangalore/bengaluru-metro-yellow-line-finish-line-8-year-delay-10176296/",
+            "https://www.moneycontrol.com/news/india/bengaluru-metro-yellow-line-tejasvi-surya-seeks-airfreight-of-bogies-for-two-trains-from-china-13507203.html"
+          ]
+        }
+      }
     },
-    "bmrcl-4rs-dm-ts002": {
-      "uid": "f21c9c3f-c5dc-4cef-9468-91411ed2a5de",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS002",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts003": {
-      "uid": "0772f2ac-81f1-4301-aadf-14f1edbd494e",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS003",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts004": {
-      "uid": "4fec8600-f8b8-432c-aa11-9f74bcda7f96",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS004",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts005": {
-      "uid": "707c0145-6dd5-453c-905a-c4d1877e6da3",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS005",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts006": {
-      "uid": "f530c455-fb2d-4646-b8f0-fc0bb43335b1",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS006",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts007": {
-      "uid": "d1521a9c-3475-47e3-992a-7e3e18659a31",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS007",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts008": {
-      "uid": "f968a1a8-11e9-4870-b65b-7bdc31818a89",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS008",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts009": {
-      "uid": "87fa479c-fffa-48a4-afd0-8841f1d682e8",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS009",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts010": {
-      "uid": "b7280f99-a1f8-4258-b066-1b2035df2f0d",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS010",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts011": {
-      "uid": "37a25f86-8b97-453c-82ca-2916aef41769",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS011",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts012": {
-      "uid": "afe322f8-f6d4-4a8d-9894-7832343e48f3",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS012",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts013": {
-      "uid": "180cdac6-bf64-4f1b-8dd3-7db26731a6ce",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS013",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts014": {
-      "uid": "6656d5ac-2add-4f0d-a49a-380781a06ee3",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS014",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts015": {
-      "uid": "91823019-a2bb-4559-a372-5f3e28e994d8",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-cbtc",
-      "trainset_number": "TS015",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts016": {
-      "uid": "1c7cf813-8139-49af-97df-e0c1dcaeb6a7",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-dtg",
-      "trainset_number": "TS016",
-      "manufacturer": "CRRC Nanjing Puzhen",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts017": {
-      "uid": "9404988a-15c2-43a1-9a8e-82d6bd389b36",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-dtg",
-      "trainset_number": "TS017",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    },
-    "bmrcl-4rs-dm-ts018": {
-      "uid": "deeb6d6f-35e3-4b77-b38b-c6334ec20f88",
-      "contract": "bmrcl-4rs-dm",
-      "rolling_stock": "bmrcl-4rs-dm-dtg",
-      "trainset_number": "TS018",
-      "manufacturer": "Titagarh Rail Systems",
-      "milestones": {}
-    }
+    "bmrcl-4rs-dm-ts002": {"uid":"f21c9c3f-c5dc-4cef-9468-91411ed2a5de","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS002","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts003": {"uid":"0772f2ac-81f1-4301-aadf-14f1edbd494e","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS003","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts004": {"uid":"4fec8600-f8b8-432c-aa11-9f74bcda7f96","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS004","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts005": {"uid":"707c0145-6dd5-453c-905a-c4d1877e6da3","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS005","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts006": {"uid":"f530c455-fb2d-4646-b8f0-fc0bb43335b1","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS006","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts007": {"uid":"d1521a9c-3475-47e3-992a-7e3e18659a31","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS007","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts008": {"uid":"f968a1a8-11e9-4870-b65b-7bdc31818a89","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS008","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts009": {"uid":"87fa479c-fffa-48a4-afd0-8841f1d682e8","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS009","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts010": {"uid":"b7280f99-a1f8-4258-b066-1b2035df2f0d","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS010","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts011": {"uid":"37a25f86-8b97-453c-82ca-2916aef41769","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS011","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts012": {"uid":"afe322f8-f6d4-4a8d-9894-7832343e48f3","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS012","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts013": {"uid":"180cdac6-bf64-4f1b-8dd3-7db26731a6ce","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS013","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts014": {"uid":"6656d5ac-2add-4f0d-a49a-380781a06ee3","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS014","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts015": {"uid":"91823019-a2bb-4559-a372-5f3e28e994d8","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS015","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts016": {"uid":"1c7cf813-8139-49af-97df-e0c1dcaeb6a7","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-dtg","trainset_number":"TS016","manufacturer":"CRRC Nanjing Puzhen","milestones":{}},
+    "bmrcl-4rs-dm-ts017": {"uid":"9404988a-15c2-43a1-9a8e-82d6bd389b36","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-dtg","trainset_number":"TS017","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts018": {"uid":"deeb6d6f-35e3-4b77-b38b-c6334ec20f88","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-dtg","trainset_number":"TS018","manufacturer":"Titagarh Rail Systems","milestones":{}}
   }
 }
