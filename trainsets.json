@@ -162,6 +162,22 @@
         "depot_arrival":{"date":"2025-12-22","sources":["https://newsfirstprime.com/bengaluru/pink-line-metro-coaches-arrive-at-kothanur-depot-as-work-gathers-pace-ahead-of-2026-launch-10930607","https://www.thehindu.com/news/national/karnataka/pink-line-prototype-metro-train-moved-to-kothanur-depot/article70426165.ece"]},
         "first_mainline_run":{"date":"2026-01-09","sources":["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-metro-pink-line-trainset-hits-tracks-for-first-trials/articleshow/126457657.cms","https://timesofindia.indiatimes.com/city/bengaluru/first-trial-run-of-bengalurus-pink-line-metro-hits-tracks-what-you-need-to-know/photostory/126482977.cms"]}
       }
+    },
+    "bmrcl-5rs-dm-ts002": {
+      "uid":"91cf5d60-9d28-43b5-89ac-24a854d83998", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS002", "manufacturer":"BEML",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-02-02",
+          "sources":["https://www.deccanherald.com/india/karnataka/bengaluru/bengaluru-metro-beml-dispatches-more-coaches-for-pink-line-3884673","https://karnataka.thefederal.com/category/state/greater-bengaluru/bengaluru-namma-metro-pink-line-update-bmrcl-driverless-train-coaches-kothanur-depot-metro-delivery-228267"],
+          "comments":"The first three coaches were dispatched late on 2026-02-02. The remaining three coaches were dispatched on the night of 2026-02-03."
+        },
+        "depot_arrival": {
+          "date":"2026-02-04",
+          "sources":[],
+          "comments":"No direct source found for complete-trainset arrival. Inferred from the remaining three coaches being dispatched late on 2026-02-03 and BEML's proximity to Kothanur depot."
+        }
+      }
     }
   }
 }
