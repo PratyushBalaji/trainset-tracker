@@ -32,7 +32,18 @@
         "revenue_induction":{"date":"2025-08-11","sources":["https://indianexpress.com/article/cities/bangalore/bengaluru-metro-yellow-line-finish-line-8-year-delay-10176296/","https://www.railwaygazette.com/metros/modi-inaugurates-bengalurus-yellow-line-driverless-metro/69371.article","https://takshashila.org.in/content/publications/20250909-Geopolitics-of-Bengalurus-Yellow-Metro-Line.html"]}
       }
     },
-    "bmrcl-4rs-dm-ts003":{"uid":"0772f2ac-81f1-4301-aadf-14f1edbd494e","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS003","manufacturer":"Titagarh Rail Systems","milestones":{}},
+    "bmrcl-4rs-dm-ts003": {
+      "uid":"0772f2ac-81f1-4301-aadf-14f1edbd494e","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS003","manufacturer":"Titagarh Rail Systems",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2025-04-29",
+          "sources":["https://indianexpress.com/article/cities/bangalore/bengaluru-metro-electronic-city-corridor-corridor-west-bengal-9976636/","https://timesofindia.indiatimes.com/city/bengaluru/3rd-train-set-for-yellow-line-may-arrive-mid-may-in-bengaluru/articleshow/120773896.cms","https://www.news9live.com/city/bengaluru/bengaluru-metro-yellow-line-update-3-more-coaches-sent-from-titagarh-factory-2845931","https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-third-trainset-for-yellow-line-3541305","https://www.deccanherald.com/india/karnataka/bengaluru/yellow-line-3-more-coaches-on-way-to-city-safety-inspection-by-may-end-3527868","https://metrorailnews.in/titagarh-deliver-3rd-train-for-bangalore-metro/"],
+          "comments":"The first three coaches were dispatched on 2025-04-29. The remaining three coaches were subsequently dispatched on 2025-05-02."
+        },
+        "depot_arrival":{"date":"2025-05-13","sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-receives-third-train-set-for-electronics-city-corridor-safety-inspection-soon-13024542.html","https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-third-trainset-for-yellow-line-3541305","https://www.theweek.in/wire-updates/national/2025/05/15/mes17-ka-yellow-line-metro.html"]},
+        "revenue_induction":{"date":"2025-08-11","sources":["https://timesofindia.indiatimes.com/city/bengaluru/prime-minister-flags-off-first-yellow-line-metro-train-services-open-to-public-from-6-30am-today/articleshow/123222211.cms","https://indianexpress.com/article/cities/bangalore/bengaluru-metro-yellow-line-finish-line-8-year-delay-10176296/","https://www.deccanherald.com/india/karnataka/bengaluru/coach-for-yellow-lines-fourth-train-arrives-3679729"]}
+      }
+    },
     "bmrcl-4rs-dm-ts004":{"uid":"4fec8600-f8b8-432c-aa11-9f74bcda7f96","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS004","manufacturer":"Titagarh Rail Systems","milestones":{}},
     "bmrcl-4rs-dm-ts005":{"uid":"707c0145-6dd5-453c-905a-c4d1877e6da3","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS005","manufacturer":"Titagarh Rail Systems","milestones":{}},
     "bmrcl-4rs-dm-ts006":{"uid":"f530c455-fb2d-4646-b8f0-fc0bb43335b1","contract":"bmrcl-4rs-dm","rolling_stock":"bmrcl-4rs-dm-cbtc","trainset_number":"TS006","manufacturer":"Titagarh Rail Systems","milestones":{}},
