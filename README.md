@@ -1,5 +1,7 @@
 # trainset-tracker
 
+> **Scope:** Version 1 includes BMRCL rolling stock procured under 4RS-DM and later contracts; legacy 2RS-DM and 3RS-DM fleets are excluded because sufficiently granular trainset-level lifecycle dates are not consistently available.
+
 A timeline from rolling stock procurement to induction.
 
 ## Data
