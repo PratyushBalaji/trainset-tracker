@@ -98,7 +98,12 @@
     },
     "bmrcl-4rs-dm-ts007": {
       "uid":"d1521a9c-3475-47e3-992a-7e3e18659a31", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS007", "manufacturer":"Titagarh Rail Systems", "milestones":{}
+      "trainset_number":"TS007", "manufacturer":"Titagarh Rail Systems",
+      "milestones": {
+        "factory_dispatch":{"date":"2025-12-10","sources":["https://tv9kannada.com/karnataka/bengaluru/namma-metro-yellow-line-seventh-driverless-train-arrives-in-bengaluru-1124576.html","https://newsfirstprime.com/bengaluru/good-news-for-yellow-line-commuters-seventh-train-reaches-hebbagodi-days-after-sixth-10925915","https://www.nativeplanet.com/news/trsl-to-deliver-eighth-train-to-bengaluru-by-month-end-as-namma-metros-yellow-line-strengthens-peak-018306.html"]},
+        "depot_arrival":{"date":"2025-12-18","sources":["https://tv9kannada.com/karnataka/bengaluru/namma-metro-yellow-line-seventh-driverless-train-arrives-in-bengaluru-1124576.html","https://www.deccanherald.com/amp/story/india/karnataka/bengaluru/namma-metro-yellow-line-10-min-headway-from-february-8th-train-on-the-way-to-city-3856109","https://newsfirstprime.com/bengaluru/good-news-for-yellow-line-commuters-seventh-train-reaches-hebbagodi-days-after-sixth-10925915"]},
+        "revenue_induction":{"date":"2026-01-15","sources":["https://indianexpress.com/article/cities/bangalore/makar-sankranti-seventh-train-operations-bengaluru-metro-yellow-line-frequency-increases-10-minutes-10474704/","https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-metro-adds-7th-train-cuts-yellow-line-wait-to-10-mins/articleshow/126511875.cms","https://www.hindustantimes.com/cities/bengaluru-news/bengaluru-yellow-line-metro-adds-7th-train-to-run-at-10-minute-frequency-during-peak-rush-hours-101768538989925.html"]}
+      }
     },
     "bmrcl-4rs-dm-ts008": {
       "uid":"f968a1a8-11e9-4870-b65b-7bdc31818a89", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
