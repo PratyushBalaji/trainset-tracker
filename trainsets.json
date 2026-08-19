@@ -12,7 +12,7 @@
   "trainsets": {
     "bmrcl-4rs-dm-ts001": {
       "uid":"cfda87c9-2a92-4a4e-a133-cc2939e4cae1", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS001", "manufacturer":"CRRC Nanjing Puzhen",
+      "trainset_number":"TS001", "manufacturer":"CRRC Nanjing Puzhen", "intended_line":"yellow",
       "milestones": {
         "factory_dispatch":{"date":"2024-01-24","sources":["https://www.moneycontrol.com/news/technology/bengaluru-metros-first-driverless-train-arrives-at-chennai-port-from-china-12204161.html","https://www.news9live.com/city/bengaluru/first-driverless-metro-train-coaches-from-china-reach-bengaluru-video-2438278","https://themetrorailguy.com/2024/03/08/bangalore-metro-begins-trial-runs-on-yellow-line-along-hosur-road/"]},
         "depot_arrival":{"date":"2024-02-14","sources":["https://indianexpress.com/article/cities/bangalore/driverless-metro-train-coaches-from-china-reach-bengaluru-9160873/","https://timesofindia.indiatimes.com/city/bengaluru/china-made-prototype-of-driverless-metro-train-reaches-hebbagodi-depot-bengaluru/amp_articleshow/107705725.cms","https://www.deccanherald.com/india/karnataka/bengaluru/first-driverless-chinese-train-for-namma-metro-arrives-in-bengaluru-2893796","https://www.railwaygazette.com/metro/bengaluru-receives-first-automated-metro-trainset/65944.article"]},
@@ -23,7 +23,7 @@
     },
     "bmrcl-4rs-dm-ts002": {
       "uid":"f21c9c3f-c5dc-4cef-9468-91411ed2a5de", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS002", "manufacturer":"Titagarh Rail Systems",
+      "trainset_number":"TS002", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
       "milestones": {
         "factory_dispatch": {
           "date":"2025-01-06",
@@ -36,7 +36,7 @@
     },
     "bmrcl-4rs-dm-ts003": {
       "uid":"0772f2ac-81f1-4301-aadf-14f1edbd494e", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS003", "manufacturer":"Titagarh Rail Systems",
+      "trainset_number":"TS003", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
       "milestones": {
         "factory_dispatch": {
           "date":"2025-04-29",
@@ -49,7 +49,7 @@
     },
     "bmrcl-4rs-dm-ts004": {
       "uid":"4fec8600-f8b8-432c-aa11-9f74bcda7f96", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS004", "manufacturer":"Titagarh Rail Systems",
+      "trainset_number":"TS004", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
       "milestones": {
         "factory_dispatch": {
           "date":"2025-07-28",
@@ -67,7 +67,7 @@
     },
     "bmrcl-4rs-dm-ts005": {
       "uid":"707c0145-6dd5-453c-905a-c4d1877e6da3", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS005", "manufacturer":"Titagarh Rail Systems",
+      "trainset_number":"TS005", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
       "milestones": {
         "factory_dispatch":{"date":"2025-09-19","sources":["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-yellow-line-frequency-to-improve-to-15-mins-5th-train-on-way-to-bengaluru-3735213","https://www.deccanherald.com/india/karnataka/bengaluru/bengalurus-namma-metro-gets-5th-train-for-yellow-line-15-min-frequency-from-mid-october-3747557","https://www.hindustantimes.com/cities/bengaluru-news/bengaluru-yellow-line-metro-gets-5th-trainset-frequency-to-improve-to-15-mins-report-101759292471146.html"]},
         "depot_arrival": {
@@ -81,7 +81,7 @@
     },
     "bmrcl-4rs-dm-ts006": {
       "uid":"f530c455-fb2d-4646-b8f0-fc0bb43335b1", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS006", "manufacturer":"Titagarh Rail Systems",
+      "trainset_number":"TS006", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
       "milestones": {
         "factory_dispatch": {
           "date":"2025-11-17",
@@ -98,7 +98,7 @@
     },
     "bmrcl-4rs-dm-ts007": {
       "uid":"d1521a9c-3475-47e3-992a-7e3e18659a31", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS007", "manufacturer":"Titagarh Rail Systems",
+      "trainset_number":"TS007", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
       "milestones": {
         "factory_dispatch":{"date":"2025-12-10","sources":["https://tv9kannada.com/karnataka/bengaluru/namma-metro-yellow-line-seventh-driverless-train-arrives-in-bengaluru-1124576.html","https://newsfirstprime.com/bengaluru/good-news-for-yellow-line-commuters-seventh-train-reaches-hebbagodi-days-after-sixth-10925915","https://www.nativeplanet.com/news/trsl-to-deliver-eighth-train-to-bengaluru-by-month-end-as-namma-metros-yellow-line-strengthens-peak-018306.html"]},
         "depot_arrival":{"date":"2025-12-18","sources":["https://tv9kannada.com/karnataka/bengaluru/namma-metro-yellow-line-seventh-driverless-train-arrives-in-bengaluru-1124576.html","https://www.deccanherald.com/amp/story/india/karnataka/bengaluru/namma-metro-yellow-line-10-min-headway-from-february-8th-train-on-the-way-to-city-3856109","https://newsfirstprime.com/bengaluru/good-news-for-yellow-line-commuters-seventh-train-reaches-hebbagodi-days-after-sixth-10925915"]},
@@ -107,7 +107,7 @@
     },
     "bmrcl-4rs-dm-ts008": {
       "uid":"f968a1a8-11e9-4870-b65b-7bdc31818a89", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS008", "manufacturer":"Titagarh Rail Systems",
+      "trainset_number":"TS008", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
       "milestones": {
         "factory_dispatch":{"date":"2026-01-08","sources":["https://www.deccanherald.com/amp/story/india/karnataka/bengaluru/namma-metro-yellow-line-10-min-headway-from-february-8th-train-on-the-way-to-city-3856109","https://newsfirstprime.com/bengaluru/yellow-line-frequency-to-drop-to-10-minutes-as-8th-namma-metro-train-set-to-arrive-10983447","https://newsfirstprime.com/bengaluru/yellow-line-metro-to-see-shorter-wait-times-from-january-15-10996148"]},
         "depot_arrival":{"date":"2026-01-19","sources":["https://www.newindianexpress.com/amp/story/cities/bengaluru/2026/Jan/20/eighth-yellow-line-trainset-for-bengaluru-metro-reaches-depot-testing-to-begin-soon","https://newsfirstprime.com/bengaluru/8th-driverless-metro-train-reaches-hebbagodi-depot-promising-shorter-wait-times-11012226","https://www.deccanherald.com/amp/story/india%2Fkarnataka%2Fbengaluru%2Fbengaluru-metro-yellow-line-peak-hour-wait-time-reduces-to-9-mins-off-peak-hours-to-14-mins-3913383"]},
@@ -116,47 +116,47 @@
     },
     "bmrcl-4rs-dm-ts009": {
       "uid":"87fa479c-fffa-48a4-afd0-8841f1d682e8", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS009", "manufacturer":"Titagarh Rail Systems", "milestones":{}
+      "trainset_number":"TS009", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
     },
     "bmrcl-4rs-dm-ts010": {
       "uid":"b7280f99-a1f8-4258-b066-1b2035df2f0d", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS010", "manufacturer":"Titagarh Rail Systems", "milestones":{}
+      "trainset_number":"TS010", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
     },
     "bmrcl-4rs-dm-ts011": {
       "uid":"37a25f86-8b97-453c-82ca-2916aef41769", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS011", "manufacturer":"Titagarh Rail Systems", "milestones":{}
+      "trainset_number":"TS011", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
     },
     "bmrcl-4rs-dm-ts012": {
       "uid":"afe322f8-f6d4-4a8d-9894-7832343e48f3", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS012", "manufacturer":"Titagarh Rail Systems", "milestones":{}
+      "trainset_number":"TS012", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
     },
     "bmrcl-4rs-dm-ts013": {
       "uid":"180cdac6-bf64-4f1b-8dd3-7db26731a6ce", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS013", "manufacturer":"Titagarh Rail Systems", "milestones":{}
+      "trainset_number":"TS013", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
     },
     "bmrcl-4rs-dm-ts014": {
       "uid":"6656d5ac-2add-4f0d-a49a-380781a06ee3", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS014", "manufacturer":"Titagarh Rail Systems", "milestones":{}
+      "trainset_number":"TS014", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
     },
     "bmrcl-4rs-dm-ts015": {
       "uid":"91823019-a2bb-4559-a372-5f3e28e994d8", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS015", "manufacturer":"Titagarh Rail Systems", "milestones":{}
+      "trainset_number":"TS015", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
     },
     "bmrcl-4rs-dm-ts016": {
       "uid":"1c7cf813-8139-49af-97df-e0c1dcaeb6a7", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-dtg",
-      "trainset_number":"TS016", "manufacturer":"CRRC Nanjing Puzhen", "milestones":{}
+      "trainset_number":"TS016", "manufacturer":"CRRC Nanjing Puzhen", "intended_line":"purple", "operational_line":"green", "milestones":{}
     },
     "bmrcl-4rs-dm-ts017": {
       "uid":"9404988a-15c2-43a1-9a8e-82d6bd389b36", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-dtg",
-      "trainset_number":"TS017", "manufacturer":"Titagarh Rail Systems", "milestones":{}
+      "trainset_number":"TS017", "manufacturer":"Titagarh Rail Systems", "intended_line":"green", "milestones":{}
     },
     "bmrcl-4rs-dm-ts018": {
       "uid":"deeb6d6f-35e3-4b77-b38b-c6334ec20f88", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-dtg",
-      "trainset_number":"TS018", "manufacturer":"Titagarh Rail Systems", "milestones":{}
+      "trainset_number":"TS018", "manufacturer":"Titagarh Rail Systems", "intended_line":"green", "milestones":{}
     },
     "bmrcl-5rs-dm-ts001": {
       "uid":"eb597c35-d408-49ff-9ddd-ed621594d538", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
-      "trainset_number":"TS001", "manufacturer":"BEML",
+      "trainset_number":"TS001", "manufacturer":"BEML", "intended_line":"pink",
       "milestones": {
         "factory_dispatch":{"date":"2025-12-21","sources":["https://newsfirstprime.com/bengaluru/pink-line-metro-coaches-arrive-at-kothanur-depot-as-work-gathers-pace-ahead-of-2026-launch-10930607","https://www.thehindu.com/news/national/karnataka/pink-line-prototype-metro-train-moved-to-kothanur-depot/article70426165.ece"]},
         "depot_arrival":{"date":"2025-12-22","sources":["https://newsfirstprime.com/bengaluru/pink-line-metro-coaches-arrive-at-kothanur-depot-as-work-gathers-pace-ahead-of-2026-launch-10930607","https://www.thehindu.com/news/national/karnataka/pink-line-prototype-metro-train-moved-to-kothanur-depot/article70426165.ece"]},
@@ -165,7 +165,7 @@
     },
     "bmrcl-5rs-dm-ts002": {
       "uid":"91cf5d60-9d28-43b5-89ac-24a854d83998", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
-      "trainset_number":"TS002", "manufacturer":"BEML",
+      "trainset_number":"TS002", "manufacturer":"BEML", "intended_line":"pink",
       "milestones": {
         "factory_dispatch": {
           "date":"2026-02-02",
