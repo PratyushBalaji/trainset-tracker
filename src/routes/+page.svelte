@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { CalendarDays, Eye, Filter, PanelLeftClose, PanelLeftOpen, RotateCcw } from '@lucide/svelte';
+  import { onDestroy } from 'svelte';
+  import { CalendarDays, Eye, Filter, PanelLeftClose, PanelLeftOpen, Pause, Play, RotateCcw } from '@lucide/svelte';
   import GanttChart from '$lib/components/GanttChart.svelte';
   import TrainsetCard from '$lib/components/TrainsetCard.svelte';
   import TrainsetDetail from '$lib/components/TrainsetDetail.svelte';
-  import { addDays, clampIsoDate, daysBetween, formatDate, toIsoDate } from '$lib/data/date';
+  import { addDays, clampIsoDate, compareIsoDate, daysBetween, formatDate, toIsoDate } from '$lib/data/date';
   import { buildTimelineSegments } from '$lib/data/lifecycle';
   import {
     decorateTrainsetForDate,
@@ -19,6 +20,8 @@
 
   const today = clampIsoDate(toIsoDate(), timelineBounds.start, timelineBounds.end);
   const dateSliderMax = daysBetween(timelineBounds.start, timelineBounds.end);
+  const playbackStepDays = 1;
+  const playbackIntervalMs = 35;
   const initiallyHiddenChartTrainsetIds = new Set(
     resolvedTrainsets
       .filter((trainset) => trainset.timelineSegments.length === 0)
@@ -32,6 +35,8 @@
   let selectedTrainsetId = $state<string | null>(null);
   let filtersCollapsed = $state(false);
   let hiddenChartTrainsetIds = $state(new Set(initiallyHiddenChartTrainsetIds));
+  let isPlaybackActive = $state(false);
+  let playbackTimer: ReturnType<typeof setInterval> | null = null;
 
   function toggleValue<T>(set: Set<T>, value: T): Set<T> {
     const next = new Set(set);
@@ -45,15 +50,18 @@
   }
 
   function resetDate() {
+    stopPlayback();
     selectedDate = today;
   }
 
   function setDateFromSlider(event: Event) {
+    stopPlayback();
     const value = Number((event.currentTarget as HTMLInputElement).value);
     selectedDate = addDays(timelineBounds.start, value);
   }
 
   function setDateFromInput(event: Event) {
+    stopPlayback();
     const value = (event.currentTarget as HTMLInputElement).value;
     if (value) {
       selectedDate = clampIsoDate(value, timelineBounds.start, timelineBounds.end);
@@ -81,6 +89,53 @@
 
   function showAllChartTrainsets() {
     hiddenChartTrainsetIds = new Set();
+  }
+
+  function stopPlayback() {
+    if (playbackTimer) {
+      clearInterval(playbackTimer);
+      playbackTimer = null;
+    }
+
+    isPlaybackActive = false;
+  }
+
+  function advancePlayback() {
+    const nextDate = clampIsoDate(
+      addDays(selectedDate, playbackStepDays),
+      chartTimelineBounds.start,
+      chartTimelineBounds.end
+    );
+
+    selectedDate = nextDate;
+
+    if (compareIsoDate(nextDate, chartTimelineBounds.end) >= 0) {
+      stopPlayback();
+    }
+  }
+
+  function startPlayback() {
+    stopPlayback();
+    selectedDate = clampIsoDate(
+      selectedDate === today ? chartTimelineBounds.start : selectedDate,
+      chartTimelineBounds.start,
+      chartTimelineBounds.end
+    );
+    isPlaybackActive = true;
+    playbackTimer = setInterval(advancePlayback, playbackIntervalMs);
+  }
+
+  function togglePlayback() {
+    if (isPlaybackActive) {
+      stopPlayback();
+    } else {
+      startPlayback();
+    }
+  }
+
+  function setDateFromChart(date: string) {
+    stopPlayback();
+    selectedDate = date;
   }
 
   function countBy<T>(items: T[]): Map<T, number> {
@@ -129,6 +184,8 @@
       ? (filteredTrainsets.find((trainset) => trainset.id === selectedTrainsetId) ?? null)
       : null
   );
+
+  onDestroy(stopPlayback);
 </script>
 
 <svelte:head>
@@ -179,16 +236,33 @@
               Date cursor
             </label>
 
-            <input
-              id="selected-date-slider"
-              class="date-slider"
-              type="range"
-              min="0"
-              max={dateSliderMax}
-              value={dateSliderValue}
-              aria-label="Selected date"
-              oninput={setDateFromSlider}
-            />
+            <div class="date-slider-row">
+              <button
+                class:playing={isPlaybackActive}
+                class="playback-button"
+                type="button"
+                aria-label={isPlaybackActive ? 'Pause playback' : 'Play timeline'}
+                title={isPlaybackActive ? 'Pause playback' : 'Play timeline'}
+                onclick={togglePlayback}
+              >
+                {#if isPlaybackActive}
+                  <Pause size={15} fill="currentColor" />
+                {:else}
+                  <Play size={15} fill="currentColor" />
+                {/if}
+              </button>
+
+              <input
+                id="selected-date-slider"
+                class="date-slider"
+                type="range"
+                min="0"
+                max={dateSliderMax}
+                value={dateSliderValue}
+                aria-label="Selected date"
+                oninput={setDateFromSlider}
+              />
+            </div>
 
             <div class="date-scale" aria-hidden="true">
               <span>{timelineBounds.start}</span>
@@ -334,7 +408,7 @@
     selectedId={selectedTrainset?.id ?? null}
     onSelect={selectTrainset}
     onHideFromChart={toggleTrainsetChartVisibility}
-    onDateChange={(date) => (selectedDate = date)}
+    onDateChange={setDateFromChart}
   />
 </main>
 
@@ -492,8 +566,40 @@
   }
 
   .date-slider {
+    min-width: 0;
     width: 100%;
     accent-color: #26342e;
+  }
+
+  .date-slider-row {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+  }
+
+  .playback-button {
+    display: inline-grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border: 1px solid #cfd8ca;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #26342e;
+    cursor: pointer;
+  }
+
+  .playback-button.playing {
+    border-color: #26342e;
+    background: #26342e;
+    color: #ffffff;
+  }
+
+  .playback-button:hover,
+  .playback-button:focus-visible {
+    border-color: #26342e;
+    outline: none;
   }
 
   .date-scale {
