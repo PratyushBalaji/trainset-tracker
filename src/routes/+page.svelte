@@ -196,6 +196,7 @@
       )
     }))
   );
+  let selectedDateReadout = $derived(`${formatDate(selectedDate)}${selectedDate === today ? ' (Today)' : ''}`);
   let selectedTrainset = $derived(
     selectedTrainsetId
       ? (filteredTrainsets.find((trainset) => trainset.id === selectedTrainsetId) ?? null)
@@ -269,22 +270,23 @@
                 {/if}
               </button>
 
-              <input
-                id="selected-date-slider"
-                class="date-slider"
-                type="range"
-                min="0"
-                max={dateSliderMax}
-                value={dateSliderValue}
-                aria-label="Selected date"
-                oninput={setDateFromSlider}
-              />
-            </div>
+              <div class="date-slider-stack">
+                <div class="date-scale" aria-hidden="true">
+                  <span>{timelineBounds.start}</span>
+                  <span>{timelineBounds.end}</span>
+                </div>
 
-            <div class="date-scale" aria-hidden="true">
-              <span>{timelineBounds.start}</span>
-              <span>Today</span>
-              <span>{timelineBounds.end}</span>
+                <input
+                  id="selected-date-slider"
+                  class="date-slider"
+                  type="range"
+                  min="0"
+                  max={dateSliderMax}
+                  value={dateSliderValue}
+                  aria-label="Selected date"
+                  oninput={setDateFromSlider}
+                />
+              </div>
             </div>
 
             <div class="date-controls">
@@ -302,7 +304,7 @@
               </button>
             </div>
 
-            <p class="date-readout">{formatDate(selectedDate)}</p>
+            <p class="date-readout">{selectedDateReadout}</p>
           </div>
 
           <div class="filter-group">
@@ -358,7 +360,7 @@
       <div class="cards-summary">
         <div>
           <p>{filteredTrainsets.length} of {datedTrainsets.length} trainsets</p>
-          <h2>Fleet status at {formatDate(selectedDate)}</h2>
+          <h2>Fleet status at {selectedDateReadout}</h2>
         </div>
 
         {#if hiddenChartFilteredCount > 0}
@@ -591,8 +593,14 @@
   .date-slider-row {
     display: grid;
     grid-template-columns: 32px minmax(0, 1fr);
-    align-items: center;
+    align-items: end;
     gap: 8px;
+  }
+
+  .date-slider-stack {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
   }
 
   .playback-button {
@@ -620,19 +628,11 @@
   }
 
   .date-scale {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
     color: #7d877b;
     font-size: 0.66rem;
-  }
-
-  .date-scale span:nth-child(2) {
-    text-align: center;
-  }
-
-  .date-scale span:last-child {
-    text-align: right;
   }
 
   .date-controls {
