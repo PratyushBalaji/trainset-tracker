@@ -1,8 +1,8 @@
 {
   "schema_version": "1.1.0",
   "contracts": {
-    "bmrcl-4rs-dm": {"uid":"a5988fd8-a64d-4fa5-ae39-64969242adef","awardee":"CRRC Nanjing Puzhen","rolling_stock":["bmrcl-4rs-dm-cbtc","bmrcl-4rs-dm-dtg"]},
-    "bmrcl-5rs-dm": {"uid":"ecfca714-b042-46e7-8e2e-8b5eea674c7e","awardee":"BEML","rolling_stock":["bmrcl-5rs-dm"]}
+    "bmrcl-4rs-dm": {"uid":"a5988fd8-a64d-4fa5-ae39-64969242adef","awardee":"CRRC Nanjing Puzhen","awarded_on":"2019-12-02","base_cars":216,"base_contract_value":{"amount":1578,"currency":"INR","unit":"crore"},"rolling_stock":["bmrcl-4rs-dm-cbtc","bmrcl-4rs-dm-dtg"]},
+    "bmrcl-5rs-dm": {"uid":"ecfca714-b042-46e7-8e2e-8b5eea674c7e","awardee":"BEML","tendered_on":"2022-09-19","awarded_on":"2023-08-07","signed_on":"2023-08-19","base_cars":318,"base_contract_value":{"amount":3176.43,"currency":"INR","unit":"crore"},"rolling_stock":["bmrcl-5rs-dm"]}
   },
   "rolling_stock": {
     "bmrcl-4rs-dm-cbtc": {"signalling":"CBTC","cars_per_trainset":6,"gauge_mm":1435,"traction_power":"750 V DC third rail","carbody":"stainless steel","intended_lines":["yellow"]},
