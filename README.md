@@ -4,6 +4,10 @@
 
 A timeline from rolling stock procurement to induction.
 
+## AI disclosure
+
+Parts of this project, especially the Svelte UI and supporting documentation, are being developed with AI assistance. I am not a frontend developer, so these tools are my interface between the data side I know and love, and being able to tell a story. The trainset data is source-backed and human-reviewed; I've spent hours tracing Twitter posts, news articles, and press releases. All factual information is backed by reputable sources to the best of my abilities to ensure a clear audit trail.
+
 ## Data
 
 The canonical dataset is stored in [`trainsets.json`](./trainsets.json). Version 1 keeps the data model deliberately small: contracts describe procurement packages, rolling stock entries describe materially distinct train designs/specifications, and trainsets represent the individual physical trains whose timelines are being tracked.
