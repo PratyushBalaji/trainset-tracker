@@ -70,7 +70,7 @@ Each contract and trainset also has an immutable generated `uid`, independent of
 
 ## Contracts
 
-A contract describes the procurement package itself. It stores the awardee, known procurement dates, original contract scope/value, and the rolling stock types sanctioned under that contract.
+A contract describes the procurement package itself. It stores the awardee, known procurement dates, original contract scope/value, later contract variations, and the rolling stock types sanctioned under that contract.
 
 ```jsonc
 "bmrcl-5rs-dm": {
@@ -79,19 +79,33 @@ A contract describes the procurement package itself. It stores the awardee, know
   "tendered_on": "2022-09-19",
   "awarded_on": "2023-08-07",
   "signed_on": "2023-08-19",
+  "base_trainsets": 53,
   "base_cars": 318,
   "base_contract_value": {
     "amount": 3176.43,
     "currency": "INR",
     "unit": "crore"
   },
+  "variations": [
+    {
+      "ordered_on": "2025-03-28",
+      "additional_trainsets": 7,
+      "additional_cars": 42,
+      "contract_value": {
+        "amount": 405,
+        "currency": "INR",
+        "unit": "crore"
+      },
+      "intended_line": "pink"
+    }
+  ],
   "rolling_stock": ["bmrcl-5rs-dm"]
 }
 ```
 
 `tendered_on` is the date the tender/NIT was issued, `awarded_on` is the contract award or Letter of Acceptance date, and `signed_on` is the later formal agreement date where separately known. These fields are omitted when an exact date cannot be established rather than storing an approximate day.
 
-`base_cars` and `base_contract_value` describe the original awarded procurement only. Later top-up orders or extensions are deliberately not folded into these values; they can be represented separately if contract-extension history is added to the schema.
+`base_trainsets`, `base_cars` and `base_contract_value` describe the original awarded procurement only. Later top-up orders or extensions are recorded in `variations` so the original award is not overwritten. A variation records the order date, additional trainsets/cars, value and intended line when known.
 
 A trainset's selected `rolling_stock` value must be one of the rolling stock IDs listed by its contract.
 
