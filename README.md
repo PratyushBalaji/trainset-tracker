@@ -66,18 +66,28 @@ Each contract and trainset also has an immutable generated `uid`, independent of
 
 ## Contracts
 
-A contract describes the procurement package itself. It stores the contract awardee and the rolling stock types sanctioned under that contract.
+A contract describes the procurement package itself. It stores the awardee, known procurement dates, original contract scope/value, and the rolling stock types sanctioned under that contract.
 
 ```jsonc
-"bmrcl-4rs-dm": { // bmrcl yellow-line cbtc + green/purple-line dtg rolling stock contract
+"bmrcl-5rs-dm": {
   "uid": "contract_...",
-  "awardee": "CRRC Nanjing Puzhen",
-  "rolling_stock": [
-    "bmrcl-4rs-dm-cbtc",
-    "bmrcl-4rs-dm-dtg"
-  ]
+  "awardee": "BEML",
+  "tendered_on": "2022-09-19",
+  "awarded_on": "2023-08-07",
+  "signed_on": "2023-08-19",
+  "base_cars": 318,
+  "base_contract_value": {
+    "amount": 3176.43,
+    "currency": "INR",
+    "unit": "crore"
+  },
+  "rolling_stock": ["bmrcl-5rs-dm"]
 }
 ```
+
+`tendered_on` is the date the tender/NIT was issued, `awarded_on` is the contract award or Letter of Acceptance date, and `signed_on` is the later formal agreement date where separately known. These fields are omitted when an exact date cannot be established rather than storing an approximate day.
+
+`base_cars` and `base_contract_value` describe the original awarded procurement only. Later top-up orders or extensions are deliberately not folded into these values; they can be represented separately if contract-extension history is added to the schema.
 
 A trainset's selected `rolling_stock` value must be one of the rolling stock IDs listed by its contract.
 
