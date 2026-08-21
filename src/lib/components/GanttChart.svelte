@@ -176,15 +176,21 @@
 
     <div class="legend" aria-label="Lifecycle legend">
       {#each timelineStageDefinitions as stage}
-        <span
+        <button
           class:phase-muted={highlightedStageId !== null && highlightedStageId !== stage.id}
           class:phase-highlighted={highlightedStageId === stage.id}
           class="legend-item"
+          type="button"
           style={stageStyle(stage.id)}
+          aria-label={`Highlight ${stage.filterLabel}`}
+          onblur={() => clearStageHighlight(stage.id)}
+          onfocus={() => (highlightedStageId = stage.id)}
+          onpointerenter={() => (highlightedStageId = stage.id)}
+          onpointerleave={() => clearStageHighlight(stage.id)}
         >
           <span class={`legend-swatch stage-${stage.id}`} aria-hidden="true"></span>
           <span>{stage.filterLabel}</span>
-        </span>
+        </button>
       {/each}
     </div>
   </div>
@@ -341,7 +347,11 @@
     gap: 6px;
     min-height: 20px;
     padding: 0 10px;
+    border: 0;
+    background: transparent;
     color: #445048;
+    cursor: pointer;
+    font: inherit;
     font-size: 0.72rem;
     font-weight: 760;
     line-height: 1.1;
