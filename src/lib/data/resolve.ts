@@ -110,13 +110,35 @@ const baseTrainsets = Object.entries(dataset.trainsets)
   })
   .sort((a, b) => a.contractId.localeCompare(b.contractId) || a.sortNumber - b.sortNumber);
 
-const milestoneDates = baseTrainsets.flatMap((trainset) => trainset.milestones.map((milestone) => milestone.date));
-const earliestMilestone = milestoneDates.length > 0 ? minIsoDate(...milestoneDates) : toIsoDate();
-const latestMilestone = milestoneDates.length > 0 ? maxIsoDate(...milestoneDates) : toIsoDate();
+const timelinePaddingDays = 80;
+
+export function getTrainsetTimelineBounds(
+  trainsets: { milestones: ResolvedMilestone[] }[],
+  fallback: DateBounds = {
+    start: addDays(toIsoDate(), -timelinePaddingDays),
+    end: addDays(toIsoDate(), timelinePaddingDays)
+  }
+): DateBounds {
+  const milestoneDates = trainsets.flatMap((trainset) => trainset.milestones.map((milestone) => milestone.date));
+
+  if (milestoneDates.length === 0) {
+    return fallback;
+  }
+
+  const earliestMilestone = minIsoDate(...milestoneDates);
+  const latestMilestone = maxIsoDate(...milestoneDates);
+
+  return {
+    start: addDays(earliestMilestone, -timelinePaddingDays),
+    end: addDays(latestMilestone, timelinePaddingDays)
+  };
+}
+
+const fullTimelineBounds = getTrainsetTimelineBounds(baseTrainsets);
 
 export const timelineBounds: DateBounds = {
-  start: addDays(earliestMilestone, -80),
-  end: maxIsoDate(addDays(latestMilestone, 80), toIsoDate())
+  start: fullTimelineBounds.start,
+  end: maxIsoDate(fullTimelineBounds.end, toIsoDate())
 };
 
 export const resolvedTrainsets: ResolvedTrainset[] = baseTrainsets.map((trainset) => ({

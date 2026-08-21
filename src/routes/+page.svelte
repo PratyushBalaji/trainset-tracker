@@ -4,8 +4,10 @@
   import TrainsetCard from '$lib/components/TrainsetCard.svelte';
   import TrainsetDetail from '$lib/components/TrainsetDetail.svelte';
   import { addDays, clampIsoDate, daysBetween, formatDate, toIsoDate } from '$lib/data/date';
+  import { buildTimelineSegments } from '$lib/data/lifecycle';
   import {
     decorateTrainsetForDate,
+    getTrainsetTimelineBounds,
     lineLabels,
     lineOptions,
     manufacturerOptions,
@@ -107,8 +109,20 @@
   let hiddenCardTrainsets = $derived(
     filteredTrainsets.filter((trainset) => hiddenChartTrainsetIds.has(trainset.id))
   );
-  let chartTrainsets = $derived(
+  let chartBaseTrainsets = $derived(
     filteredTrainsets.filter((trainset) => !hiddenChartTrainsetIds.has(trainset.id))
+  );
+  let chartTimelineBounds = $derived(getTrainsetTimelineBounds(chartBaseTrainsets, timelineBounds));
+  let chartSelectedDate = $derived(clampIsoDate(selectedDate, chartTimelineBounds.start, chartTimelineBounds.end));
+  let chartTrainsets = $derived(
+    chartBaseTrainsets.map((trainset) => ({
+      ...trainset,
+      timelineSegments: buildTimelineSegments(
+        trainset.milestones,
+        chartTimelineBounds.start,
+        chartTimelineBounds.end
+      )
+    }))
   );
   let selectedTrainset = $derived(
     selectedTrainsetId
@@ -315,8 +329,8 @@
 
   <GanttChart
     trainsets={chartTrainsets}
-    selectedDate={selectedDate}
-    bounds={timelineBounds}
+    selectedDate={chartSelectedDate}
+    bounds={chartTimelineBounds}
     selectedId={selectedTrainset?.id ?? null}
     onSelect={selectTrainset}
     onHideFromChart={toggleTrainsetChartVisibility}
