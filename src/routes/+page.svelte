@@ -4,7 +4,16 @@
   import GanttChart from '$lib/components/GanttChart.svelte';
   import TrainsetCard from '$lib/components/TrainsetCard.svelte';
   import TrainsetDetail from '$lib/components/TrainsetDetail.svelte';
-  import { addDays, clampIsoDate, compareIsoDate, daysBetween, formatDate, toIsoDate } from '$lib/data/date';
+  import {
+    addDays,
+    clampIsoDate,
+    compareIsoDate,
+    daysBetween,
+    formatDate,
+    maxIsoDate,
+    minIsoDate,
+    toIsoDate
+  } from '$lib/data/date';
   import { buildTimelineSegments } from '$lib/data/lifecycle';
   import {
     decorateTrainsetForDate,
@@ -36,6 +45,7 @@
   let filtersCollapsed = $state(false);
   let hiddenChartTrainsetIds = $state(new Set(initiallyHiddenChartTrainsetIds));
   let isPlaybackActive = $state(false);
+  let playbackEndDate = $state<string | null>(null);
   let playbackTimer: ReturnType<typeof setInterval> | null = null;
 
   function toggleValue<T>(set: Set<T>, value: T): Set<T> {
@@ -97,29 +107,32 @@
       playbackTimer = null;
     }
 
+    playbackEndDate = null;
     isPlaybackActive = false;
   }
 
   function advancePlayback() {
+    const targetDate = playbackEndDate ?? timelineBounds.end;
     const nextDate = clampIsoDate(
       addDays(selectedDate, playbackStepDays),
-      chartTimelineBounds.start,
-      chartTimelineBounds.end
+      timelineBounds.start,
+      targetDate
     );
 
     selectedDate = nextDate;
 
-    if (compareIsoDate(nextDate, chartTimelineBounds.end) >= 0) {
+    if (compareIsoDate(nextDate, targetDate) >= 0) {
       stopPlayback();
     }
   }
 
   function startPlayback() {
     stopPlayback();
+    playbackEndDate = timelineBounds.end;
     selectedDate = clampIsoDate(
-      selectedDate === today ? chartTimelineBounds.start : selectedDate,
-      chartTimelineBounds.start,
-      chartTimelineBounds.end
+      selectedDate === today ? chartDataTimelineBounds.start : selectedDate,
+      timelineBounds.start,
+      timelineBounds.end
     );
     isPlaybackActive = true;
     playbackTimer = setInterval(advancePlayback, playbackIntervalMs);
@@ -167,7 +180,11 @@
   let chartBaseTrainsets = $derived(
     filteredTrainsets.filter((trainset) => !hiddenChartTrainsetIds.has(trainset.id))
   );
-  let chartTimelineBounds = $derived(getTrainsetTimelineBounds(chartBaseTrainsets, timelineBounds));
+  let chartDataTimelineBounds = $derived(getTrainsetTimelineBounds(chartBaseTrainsets, timelineBounds));
+  let chartTimelineBounds = $derived({
+    start: minIsoDate(chartDataTimelineBounds.start, selectedDate, playbackEndDate ?? selectedDate),
+    end: maxIsoDate(chartDataTimelineBounds.end, selectedDate, playbackEndDate ?? selectedDate)
+  });
   let chartSelectedDate = $derived(clampIsoDate(selectedDate, chartTimelineBounds.start, chartTimelineBounds.end));
   let chartTrainsets = $derived(
     chartBaseTrainsets.map((trainset) => ({
