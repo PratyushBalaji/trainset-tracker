@@ -2,7 +2,7 @@
   "schema_version": "1.1.0",
   "contracts": {
     "bmrcl-4rs-dm": {"uid":"a5988fd8-a64d-4fa5-ae39-64969242adef","awardee":"CRRC Nanjing Puzhen","awarded_on":"2019-12-02","base_cars":216,"base_contract_value":{"amount":1578,"currency":"INR","unit":"crore"},"rolling_stock":["bmrcl-4rs-dm-cbtc","bmrcl-4rs-dm-dtg"]},
-    "bmrcl-5rs-dm": {"uid":"ecfca714-b042-46e7-8e2e-8b5eea674c7e","awardee":"BEML","tendered_on":"2022-09-19","awarded_on":"2023-08-07","signed_on":"2023-08-19","base_cars":318,"base_contract_value":{"amount":3176.43,"currency":"INR","unit":"crore"},"rolling_stock":["bmrcl-5rs-dm"]}
+    "bmrcl-5rs-dm": {"uid":"ecfca714-b042-46e7-8e2e-8b5eea674c7e","awardee":"BEML","tendered_on":"2022-09-19","awarded_on":"2023-08-07","signed_on":"2023-08-19","base_trainsets":53,"base_cars":318,"base_contract_value":{"amount":3176.43,"currency":"INR","unit":"crore"},"variations":[{"ordered_on":"2025-03-28","additional_trainsets":7,"additional_cars":42,"contract_value":{"amount":405,"currency":"INR","unit":"crore"},"intended_line":"pink"},{"ordered_on":"2025-12-03","additional_trainsets":6,"additional_cars":36,"contract_value":{"amount":414,"currency":"INR","unit":"crore"},"intended_line":"yellow"}],"rolling_stock":["bmrcl-5rs-dm"]}
   },
   "rolling_stock": {
     "bmrcl-4rs-dm-cbtc": {"signalling":"CBTC","cars_per_trainset":6,"gauge_mm":1435,"traction_power":"750 V DC third rail","carbody":"stainless steel","intended_lines":["yellow"]},
@@ -176,6 +176,65 @@
           "date":"2026-02-04",
           "sources":[],
           "comments":"No direct source found for complete-trainset arrival. Inferred from the remaining three coaches being dispatched late on 2026-02-03 and BEML's proximity to Kothanur depot."
+        }
+      }
+    },
+    "bmrcl-5rs-dm-ts003": {
+      "uid":"a82e2dc4-ac5d-474c-890e-9cfbfbfe9d71", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS003", "manufacturer":"BEML", "intended_line":"pink",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-02-25",
+          "sources":[],
+          "comments":"No direct source found for factory dispatch. Inferred from the complete trainset arriving at Kothanur depot around midnight on 2026-02-26 and BEML's proximity to the depot."
+        },
+        "depot_arrival":{"date":"2026-02-26","sources":["https://www.deccanherald.com/amp/story/india%2Fkarnataka%2Fbengaluru%2Fbengaluru-metro-yellow-line-peak-hour-wait-time-reduces-to-9-mins-off-peak-hours-to-14-mins-3913383","https://indianexpress.com/article/cities/bangalore/bmrcl-eighth-namma-metro-yellow-line-cutting-peak-hour-frequency-10554905/lite/","https://newsfirstprime.com/bengaluru/third-driverless-metro-train-reaches-bengaluru-pink-line-launch-moves-closer-11157364"]}
+      }
+    },
+    "bmrcl-5rs-dm-ts004": {
+      "uid":"159e3a55-6bea-4289-8161-5329528f2b82", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS004", "manufacturer":"BEML", "intended_line":"pink",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-03-12",
+          "sources":[],
+          "comments":"No direct source found for factory dispatch. Inferred from the complete trainset arriving at Kothanur depot on 2026-03-13 and BEML's proximity to the depot."
+        },
+        "depot_arrival":{"date":"2026-03-13","sources":["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-pink-line-gets-fourth-train-from-beml-3933041","https://www.nativeplanet.com/news/beml-delivers-fourth-pink-line-train-to-bengaluru-as-technical-checks-begin-ahead-of-may-service-019915.html","https://newskarnataka.com/bengaluru/namma-metro-gets-new-train-pink-line-rollout-gains-pace/18032026"]}
+      }
+    },
+    "bmrcl-5rs-dm-ts005": {
+      "uid":"96345032-aaea-4bd6-aa7d-ee7d5cb2822e", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS005", "manufacturer":"BEML", "intended_line":"pink",
+      "milestones": {
+        "depot_arrival":{"date":"2026-03-23","sources":["https://x.com/i/status/2037138194316308549"]}
+      }
+    },
+    "bmrcl-5rs-dm-ts007": {
+      "uid":"222368ed-bfb1-4981-bbac-c0f747a4710a", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS007", "manufacturer":"BEML", "intended_line":"blue",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-06-03",
+          "sources":[],
+          "comments":"No direct source found for factory dispatch. Inferred from the complete trainset arriving at Byappanahalli depot on 2026-06-04 and BEML's proximity to the depot."
+        },
+        "depot_arrival":{"date":"2026-06-04","sources":["https://www.moneycontrol.com/news/india/beml-delivers-first-train-set-for-bengaluru-s-outer-ring-road-metro-13940838.html","https://tv9kannada.com/karnataka/bengaluru-rural/silk-board-to-kempegowda-airport-metro-blue-line-update-first-train-arrives-in-bengaluru-1195022.html"]}
+      }
+    },
+    "bmrcl-5rs-dm-ts008": {
+      "uid":"cf6be069-b358-4c59-9989-228397971346", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS008", "manufacturer":"BEML", "intended_line":"blue",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-06-25",
+          "sources":[],
+          "comments":"No direct source found for factory dispatch. Inferred from the second Blue Line trainset being reported as delivered on 2026-06-26 and BEML's proximity to Byappanahalli depot."
+        },
+        "depot_arrival": {
+          "date":"2026-06-26",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-likely-to-induct-three-new-green-line-train-sets-by-august-to-ease-rush-13959388.html"],
+          "comments":"Moneycontrol reported on 2026-06-26 that BEML had delivered the second Blue Line trainset."
         }
       }
     }
