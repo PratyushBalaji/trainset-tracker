@@ -1,5 +1,5 @@
 import rawDataset from '../../../trainsets.json';
-import { addDays, maxIsoDate, minIsoDate, toIsoDate } from './date';
+import { addDays, maxIsoDate, minIsoDate, todayIsoDate } from './date';
 import {
   buildTimelineSegments,
   getCurrentStage,
@@ -115,8 +115,8 @@ const timelinePaddingDays = 80;
 export function getTrainsetTimelineBounds(
   trainsets: { milestones: ResolvedMilestone[] }[],
   fallback: DateBounds = {
-    start: addDays(toIsoDate(), -timelinePaddingDays),
-    end: addDays(toIsoDate(), timelinePaddingDays)
+    start: addDays(todayIsoDate(), -timelinePaddingDays),
+    end: todayIsoDate()
   }
 ): DateBounds {
   const milestoneDates = trainsets.flatMap((trainset) => trainset.milestones.map((milestone) => milestone.date));
@@ -135,10 +135,11 @@ export function getTrainsetTimelineBounds(
 }
 
 const fullTimelineBounds = getTrainsetTimelineBounds(baseTrainsets);
+const currentDate = todayIsoDate();
 
 export const timelineBounds: DateBounds = {
-  start: fullTimelineBounds.start,
-  end: maxIsoDate(fullTimelineBounds.end, toIsoDate())
+  start: minIsoDate(fullTimelineBounds.start, currentDate),
+  end: currentDate
 };
 
 export const resolvedTrainsets: ResolvedTrainset[] = baseTrainsets.map((trainset) => ({

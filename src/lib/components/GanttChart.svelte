@@ -2,9 +2,11 @@
   import { EyeOff } from '@lucide/svelte';
   import {
     addDays,
+    clampIsoDate,
     daysBetween,
     formatDate,
     makeMonthTicks,
+    minIsoDate,
     parseIsoDate,
     percentageBetween
   } from '$lib/data/date';
@@ -15,6 +17,7 @@
     trainsets: DatedTrainset[];
     selectedDate: string;
     bounds: DateBounds;
+    maxDate: string;
     selectedId: string | null;
     onSelect: (id: string) => void;
     onHideFromChart: (id: string) => void;
@@ -32,6 +35,7 @@
     trainsets,
     selectedDate,
     bounds,
+    maxDate,
     selectedId,
     onSelect,
     onHideFromChart,
@@ -52,6 +56,7 @@
   );
   let cursorLeft = $derived(percentageBetween(selectedDate, bounds.start, bounds.end));
   let totalDays = $derived(daysBetween(bounds.start, bounds.end));
+  let maxInteractiveDate = $derived(minIsoDate(bounds.end, maxDate));
 
   function clamp(value: number, min: number, max: number): number {
     return Math.min(Math.max(value, min), max);
@@ -97,10 +102,11 @@
     const trackWidth = Math.max(1, rect.width - labelColumnWidth - 2 * canvasSidePadding - 2 * plotSidePadding);
     const x = clamp(event.clientX - trackLeft, 0, trackWidth);
     const ratio = x / trackWidth;
+    const date = clampIsoDate(addDays(bounds.start, Math.round(totalDays * ratio)), bounds.start, maxInteractiveDate);
 
     return {
-      percent: ratio * 100,
-      date: addDays(bounds.start, Math.round(totalDays * ratio))
+      percent: percentageBetween(date, bounds.start, bounds.end),
+      date
     };
   }
 

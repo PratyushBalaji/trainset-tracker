@@ -9,6 +9,13 @@ export function toIsoDate(date: Date = new Date()): string {
   return date.toISOString().slice(0, 10);
 }
 
+export function todayIsoDate(date: Date = new Date()): string {
+  const year = date.getFullYear();
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  const day = `${date.getDate()}`.padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 export function addDays(date: string, days: number): string {
   return toIsoDate(new Date(parseIsoDate(date).getTime() + days * DAY_MS));
 }

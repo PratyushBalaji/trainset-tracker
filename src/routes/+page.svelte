@@ -12,7 +12,7 @@
     formatDate,
     maxIsoDate,
     minIsoDate,
-    toIsoDate
+    todayIsoDate
   } from '$lib/data/date';
   import { buildTimelineSegments } from '$lib/data/lifecycle';
   import {
@@ -27,7 +27,7 @@
   } from '$lib/data/resolve';
   import type { DatedTrainset, LineId, StageId } from '$lib/data/types';
 
-  const today = clampIsoDate(toIsoDate(), timelineBounds.start, timelineBounds.end);
+  const today = clampIsoDate(todayIsoDate(), timelineBounds.start, timelineBounds.end);
   const dateSliderMax = daysBetween(timelineBounds.start, timelineBounds.end);
   const playbackStepDays = 1;
   const playbackIntervalMs = 35;
@@ -148,7 +148,7 @@
 
   function setDateFromChart(date: string) {
     stopPlayback();
-    selectedDate = date;
+    selectedDate = clampIsoDate(date, timelineBounds.start, timelineBounds.end);
   }
 
   function countBy<T>(items: T[]): Map<T, number> {
@@ -183,7 +183,10 @@
   let chartDataTimelineBounds = $derived(getTrainsetTimelineBounds(chartBaseTrainsets, timelineBounds));
   let chartTimelineBounds = $derived({
     start: minIsoDate(chartDataTimelineBounds.start, selectedDate, playbackEndDate ?? selectedDate),
-    end: maxIsoDate(chartDataTimelineBounds.end, selectedDate, playbackEndDate ?? selectedDate)
+    end: minIsoDate(
+      maxIsoDate(chartDataTimelineBounds.end, selectedDate, playbackEndDate ?? selectedDate),
+      timelineBounds.end
+    )
   });
   let chartSelectedDate = $derived(clampIsoDate(selectedDate, chartTimelineBounds.start, chartTimelineBounds.end));
   let chartTrainsets = $derived(
@@ -424,6 +427,7 @@
     trainsets={chartTrainsets}
     selectedDate={chartSelectedDate}
     bounds={chartTimelineBounds}
+    maxDate={timelineBounds.end}
     selectedId={selectedTrainset?.id ?? null}
     onSelect={selectTrainset}
     onHideFromChart={toggleTrainsetChartVisibility}
