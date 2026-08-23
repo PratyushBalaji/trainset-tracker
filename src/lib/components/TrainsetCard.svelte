@@ -183,6 +183,7 @@
   }
 
   .line-chip {
+    justify-self: start;
     min-width: 0;
     max-width: 100%;
     padding: 3px 7px;
