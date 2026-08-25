@@ -133,7 +133,21 @@
     },
     "bmrcl-4rs-dm-ts010": {
       "uid":"b7280f99-a1f8-4258-b066-1b2035df2f0d", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS010", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
+      "trainset_number":"TS010", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-04-14",
+          "sources":["https://x.com/ChristinMP_/status/2043642432039104831","https://x.com/ever_pessimist/status/2046595043126038745","https://www.moneycontrol.com/news/india/bengaluru-metro-to-get-21-dtg-trains-by-q2-2027-induction-from-july-2026-13888451.html"],
+          "comments":"The 10th Yellow Line trainset was reported ready for dispatch from Titagarh by 2026-04-14. The exact physical dispatch date is unconfirmed, but the trainset had definitely departed before 2026-04-21, when it was spotted in transit at Ichapuram, Andhra Pradesh."
+        },
+        "depot_arrival":{"date":"2026-04-27","sources":["https://www.deccanherald.com/india/karnataka/bengaluru/bengaluru-metro-yellow-line-gets-10th-train-3983249","https://timesofindia.indiatimes.com/city/bengaluru/namma-metro-pink-line-trials-from-april-28/articleshow/130562356.cms","https://newskarnataka.com/bengaluru/bengaluru-yellow-line-gets-10th-train-ahead-of-launch/30042026"]},
+        "mainline_testing": {
+          "date":"2026-05-30",
+          "sources":["https://www.deccanherald.com/india/karnataka/bengaluru/bmrcl-set-to-induct-10th-yellow-line-train-within-three-days-4021170"],
+          "comments":"Service trials were already underway on or before 2026-05-30. The exact testing start date was not reported."
+        },
+        "revenue_induction":{"date":"2026-06-03","sources":["https://airnews.in/articles/74e41820c1-bmrcl-inducts-two-trains-improves-yellow-line-frequency","https://www.deccanherald.com/india/karnataka/bengaluru/bmrcl-set-to-induct-10th-yellow-line-train-within-three-days-4021170"]}
+      }
     },
     "bmrcl-4rs-dm-ts011": {
       "uid":"37a25f86-8b97-453c-82ca-2916aef41769", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
