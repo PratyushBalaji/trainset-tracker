@@ -144,15 +144,52 @@
     },
     "bmrcl-4rs-dm-ts016": {
       "uid":"1c7cf813-8139-49af-97df-e0c1dcaeb6a7", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-dtg",
-      "trainset_number":"TS016", "manufacturer":"CRRC Nanjing Puzhen", "intended_line":"purple", "operational_line":"green", "milestones":{}
+      "trainset_number":"TS016", "manufacturer":"CRRC Nanjing Puzhen", "intended_line":"purple", "operational_line":"green",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2024-12-20",
+          "sources":["https://www.moneycontrol.com/news/india/prototype-train-for-bengaluru-metro-s-purple-line-shipped-from-china-12894577.html"],
+          "comments":"The CRRC-built prototype had been shipped from Shanghai Port on or before 2024-12-20. The exact shipping date was not reported."
+        },
+        "depot_arrival": {
+          "date":"2025-01-12",
+          "sources":["https://timesofindia.indiatimes.com/city/bengaluru/bmrcl-gets-train-prototype-for-operational-lines/articleshow/117244753.cms","https://indianexpress.com/article/cities/bangalore/prototype-dtg-train-bengaluru-metro-purple-line-arrives-china-9777981/","https://www.moneycontrol.com/news/india/crrc-s-metro-train-prototype-from-china-arrives-for-bengaluru-s-purple-line-12909866.html"],
+          "comments":"The prototype reached Peenya depot on 2025-01-12 and was unloaded on 2025-01-13."
+        },
+        "mainline_testing": {
+          "date":"2025-12-27",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-s-green-line-to-get-full-fleet-of-crrc-trains-existing-rakes-to-move-to-purple-line-13744901.html"],
+          "comments":"RDSO night testing was already underway on or before 2025-12-27 on the Green Line between Jalahalli and Mantri Square-Sampige Road. The exact testing start date was not reported."
+        }
+      }
     },
     "bmrcl-4rs-dm-ts017": {
       "uid":"9404988a-15c2-43a1-9a8e-82d6bd389b36", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-dtg",
-      "trainset_number":"TS017", "manufacturer":"Titagarh Rail Systems", "intended_line":"green", "milestones":{}
+      "trainset_number":"TS017", "manufacturer":"Titagarh Rail Systems", "intended_line":"green",
+      "milestones": {
+        "factory_dispatch":{"date":"2026-02-18","sources":["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-new-train-for-green-line-3922731"]},
+        "depot_arrival": {
+          "date":"2026-03-07",
+          "sources":["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-new-train-for-green-line-3922731"],
+          "comments":"Deccan Herald reported on 2026-03-07 that the trainset had arrived at Peenya depot earlier that week. The exact arrival date is unconfirmed, but was on or before 2026-03-07."
+        }
+      }
     },
     "bmrcl-4rs-dm-ts018": {
       "uid":"deeb6d6f-35e3-4b77-b38b-c6334ec20f88", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-dtg",
-      "trainset_number":"TS018", "manufacturer":"Titagarh Rail Systems", "intended_line":"green", "milestones":{}
+      "trainset_number":"TS018", "manufacturer":"Titagarh Rail Systems", "intended_line":"green",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-03-13",
+          "sources":["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-pink-line-gets-fourth-train-from-beml-3933041"],
+          "comments":"The first three coaches were dispatched on 2026-03-13. The remaining three coaches were dispatched on the night of 2026-03-14."
+        },
+        "depot_arrival": {
+          "date":"2026-04-14",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-to-get-21-dtg-trains-by-q2-2027-induction-from-july-2026-13888451.html"],
+          "comments":"Moneycontrol confirmed by 2026-04-14 that three DTG trainsets, including the CRRC prototype and two Titagarh-built sets, had reached Peenya depot. The exact arrival date of TS018 is unconfirmed, but was on or before 2026-04-14."
+        }
+      }
     },
     "bmrcl-4rs-dm-ts019": {
       "uid":"bbc4c4e6-c2e5-4404-8ff8-ffc567a10664", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-dtg",
@@ -246,7 +283,7 @@
           "comments":"The sixth Pink Line trainset was confirmed delivered on or before 2026-05-22. Moneycontrol also later confirmed that BEML had delivered six Pink Line trainsets by 2026-06-04."
         }
       }
-    }
+    },
     "bmrcl-5rs-dm-ts007": {
       "uid":"222368ed-bfb1-4981-bbac-c0f747a4710a", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
       "trainset_number":"TS007", "manufacturer":"BEML", "intended_line":"blue",
