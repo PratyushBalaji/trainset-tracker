@@ -239,7 +239,16 @@
     },
     "bmrcl-4rs-dm-ts015": {
       "uid":"91823019-a2bb-4559-a372-5f3e28e994d8", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS015", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
+      "trainset_number":"TS015", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-07-16",
+          "sources":["https://x.com/ChristinMP_/status/2077559167871799299","https://www.moneycontrol.com/news/india/bengaluru-metro-likely-to-induct-three-new-green-line-train-sets-by-august-to-ease-rush-13959388.html"],
+          "comments":"TS015 was reported as under dispatch on 2026-07-16. Moneycontrol had earlier reported on 2026-06-26 that the trainset was still undergoing testing at the Titagarh Rail Systems factory."
+        },
+        "depot_arrival":{"date":"2026-07-27","sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-receives-all-15-titagarh-crrc-trains-for-yellow-line-after-prolonged-delays-13984924.html"]},
+        "revenue_induction":{"date":"2026-08-15","sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-inducts-15th-yellow-line-train-plans-6-minute-peak-hour-frequency-14006432.html"]}
+      }
     },
     "bmrcl-4rs-dm-ts016": {
       "uid":"1c7cf813-8139-49af-97df-e0c1dcaeb6a7", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-dtg",
