@@ -151,7 +151,25 @@
     },
     "bmrcl-4rs-dm-ts011": {
       "uid":"37a25f86-8b97-453c-82ca-2916aef41769", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS011", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
+      "trainset_number":"TS011", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-04-13",
+          "sources":["https://x.com/ChristinMP_/status/2043642432039104831","https://bangaloremirror.indiatimes.com/bangalore/others/running-late-still-waiting-for-the-yellow-line-train/articleshow/131298952.cms","https://kannada.oneindia.com/news/bengaluru/rv-road-bommasandra-metro-yellow-line-receives-11th-driverless-rail-total-10-train-operation-soon-453631.html"],
+          "comments":"The exact factory dispatch date is unconfirmed. The trainset was expected to be dispatched on or after 2026-04-13 and by the end of April; later reporting confirmed that it had been dispatched from Titagarh before reaching Hebbagodi depot on 2026-05-10."
+        },
+        "depot_arrival":{"date":"2026-05-10","sources":["https://kannada.oneindia.com/news/bengaluru/rv-road-bommasandra-metro-yellow-line-receives-11th-driverless-rail-total-10-train-operation-soon-453631.html"]},
+        "mainline_testing": {
+          "date":"2026-06-15",
+          "sources":["https://x.com/ChristinMP_/status/2066565199013007761","https://www.deccanherald.com/india/karnataka/bengaluru/bmrcl-set-to-induct-10th-yellow-line-train-within-three-days-4021170"],
+          "comments":"Testing had been completed by 2026-06-15 and the trainset had entered service trials."
+        },
+        "revenue_induction": {
+          "date":"2026-07-22",
+          "sources":["https://x.com/ChristinMP_/status/2079880339862986812"],
+          "comments":"The trainset had been inducted into passenger service on or before 2026-07-22. The exact induction date is unconfirmed."
+        }
+      }
     },
     "bmrcl-4rs-dm-ts012": {
       "uid":"afe322f8-f6d4-4a8d-9894-7832343e48f3", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
