@@ -154,6 +154,18 @@
       "uid":"deeb6d6f-35e3-4b77-b38b-c6334ec20f88", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-dtg",
       "trainset_number":"TS018", "manufacturer":"Titagarh Rail Systems", "intended_line":"green", "milestones":{}
     },
+    "bmrcl-4rs-dm-ts019": {
+      "uid":"bbc4c4e6-c2e5-4404-8ff8-ffc567a10664", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-dtg",
+      "trainset_number":"TS019", "manufacturer":"Titagarh Rail Systems", "intended_line":"green",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-08-12", 
+          "sources":["https://x.com/blrmetrotracker/status/2087447902323196187"],
+          "comments":"Trainset was spotted in Odisha on 2026-08-12, close to the Titagarh Rail Systems factory. The actual factory dispatch date is unconfirmed, but was on or before 2026-08-12."
+        },
+        "depot_arrival": {"date":"2026-08-20","sources":["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-gets-4th-new-trainfor-green-line-4122936","https://x.com/i/status/2091947374268854545","https://www.nativeplanet.com/news/namma-metros-fourth-train-bmrcl-received-its-fourth-train-inspection-process-to-begin-soon-023835.html"]}
+      }
+    },
     "bmrcl-5rs-dm-ts001": {
       "uid":"eb597c35-d408-49ff-9ddd-ed621594d538", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
       "trainset_number":"TS001", "manufacturer":"BEML", "intended_line":"pink",
