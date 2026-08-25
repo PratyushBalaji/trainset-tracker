@@ -217,7 +217,25 @@
     },
     "bmrcl-4rs-dm-ts014": {
       "uid":"6656d5ac-2add-4f0d-a49a-380781a06ee3", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS014", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
+      "trainset_number":"TS014", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-06-26",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-likely-to-induct-three-new-green-line-train-sets-by-august-to-ease-rush-13959388.html","https://newskarnataka.com/bengaluru/more-yellow-line-trains-set-to-improve-namma-metro-frequency/28062026/"],
+          "comments":"TS014 was reported as under dispatch on 2026-06-26. The exact physical departure date from Titagarh is unconfirmed."
+        },
+        "depot_arrival":{"date":"2026-07-09","sources":["https://bangaloremirror.indiatimes.com/bangalore/others/yellow-line-train-fleet-nears-full-strength/articleshow/132469674.cms","https://www.nativeplanet.com/news/bengaluru-metros-14th-train-bengaluru-metros-new-train-will-undergo-testing-after-its-arrival-an-022939.html","https://www.moneycontrol.com/city/bengaluru-metro-yellow-line-gets-14th-train-5-min-peak-hour-frequency-moves-closer-article-13976622.html"]},
+        "mainline_testing": {
+          "date":"2026-07-27",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-receives-all-15-titagarh-crrc-trains-for-yellow-line-after-prolonged-delays-13984924.html"],
+          "comments":"Testing had been completed by 2026-07-27 and TS014 was undergoing mandatory service trials."
+        },
+        "revenue_induction": {
+          "date":"2026-08-15",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-inducts-15th-yellow-line-train-plans-6-minute-peak-hour-frequency-14006432.html"],
+          "comments":"TS014 had been inducted into commercial service on or before 2026-08-15. The exact induction date is unconfirmed."
+        }
+      }
     },
     "bmrcl-4rs-dm-ts015": {
       "uid":"91823019-a2bb-4559-a372-5f3e28e994d8", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
