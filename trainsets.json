@@ -190,11 +190,7 @@
           "sources":["https://x.com/ChristinMP_/status/2066565199013007761","https://www.moneycontrol.com/news/india/bengaluru-metro-likely-to-induct-three-new-green-line-train-sets-by-august-to-ease-rush-13959388.html"],
           "comments":"Testing was in progress on 2026-06-15 and was expected to continue for roughly another 15 days. Moneycontrol independently confirmed on 2026-06-26 that TS012 was undergoing testing at Hebbagodi depot."
         },
-        "revenue_induction": {
-          "date":"2026-07-16",
-          "sources":["https://x.com/ChristinMP_/status/2079880339862986812"],
-          "comments":"TS012 had been inducted into commercial service on or before 2026-07-16 and was subsequently confirmed deployed by 2026-07-22."
-        }
+        "revenue_induction":{"date":"2026-07-16","sources":["https://x.com/ChristinMP_/status/2077559167871799299","https://x.com/ChristinMP_/status/2079880339862986812"]}
       }
     },
     "bmrcl-4rs-dm-ts013": {
