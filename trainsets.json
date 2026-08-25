@@ -199,7 +199,21 @@
     },
     "bmrcl-4rs-dm-ts013": {
       "uid":"180cdac6-bf64-4f1b-8dd3-7db26731a6ce", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS013", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
+      "trainset_number":"TS013", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-06-02",
+          "sources":["https://x.com/ChristinMP_/status/2061672816454607326"],
+          "comments":"TS013 was reported as under dispatch on 2026-06-02. The exact physical departure date from Titagarh is unconfirmed."
+        },
+        "depot_arrival":{"date":"2026-06-15","sources":["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-13th-yellow-line-train-in-bengaluru-4040433","https://metrorailnews.in/titagarh-delivers-13th-train-for-bengaluru-metro/"]},
+        "mainline_testing": {
+          "date":"2026-06-26",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-likely-to-induct-three-new-green-line-train-sets-by-august-to-ease-rush-13959388.html"],
+          "comments":"TS013 was confirmed undergoing testing at Hebbagodi depot on or before 2026-06-26. The exact testing start date was not reported."
+        },
+        "revenue_induction":{"date":"2026-07-27","sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-receives-all-15-titagarh-crrc-trains-for-yellow-line-after-prolonged-delays-13984924.html"]}
+      }
     },
     "bmrcl-4rs-dm-ts014": {
       "uid":"6656d5ac-2add-4f0d-a49a-380781a06ee3", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
