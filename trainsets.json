@@ -173,7 +173,29 @@
     },
     "bmrcl-4rs-dm-ts012": {
       "uid":"afe322f8-f6d4-4a8d-9894-7832343e48f3", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS012", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
+      "trainset_number":"TS012", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-05-20",
+          "sources":["https://x.com/ChristinMP_/status/2061672816454607326"],
+          "comments":"The exact factory dispatch date is unconfirmed. TS012 had not yet reached Hebbagodi depot as of 2026-05-19 and had already arrived and entered static testing by 2026-06-02; dispatch therefore occurred on or after 2026-05-20 and before depot arrival."
+        },
+        "depot_arrival": {
+          "date":"2026-06-02",
+          "sources":["https://x.com/ChristinMP_/status/2061672816454607326"],
+          "comments":"TS012 was confirmed at Hebbagodi depot undergoing static tests on or before 2026-06-02. The exact physical arrival date is unconfirmed."
+        },
+        "mainline_testing": {
+          "date":"2026-06-15",
+          "sources":["https://x.com/ChristinMP_/status/2066565199013007761","https://www.moneycontrol.com/news/india/bengaluru-metro-likely-to-induct-three-new-green-line-train-sets-by-august-to-ease-rush-13959388.html"],
+          "comments":"Testing was in progress on 2026-06-15 and was expected to continue for roughly another 15 days. Moneycontrol independently confirmed on 2026-06-26 that TS012 was undergoing testing at Hebbagodi depot."
+        },
+        "revenue_induction": {
+          "date":"2026-07-16",
+          "sources":["https://x.com/ChristinMP_/status/2079880339862986812"],
+          "comments":"TS012 had been inducted into commercial service on or before 2026-07-16 and was subsequently confirmed deployed by 2026-07-22."
+        }
+      }
     },
     "bmrcl-4rs-dm-ts013": {
       "uid":"180cdac6-bf64-4f1b-8dd3-7db26731a6ce", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
