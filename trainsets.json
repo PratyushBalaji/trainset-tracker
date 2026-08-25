@@ -168,11 +168,7 @@
       "trainset_number":"TS017", "manufacturer":"Titagarh Rail Systems", "intended_line":"green",
       "milestones": {
         "factory_dispatch":{"date":"2026-02-18","sources":["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-new-train-for-green-line-3922731"]},
-        "depot_arrival": {
-          "date":"2026-03-07",
-          "sources":["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-new-train-for-green-line-3922731"],
-          "comments":"Deccan Herald reported on 2026-03-07 that the trainset had arrived at Peenya depot earlier that week. The exact arrival date is unconfirmed, but was on or before 2026-03-07."
-        }
+        "depot_arrival":{"date":"2026-03-04","sources":["https://x.com/ChristinMP_/status/2029366599053131884","https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-new-train-for-green-line-3922731"]}
       }
     },
     "bmrcl-4rs-dm-ts018": {
