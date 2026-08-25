@@ -116,7 +116,20 @@
     },
     "bmrcl-4rs-dm-ts009": {
       "uid":"87fa479c-fffa-48a4-afd0-8841f1d682e8", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
-      "trainset_number":"TS009", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow", "milestones":{}
+      "trainset_number":"TS009", "manufacturer":"Titagarh Rail Systems", "intended_line":"yellow",
+      "milestones": {
+        "depot_arrival": {
+          "date":"2026-04-14",
+          "sources":["https://x.com/ChristinMP_/status/2043642432039104831","https://www.moneycontrol.com/news/india/bengaluru-metro-to-get-21-dtg-trains-by-q2-2027-induction-from-july-2026-13888451.html"],
+          "comments":"The first three coaches had reached Hebbagodi depot by 2026-04-13. The remaining three were expected by the night of 2026-04-14, and Moneycontrol subsequently confirmed that the ninth trainset had been delivered by 2026-04-14."
+        },
+        "mainline_testing": {
+          "date":"2026-04-30",
+          "sources":["https://newskarnataka.com/bengaluru/bengaluru-yellow-line-gets-10th-train-ahead-of-launch/30042026"],
+          "comments":"The ninth trainset was already undergoing trial runs on or before 2026-04-30. The exact testing start date was not reported."
+        },
+        "revenue_induction": {"date":"2026-05-20","sources":["https://x.com/ChristinMP_/status/2057147383256093121","https://www.deccanherald.com/india/karnataka/bengaluru/bmrcl-set-to-induct-10th-yellow-line-train-within-three-days-4021170"]}
+      }
     },
     "bmrcl-4rs-dm-ts010": {
       "uid":"b7280f99-a1f8-4258-b066-1b2035df2f0d", "contract":"bmrcl-4rs-dm", "rolling_stock":"bmrcl-4rs-dm-cbtc",
