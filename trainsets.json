@@ -216,12 +216,37 @@
       }
     },
     "bmrcl-5rs-dm-ts005": {
-      "uid":"96345032-aaea-4bd6-aa7d-ee7d5cb2822e", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "uid":"4a8d6a61-1f4b-4e33-9d0f-df6ceaa1cb7d", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
       "trainset_number":"TS005", "manufacturer":"BEML", "intended_line":"pink",
       "milestones": {
-        "depot_arrival":{"date":"2026-03-23","sources":["https://x.com/i/status/2037138194316308549"]}
+        "factory_dispatch": {
+          "date":"2026-03-22",
+          "sources":[],
+          "comments":"No direct source found for factory dispatch. Inferred from the trainset being confirmed delivered on or before 2026-03-23 and BEML's proximity to Kothanur depot."
+        },
+        "depot_arrival": {
+          "date":"2026-03-23",
+          "sources":["https://x.com/i/status/2037138194316308549","https://www.moneycontrol.com/news/india/beml-to-deliver-2-trainsets-for-bengaluru-s-outer-ring-road-metro-by-may-13870152.html"],
+          "comments":"The fifth Pink Line trainset was confirmed delivered on or before 2026-03-23. Moneycontrol independently confirmed by 2026-03-25 that BEML had delivered five Pink Line trainsets."
+        }
       }
     },
+    "bmrcl-5rs-dm-ts006": {
+      "uid":"9f6f1c0b-3d7e-49c1-98ee-0a1dce9e2c94", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS006", "manufacturer":"BEML", "intended_line":"pink",
+      "milestones": {
+        "factory_dispatch": {
+          "date":"2026-05-21",
+          "sources":[],
+          "comments":"No direct source found for factory dispatch. Inferred from the trainset being confirmed delivered on or before 2026-05-22 and BEML's proximity to Kothanur depot."
+        },
+        "depot_arrival": {
+          "date":"2026-05-22",
+          "sources":["https://x.com/ChristinMP_/status/2057751465041805442","https://www.moneycontrol.com/news/india/beml-delivers-first-train-set-for-bengaluru-s-outer-ring-road-metro-13940838.html"],
+          "comments":"The sixth Pink Line trainset was confirmed delivered on or before 2026-05-22. Moneycontrol also later confirmed that BEML had delivered six Pink Line trainsets by 2026-06-04."
+        }
+      }
+    }
     "bmrcl-5rs-dm-ts007": {
       "uid":"222368ed-bfb1-4981-bbac-c0f747a4710a", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
       "trainset_number":"TS007", "manufacturer":"BEML", "intended_line":"blue",
