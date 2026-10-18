@@ -431,6 +431,61 @@
           "comments":"Moneycontrol reported on 2026-06-26 that BEML had delivered the second Blue Line trainset."
         }
       }
+    },
+    "bmrcl-5rs-dm-ts009": {
+      "uid":"f2040341-a514-44fe-9b47-582d0b69eff1", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS009", "manufacturer":"BEML", "intended_line":"pink",
+      "milestones": {
+        "depot_arrival": {
+          "date":"2026-08-06",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-cmrs-likely-to-inspect-new-green-pink-line-trainsets-from-august-12-14-13996944.html"],
+          "comments":"Provisional contract-wide serial assignment: seventh Pink Line delivery mapped to TS009, following Blue TS007-TS008. Moneycontrol reported eight Pink Line trainsets delivered by 2026-08-06 but did not specify each trainset's identity or actual arrival date. This date means 'on or before'; serial numbering requires verification."
+        }
+      }
+    },
+    "bmrcl-5rs-dm-ts010": {
+      "uid":"10a1e09a-2447-4ab7-bad9-bd6a9ae9586f", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS010", "manufacturer":"BEML", "intended_line":"pink",
+      "milestones": {
+        "depot_arrival": {
+          "date":"2026-08-06",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-cmrs-likely-to-inspect-new-green-pink-line-trainsets-from-august-12-14-13996944.html","https://www.moneycontrol.com/news/india/bengaluru-metro-s-pink-line-krishna-byre-gowda-says-ready-for-september-launch-tejasvi-surya-expects-safety-nods-in-15-days-14021021.html"],
+          "comments":"Provisional contract-wide serial assignment: eighth Pink Line delivery mapped to TS010, following Blue TS007-TS008. Moneycontrol reported eight Pink Line trainsets delivered by 2026-08-06 (still eight on 2026-09-02). Actual arrival date and serial number are unconfirmed. Date means 'on or before'."
+        }
+      }
+    },
+    "bmrcl-5rs-dm-ts011": {
+      "uid":"3042c1f5-325c-40ab-9944-c44bc6f60e23", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS011", "manufacturer":"BEML", "intended_line":"pink",
+      "milestones": {
+        "depot_arrival": {
+          "date":"2026-09-10",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-s-pink-line-krishna-byre-gowda-says-ready-for-september-launch-tejasvi-surya-expects-safety-nods-in-15-days-14021021.html","https://x.com/Amey777/status/2097200351690797494","https://x.com/blrmetrotracker/status/2098061892627661043","https://x.com/ever_pessimist/status/2102624856584163583"],
+          "comments":"Provisional contract-wide serial assignment: ninth Pink Line delivery mapped to TS011. Eight were reported delivered on 2026-09-02; a possible ninth-train sighting was reported on 2026-09-08, and nine were confirmed by 2026-09-10 (IST). Actual arrival date and serial number are unconfirmed. X references to 'TS9' may denote Pink Line delivery order."
+        }
+      }
+    },
+    "bmrcl-5rs-dm-ts012": {
+      "uid":"00025805-6d64-489b-96b3-c420c9f850ef", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS012", "manufacturer":"BEML", "intended_line":"pink",
+      "milestones": {
+        "depot_arrival": {
+          "date":"2026-10-01",
+          "sources":["https://x.com/ever_pessimist/status/2102624856584163583","https://x.com/pradeep_c_k/status/2104447045096648917","https://x.com/blrmetrotracker/status/2105503289957859799","https://www.moneycontrol.com/news/india/bengaluru-metro-to-cross-100-km-as-pink-line-cmrs-inspection-likely-from-october-6-8-14042953.html"],
+          "comments":"Provisional contract-wide serial assignment: tenth Pink Line delivery mapped to TS012. Nine trains were reported delivered on 2026-09-23; possible sighting on 2026-09-28; BLR Metro Tracker confirmed the tenth train delivered on 2026-10-01 IST. Its 'TS10' label may reflect Pink Line delivery order. Exact physical arrival date and contract-wide serial number are unconfirmed."
+        }
+      }
+    },
+    "bmrcl-5rs-dm-ts013": {
+      "uid":"f9d65899-5eea-4a00-bc87-07c3bbba903c", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
+      "trainset_number":"TS013", "manufacturer":"BEML", "intended_line":"pink",
+      "milestones": {
+        "depot_arrival": {
+          "date":"2026-10-15",
+          "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-to-cross-100-km-as-pink-line-cmrs-inspection-likely-from-october-6-8-14042953.html","https://www.moneycontrol.com/news/india/bengaluru-metro-s-pink-line-underground-orr-sections-likely-to-see-trial-runs-from-november-14052988.html"],
+          "comments":"Provisional contract-wide serial assignment: eleventh Pink Line delivery mapped to TS013. Moneycontrol reported ten Pink Line trainsets by 2026-10-01 and eleven by 2026-10-15. Delivery occurred after the earlier tally and no later than 2026-10-15; the exact physical arrival date and serial number remain unconfirmed."
+        }
+      }
     }
   }
 }
