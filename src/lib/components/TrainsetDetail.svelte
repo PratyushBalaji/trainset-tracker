@@ -298,4 +298,10 @@
       grid-template-columns: 1fr;
     }
   }
+
+  @media (max-width: 820px) {
+    .detail-panel {
+      max-height: 360px;
+    }
+  }
 </style>

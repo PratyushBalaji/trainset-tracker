@@ -8,11 +8,12 @@
     trainset: DatedTrainset;
     hiddenFromChart: boolean;
     selected: boolean;
+    compact?: boolean;
     onSelect: (id: string) => void;
     onToggleChartVisibility: (id: string) => void;
   }
 
-  let { trainset, hiddenFromChart, selected, onSelect, onToggleChartVisibility }: Props = $props();
+  let { trainset, hiddenFromChart, selected, compact = false, onSelect, onToggleChartVisibility }: Props = $props();
 
   let lineColor = $derived(lineColors[trainset.displayLine] ?? '#6f786f');
   let stageColor = $derived(stageColors[trainset.currentStage.id]);
@@ -24,6 +25,7 @@
 <article
   class:hidden-from-chart={hiddenFromChart}
   class:selected
+  class:compact
   class={`trainset-card stage-${trainset.currentStage.id}`}
   style={`--line-color: ${lineColor}; --stage-color: ${stageColor.color}; --stage-soft: ${stageColor.softColor}; --stage-text: ${stageColor.textColor}`}
 >
@@ -32,11 +34,16 @@
       class="select-button"
       type="button"
       aria-pressed={selected}
-      aria-label={`Show details for ${trainset.trainsetNumber}`}
+      aria-label={`Show details for ${trainset.trainsetNumber}, ${trainset.lineSummary}, ${trainset.currentStage.label}`}
+      title={`${trainset.lineSummary} - ${trainset.currentStage.label}`}
       onclick={() => onSelect(trainset.id)}
     >
       <span class="train-number"><TrainFront size={15} strokeWidth={2.2} /> {trainset.trainsetNumber}</span>
-      <span class="line-chip">{trainset.lineSummary}</span>
+      {#if compact}
+        <span class="stage-dot" aria-hidden="true"></span>
+      {:else}
+        <span class="line-chip">{trainset.lineSummary}</span>
+      {/if}
     </button>
 
     <button
@@ -55,6 +62,7 @@
     </button>
   </div>
 
+  {#if !compact}
   <button class="card-body" type="button" onclick={() => onSelect(trainset.id)}>
     <span class="manufacturer">{trainset.manufacturer}</span>
 
@@ -68,9 +76,28 @@
       <span>{sourceCount} sources</span>
     </span>
   </button>
+  {/if}
 </article>
 
 <style>
+  .trainset-card.compact {
+    min-height: 42px;
+    padding: 6px 8px;
+    gap: 0;
+    box-shadow: none;
+  }
+
+  .compact .select-button {
+    display: flex;
+    justify-content: space-between;
+    min-height: 28px;
+    padding-right: 5px;
+  }
+
+  .compact .stage-dot {
+    flex: 0 0 9px;
+  }
+
   .trainset-card {
     display: grid;
     gap: 5px;

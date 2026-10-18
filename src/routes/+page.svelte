@@ -223,7 +223,7 @@
       <p>Metro Central pilot</p>
       <h1>Namma Metro Trainset Tracker</h1>
     </div>
-    <div class="schema-chip">JSON schema {timelineBounds.start.slice(0, 4)}-{timelineBounds.end.slice(0, 4)}</div>
+    <a class="schema-chip" href="https://github.com/PratyushBalaji/trainset-tracker/blob/main/trainsets.json" target="_blank" rel="noreferrer">JSON schema {timelineBounds.start.slice(0, 4)}-{timelineBounds.end.slice(0, 4)}</a>
   </header>
 
   <section class:filters-collapsed={filtersCollapsed} class="workspace" aria-label="Trainset tracker controls and cards">
@@ -386,6 +386,7 @@
                 <TrainsetCard
                   {trainset}
                   hiddenFromChart={false}
+                  compact={Boolean(selectedTrainset)}
                   selected={selectedTrainset?.id === trainset.id}
                   onSelect={selectTrainset}
                   onToggleChartVisibility={toggleTrainsetChartVisibility}
@@ -395,24 +396,25 @@
           </div>
 
           {#if hiddenCardTrainsets.length > 0}
-            <section class="hidden-card-section" aria-label="Hidden trainsets">
-              <div class="hidden-card-heading">
+            <details class="hidden-card-section">
+              <summary class="hidden-card-heading">
                 <h3>Hidden from chart</h3>
                 <span>{hiddenCardTrainsets.length}</span>
-              </div>
+              </summary>
 
               <div class="cards-grid hidden-cards-grid">
                 {#each hiddenCardTrainsets as trainset}
                   <TrainsetCard
                     {trainset}
                     hiddenFromChart={true}
+                    compact={Boolean(selectedTrainset)}
                     selected={selectedTrainset?.id === trainset.id}
                     onSelect={selectTrainset}
                     onToggleChartVisibility={toggleTrainsetChartVisibility}
                   />
                 {/each}
               </div>
-            </section>
+            </details>
           {/if}
         </div>
 
@@ -439,7 +441,8 @@
   .tracker-page {
     min-height: 100vh;
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto;
+    align-content: start;
   }
 
   .project-header {
@@ -472,6 +475,7 @@
   }
 
   .schema-chip {
+    text-decoration: none;
     flex: 0 0 auto;
     padding: 7px 9px;
     border: 1px solid #d8ded4;
@@ -483,6 +487,7 @@
   }
 
   .workspace {
+    height: clamp(320px, 60vh, 640px);
     display: grid;
     grid-template-columns: minmax(222px, 268px) minmax(0, 1fr);
     gap: 16px;
@@ -759,11 +764,17 @@
     gap: 14px;
     align-items: start;
     min-height: 0;
+    height: 100%;
     overflow: hidden;
   }
 
   .cards-and-detail.with-detail {
     grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  }
+
+  .with-detail .cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    gap: 6px;
   }
 
   .cards-grid {
@@ -779,19 +790,19 @@
     align-content: start;
     gap: 12px;
     max-height: 100%;
+    min-height: 0;
     min-width: 0;
     overflow: auto;
     padding-right: 2px;
   }
 
   .hidden-card-section {
-    display: grid;
-    gap: 8px;
     padding-top: 12px;
     border-top: 1px solid #d8ded4;
   }
 
   .hidden-card-heading {
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -805,6 +816,20 @@
   .hidden-card-heading h3 {
     margin: 0;
     font-size: inherit;
+  }
+
+  .hidden-card-heading h3::before {
+    content: '+';
+    display: inline-block;
+    width: 16px;
+  }
+
+  .hidden-card-section[open] .hidden-card-heading h3::before {
+    content: '-';
+  }
+
+  .hidden-cards-grid {
+    margin-top: 8px;
   }
 
   .hidden-card-heading span {
@@ -830,8 +855,7 @@
 
   @media (max-width: 1100px) {
     .cards-and-detail.with-detail {
-      grid-template-columns: 1fr;
-      overflow: auto;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
     }
   }
 
@@ -848,8 +872,17 @@
     }
 
     .workspace {
+      height: auto;
       grid-template-columns: 1fr;
       overflow: visible;
+    }
+
+    .cards-and-detail.with-detail {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .with-detail .cards-stack {
+      max-height: 220px;
     }
 
     .workspace.filters-collapsed {
