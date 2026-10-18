@@ -312,6 +312,10 @@
           "sources":[
             "https://x.com/blrmetrotracker/status/2093570928173355270"
           ]
+        },
+        "depot_arrival": {
+          "date":"2026-09-06",
+          "sources":["https://x.com/blrmetrotracker/status/2096591363307626998"]
         }
       }
     },
