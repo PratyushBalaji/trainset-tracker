@@ -486,6 +486,13 @@
     font-weight: 720;
   }
 
+  .schema-chip:hover,
+  .schema-chip:focus-visible {
+    color: #0b5fe8;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
   .workspace {
     height: clamp(320px, 60vh, 640px);
     display: grid;
