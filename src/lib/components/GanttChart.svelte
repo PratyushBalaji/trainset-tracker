@@ -74,6 +74,9 @@
   }
 
   function segmentTitle(trainset: DatedTrainset, segment: TimelineSegment): string {
+    if (segment.id === 'manufacturing-window') {
+      return `${trainset.trainsetNumber} - Inferred pre-dispatch window: illustrative 70-day lead-in to factory dispatch on ${formatDate(segment.end)} (clipped to chart range). Actual manufacturing dates are not recorded; no sources establish this window.`;
+    }
     const sourceCount = segment.sourceMilestones.reduce(
       (count, milestone) => count + milestone.sources.length,
       0
@@ -243,8 +246,8 @@
 
       <div class="timeline-rows">
         {#each trainsets as trainset}
-          <div class:selected={selectedId === trainset.id} class="timeline-row">
-            <div class="row-label" style={`--line-color: ${lineColors[trainset.displayLine] ?? '#6f786f'}`}>
+          <div class:selected={selectedId === trainset.id} class="timeline-row" style={`--line-color: ${lineColors[trainset.displayLine] ?? '#6f786f'}`}>
+            <div class="row-label">
               <button
                 class="row-select-button"
                 type="button"
@@ -522,8 +525,9 @@
     padding: var(--plot-pad-y) 0;
   }
 
-  .timeline-row.selected {
-    background: #f8f4ea;
+  .timeline-row.selected,
+  .timeline-row:hover {
+    background: color-mix(in srgb, var(--line-color) 10%, #fffdfa);
   }
 
   .row-label {
@@ -535,8 +539,9 @@
     background: #fffdfa;
   }
 
-  .timeline-row.selected .row-label {
-    background: color-mix(in srgb, var(--line-color) 10%, #fffdfa);
+  .timeline-row.selected .row-label,
+  .timeline-row:hover .row-label {
+    background: transparent;
   }
 
   .row-select-button,
@@ -557,8 +562,12 @@
 
   .row-select-button:hover,
   .row-select-button:focus-visible {
-    background: color-mix(in srgb, var(--line-color) 12%, #ffffff);
-    outline: none;
+    background: transparent;
+  }
+
+  .row-select-button:focus-visible {
+    outline: 2px solid var(--line-color);
+    outline-offset: -2px;
   }
 
   .row-select-button strong {
@@ -603,7 +612,8 @@
   .lane {
     position: relative;
     min-width: 0;
-    height: 30px;
+    min-height: 30px;
+    align-self: stretch;
     border-left: 1px solid #e3e7df;
   }
 
@@ -626,7 +636,8 @@
 
   .segment {
     position: absolute;
-    top: 6px;
+    top: 50%;
+    transform: translateY(-50%);
     z-index: 2;
     display: block;
     min-width: 8px;
@@ -639,7 +650,6 @@
     transition:
       opacity 120ms ease,
       filter 120ms ease,
-      top 120ms ease,
       height 120ms ease,
       box-shadow 120ms ease;
   }
@@ -650,7 +660,6 @@
   }
 
   .segment.phase-highlighted {
-    top: 5px;
     z-index: 4;
     height: 20px;
     opacity: 1;
@@ -660,7 +669,6 @@
 
   .segment:hover,
   .segment:focus-visible {
-    top: 4px;
     height: 22px;
     outline: 2px solid #26342e;
     outline-offset: 1px;

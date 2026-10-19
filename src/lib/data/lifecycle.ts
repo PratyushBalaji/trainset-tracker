@@ -166,7 +166,7 @@ export function buildTimelineSegments(
       label: 'Pre-dispatch window',
       start: maxIsoDate(chartStart, addDays(factoryDispatch.date, -70)),
       end: factoryDispatch.date,
-      sourceMilestones: [factoryDispatch],
+      sourceMilestones: [],
       derived: true
     });
   }

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
-  import { CalendarDays, Eye, Filter, PanelLeftClose, PanelLeftOpen, Pause, Play, RotateCcw } from '@lucide/svelte';
+  import { CalendarDays, ChevronDown, Eye, Filter, Minus, PanelLeftClose, PanelLeftOpen, Pause, Play, RotateCcw } from '@lucide/svelte';
   import GanttChart from '$lib/components/GanttChart.svelte';
   import TrainsetCard from '$lib/components/TrainsetCard.svelte';
   import TrainsetDetail from '$lib/components/TrainsetDetail.svelte';
@@ -168,9 +168,6 @@
       selectedManufacturers.has(trainset.manufacturer) &&
       trainset.lineKeys.some((line) => selectedLines.has(line))
   ));
-  let hiddenChartFilteredCount = $derived(
-    filteredTrainsets.filter((trainset) => hiddenChartTrainsetIds.has(trainset.id)).length
-  );
   let visibleCardTrainsets = $derived(
     filteredTrainsets.filter((trainset) => !hiddenChartTrainsetIds.has(trainset.id))
   );
@@ -310,8 +307,12 @@
             <p class="date-readout">{selectedDateReadout}</p>
           </div>
 
-          <div class="filter-group">
-            <h2>Stage</h2>
+          <details class="filter-group filter-accordion">
+            <summary>
+              <ChevronDown size={15} />
+              <span>Stage<small>{selectedStages.size === stageDefinitions.length ? 'All selected' : `${selectedStages.size} of ${stageDefinitions.length} selected`}</small></span>
+            </summary>
+            <div class="filter-options">
             {#each stageDefinitions as stage}
               <label class:muted={(stageCounts.get(stage.id) ?? 0) === 0}>
                 <input
@@ -323,10 +324,15 @@
                 <em>{stageCounts.get(stage.id) ?? 0}</em>
               </label>
             {/each}
-          </div>
+            </div>
+          </details>
 
-          <div class="filter-group">
-            <h2>Manufacturer</h2>
+          <details class="filter-group filter-accordion">
+            <summary>
+              <ChevronDown size={15} />
+              <span>Manufacturer<small>{selectedManufacturers.size === manufacturerOptions.length ? 'All selected' : `${selectedManufacturers.size} of ${manufacturerOptions.length} selected`}</small></span>
+            </summary>
+            <div class="filter-options">
             {#each manufacturerOptions as manufacturer}
               <label>
                 <input
@@ -339,10 +345,15 @@
                 <em>{manufacturerCounts.get(manufacturer) ?? 0}</em>
               </label>
             {/each}
-          </div>
+            </div>
+          </details>
 
-          <div class="filter-group">
-            <h2>Metro line</h2>
+          <details class="filter-group filter-accordion">
+            <summary>
+              <ChevronDown size={15} />
+              <span>Metro line<small>{selectedLines.size === lineOptions.length ? 'All selected' : `${selectedLines.size} of ${lineOptions.length} selected`}</small></span>
+            </summary>
+            <div class="filter-options">
             {#each lineOptions as line}
               <label>
                 <input
@@ -354,7 +365,8 @@
                 <em>{lineCounts.get(line) ?? 0}</em>
               </label>
             {/each}
-          </div>
+            </div>
+          </details>
         </div>
       {/if}
     </aside>
@@ -366,16 +378,38 @@
           <h2>Fleet status at {selectedDateReadout}</h2>
         </div>
 
-        {#if hiddenChartFilteredCount > 0}
-          <button class="show-hidden-button" type="button" onclick={showAllChartTrainsets}>
-            <Eye size={15} />
-            Show {hiddenChartFilteredCount} in chart
-          </button>
-        {/if}
       </div>
 
       <div class:with-detail={Boolean(selectedTrainset)} class="cards-and-detail">
         <div class="cards-stack">
+          {#if hiddenCardTrainsets.length > 0}
+            <details class="hidden-card-section">
+              <summary class="hidden-card-heading">
+                <ChevronDown size={15} class="hidden-expand-icon" />
+                <Minus size={15} class="hidden-collapse-icon" />
+                <h3>Hidden from chart</h3>
+                <span class="hidden-expand-label">Show {hiddenCardTrainsets.length} hidden</span>
+                <span class="hidden-collapse-label">{hiddenCardTrainsets.length} hidden</span>
+              </summary>
+              <div class="hidden-actions">
+                <button class="show-hidden-button" type="button" onclick={showAllChartTrainsets}>
+                  <Eye size={15} /> Restore all to chart
+                </button>
+              </div>
+              <div class="cards-grid hidden-cards-grid">
+                {#each hiddenCardTrainsets as trainset}
+                  <TrainsetCard
+                    {trainset}
+                    hiddenFromChart={true}
+                    compact={Boolean(selectedTrainset)}
+                    selected={selectedTrainset?.id === trainset.id}
+                    onSelect={selectTrainset}
+                    onToggleChartVisibility={toggleTrainsetChartVisibility}
+                  />
+                {/each}
+              </div>
+            </details>
+          {/if}
           <div class="cards-grid">
             {#if filteredTrainsets.length === 0}
               <div class="empty-state">No trainsets match the current filters.</div>
@@ -395,27 +429,6 @@
             {/if}
           </div>
 
-          {#if hiddenCardTrainsets.length > 0}
-            <details class="hidden-card-section">
-              <summary class="hidden-card-heading">
-                <h3>Hidden from chart</h3>
-                <span>{hiddenCardTrainsets.length}</span>
-              </summary>
-
-              <div class="cards-grid hidden-cards-grid">
-                {#each hiddenCardTrainsets as trainset}
-                  <TrainsetCard
-                    {trainset}
-                    hiddenFromChart={true}
-                    compact={Boolean(selectedTrainset)}
-                    selected={selectedTrainset?.id === trainset.id}
-                    onSelect={selectTrainset}
-                    onToggleChartVisibility={toggleTrainsetChartVisibility}
-                  />
-                {/each}
-              </div>
-            </details>
-          {/if}
         </div>
 
         {#if selectedTrainset}
@@ -587,11 +600,53 @@
     gap: 7px;
   }
 
-  .filter-group h2 {
-    margin: 0;
-    color: #536055;
-    font-size: 0.74rem;
-    text-transform: uppercase;
+  .filter-accordion {
+    border-top: 1px solid #e3e7df;
+    padding-top: 8px;
+  }
+
+  .filter-accordion summary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
+    cursor: pointer;
+    color: #26342e;
+    font-size: 0.8rem;
+    font-weight: 760;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .filter-accordion summary :global(svg) {
+    flex-shrink: 0;
+    transform: rotate(-90deg);
+  }
+
+  .filter-accordion[open] summary :global(svg) {
+    transform: rotate(0);
+  }
+
+  .filter-accordion small {
+    display: block;
+    margin-top: 2px;
+    color: #687267;
+    font-size: 0.68rem;
+    font-weight: 400;
+  }
+
+  .filter-options {
+    display: grid;
+    gap: 7px;
+    padding-top: 8px;
+  }
+
+  summary:focus-visible {
+    outline: 2px solid #26342e;
+    outline-offset: 2px;
   }
 
   .date-label {
@@ -804,13 +859,14 @@
   }
 
   .hidden-card-section {
-    padding-top: 12px;
-    border-top: 1px solid #d8ded4;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d8ded4;
   }
 
   .hidden-card-heading {
     cursor: pointer;
-    display: flex;
+    display: grid;
+    grid-template-columns: 15px minmax(0, 1fr) auto;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
@@ -818,6 +874,8 @@
     font-size: 0.74rem;
     font-weight: 820;
     text-transform: uppercase;
+    min-height: 32px;
+    list-style: none;
   }
 
   .hidden-card-heading h3 {
@@ -825,14 +883,22 @@
     font-size: inherit;
   }
 
-  .hidden-card-heading h3::before {
-    content: '+';
-    display: inline-block;
-    width: 16px;
+  .hidden-card-heading .hidden-collapse-label,
+  .hidden-card-heading :global(.hidden-collapse-icon),
+  .hidden-card-section[open] .hidden-expand-label,
+  .hidden-card-section[open] :global(.hidden-expand-icon) {
+    display: none;
   }
 
-  .hidden-card-section[open] .hidden-card-heading h3::before {
-    content: '-';
+  .hidden-card-section[open] .hidden-collapse-label,
+  .hidden-card-section[open] :global(.hidden-collapse-icon) {
+    display: inline;
+  }
+
+  .hidden-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
   }
 
   .hidden-cards-grid {
@@ -840,14 +906,9 @@
   }
 
   .hidden-card-heading span {
-    display: inline-grid;
-    min-width: 24px;
-    height: 22px;
-    place-items: center;
-    border: 1px solid #d8ded4;
-    border-radius: 999px;
-    background: #fffdfa;
-    color: #536055;
+    color: #26342e;
+    text-transform: none;
+    font-size: 0.76rem;
   }
 
   .empty-state {
