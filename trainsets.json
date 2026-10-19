@@ -276,7 +276,12 @@
       "trainset_number":"TS017", "manufacturer":"Titagarh Rail Systems", "intended_line":"green",
       "milestones": {
         "factory_dispatch":{"date":"2026-02-18","sources":["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-new-train-for-green-line-3922731"]},
-        "depot_arrival":{"date":"2026-03-04","sources":["https://x.com/ChristinMP_/status/2029366599053131884","https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-new-train-for-green-line-3922731"]}
+        "depot_arrival":{"date":"2026-03-04","sources":["https://x.com/ChristinMP_/status/2029366599053131884","https://www.deccanherald.com/india/karnataka/bengaluru/namma-metro-receives-new-train-for-green-line-3922731"]},
+        "revenue_induction": {
+          "date":"2026-09-25",
+          "sources":["https://x.com/blrmetrotracker/status/2103458495202996439"],
+          "comments":"Inducted on or before 2026-09-25. The exact induction date is unconfirmed."
+        }
       }
     },
     "bmrcl-4rs-dm-ts018": {
@@ -292,6 +297,11 @@
           "date":"2026-04-14",
           "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-to-get-21-dtg-trains-by-q2-2027-induction-from-july-2026-13888451.html"],
           "comments":"Moneycontrol confirmed by 2026-04-14 that three DTG trainsets, including the CRRC prototype and two Titagarh-built sets, had reached Peenya depot. The exact arrival date of TS018 is unconfirmed, but was on or before 2026-04-14."
+        },
+        "revenue_induction": {
+          "date":"2026-10-02",
+          "sources":["https://x.com/ChristinMP_/status/2106022472449695790"],
+          "comments":"Three DTG trains were in service by 2026-10-02. The third was likely TS018 given its earlier delivery, but its identity and exact induction date are unconfirmed."
         }
       }
     },
@@ -320,6 +330,52 @@
         "depot_arrival": {
           "date":"2026-09-06",
           "sources":["https://x.com/blrmetrotracker/status/2096591363307626998"]
+        }
+      }
+    },
+    "bmrcl-4rs-dm-ts021": {
+      "uid": "c5c5f834-8dbf-49e5-9d24-54b893fe135f",
+      "contract": "bmrcl-4rs-dm",
+      "rolling_stock": "bmrcl-4rs-dm-dtg",
+      "trainset_number": "TS021",
+      "manufacturer": "Titagarh Rail Systems",
+      "intended_line": "green",
+      "milestones": {
+        "factory_dispatch": {
+          "date": "2026-09-15",
+          "sources": [
+            "https://x.com/blrmetrotracker/status/2103335065510129850"
+          ],
+          "comments": "Approximate dispatch date, based on the 2026-09-25 report that the train left Titagarh around ten days earlier."
+        },
+        "depot_arrival": {
+          "date": "2026-09-25",
+          "sources": [
+            "https://x.com/blrmetrotracker/status/2103335065510129850"
+          ]
+        }
+      }
+    },
+    "bmrcl-4rs-dm-ts022": {
+      "uid": "7d9a2e69-1f93-4a77-b282-f03ac7d306d2",
+      "contract": "bmrcl-4rs-dm",
+      "rolling_stock": "bmrcl-4rs-dm-dtg",
+      "trainset_number": "TS022",
+      "manufacturer": "Titagarh Rail Systems",
+      "intended_line": "green",
+      "milestones": {
+        "factory_dispatch": {
+          "date": "2026-10-09",
+          "sources": [
+            "https://x.com/blrmetrotracker/status/2108482608141349087",
+            "https://x.com/blrmetrotracker/status/2112187678083219478"
+          ]
+        },
+        "depot_arrival": {
+          "date": "2026-10-19",
+          "sources": [
+            "https://x.com/blrmetrotracker/status/2112187678083219478"
+          ]
         }
       }
     },
