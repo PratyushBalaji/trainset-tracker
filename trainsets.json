@@ -374,8 +374,10 @@
         "depot_arrival": {
           "date": "2026-10-19",
           "sources": [
-            "https://x.com/blrmetrotracker/status/2112187678083219478"
-          ]
+            "https://x.com/blrmetrotracker/status/2112187678083219478",
+            "https://x.com/blrmetrotracker/status/2112453858823913607"
+          ],
+          "comments": "TS022 was reported delivered to Peenya depot by 2026-10-19; unloading was documented on 2026-10-20 IST."
         }
       }
     },
