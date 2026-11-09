@@ -471,7 +471,16 @@
           "sources":[],
           "comments":"No direct source found for factory dispatch. Inferred from the complete trainset arriving at Byappanahalli depot on 2026-06-04 and BEML's proximity to the depot."
         },
-        "depot_arrival":{"date":"2026-06-04","sources":["https://www.moneycontrol.com/news/india/beml-delivers-first-train-set-for-bengaluru-s-outer-ring-road-metro-13940838.html","https://tv9kannada.com/karnataka/bengaluru-rural/silk-board-to-kempegowda-airport-metro-blue-line-update-first-train-arrives-in-bengaluru-1195022.html"]}
+        "depot_arrival":{"date":"2026-06-04","sources":["https://www.moneycontrol.com/news/india/beml-delivers-first-train-set-for-bengaluru-s-outer-ring-road-metro-13940838.html","https://tv9kannada.com/karnataka/bengaluru-rural/silk-board-to-kempegowda-airport-metro-blue-line-update-first-train-arrives-in-bengaluru-1195022.html"]},
+        "mainline_testing": {
+          "date":"2026-11-07",
+          "sources":[
+            "https://x.com/ChristinMP_/status/2119707086259192083",
+            "https://x.com/ChristinMP_/status/2118997665010901157",
+            "https://x.com/ChristinMP_/status/2119014498313069017",
+            "https://x.com/blrmetrotracker/status/2118992949136728393"
+          ]
+        }
       }
     },
     "bmrcl-5rs-dm-ts008": {
@@ -487,6 +496,15 @@
           "date":"2026-06-26",
           "sources":["https://www.moneycontrol.com/news/india/bengaluru-metro-likely-to-induct-three-new-green-line-train-sets-by-august-to-ease-rush-13959388.html"],
           "comments":"Moneycontrol reported on 2026-06-26 that BEML had delivered the second Blue Line trainset."
+        },
+        "mainline_testing": {
+          "date":"2026-11-07",
+          "sources":[
+            "https://x.com/ChristinMP_/status/2119707086259192083",
+            "https://x.com/ChristinMP_/status/2118997665010901157",
+            "https://x.com/ChristinMP_/status/2119014498313069017",
+            "https://x.com/blrmetrotracker/status/2118992949136728393"
+          ]
         }
       }
     },
