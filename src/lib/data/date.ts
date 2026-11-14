@@ -10,9 +10,13 @@ export function toIsoDate(date: Date = new Date()): string {
 }
 
 export function todayIsoDate(date: Date = new Date()): string {
-  const year = date.getFullYear();
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const day = `${date.getDate()}`.padStart(2, '0');
+  const parts = new Intl.DateTimeFormat('en', {
+    timeZone: 'Asia/Kolkata',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(date);
+  const { year, month, day } = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
   return `${year}-${month}-${day}`;
 }
 
