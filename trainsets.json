@@ -381,6 +381,57 @@
         }
       }
     },
+    "bmrcl-4rs-dm-ts023": {
+      "uid": "d0bb4e13-77dc-46cd-b56a-248145091633",
+      "contract": "bmrcl-4rs-dm",
+      "rolling_stock": "bmrcl-4rs-dm-dtg",
+      "trainset_number": "TS023",
+      "manufacturer": "Titagarh Rail Systems",
+      "intended_line": "green",
+      "milestones": {
+        "depot_arrival": {
+          "date": "2026-11-16",
+          "sources": [
+            "https://x.com/blrmetrotracker/status/2122299059025461261"
+          ],
+          "comments": "Reported delivered to Peenya depot on or before 2026-11-16. The exact arrival date is unconfirmed."
+        }
+      }
+    },
+    "bmrcl-4rs-dm-ts024": {
+      "uid": "3462a067-8eae-4501-82f5-ad1283db8c81",
+      "contract": "bmrcl-4rs-dm",
+      "rolling_stock": "bmrcl-4rs-dm-dtg",
+      "trainset_number": "TS024",
+      "manufacturer": "Titagarh Rail Systems",
+      "intended_line": "green",
+      "milestones": {
+        "depot_arrival": {
+          "date": "2026-11-20",
+          "sources": [
+            "https://www.moneycontrol.com/news/india/bengaluru-metro-seeks-nod-to-begin-trial-runs-for-pink-line-underground-stretch-14085655.html"
+          ],
+          "comments": "Provisional TS024 assignment from the reported total of ten DTG trainsets. Delivered on or before 2026-11-20; exact arrival date and physical identity are unconfirmed."
+        }
+      }
+    },
+    "bmrcl-4rs-dm-ts025": {
+      "uid": "c4acd703-9ee3-4990-8d4f-5ea39b0e4848",
+      "contract": "bmrcl-4rs-dm",
+      "rolling_stock": "bmrcl-4rs-dm-dtg",
+      "trainset_number": "TS025",
+      "manufacturer": "Titagarh Rail Systems",
+      "intended_line": "green",
+      "milestones": {
+        "depot_arrival": {
+          "date": "2026-11-20",
+          "sources": [
+            "https://www.moneycontrol.com/news/india/bengaluru-metro-seeks-nod-to-begin-trial-runs-for-pink-line-underground-stretch-14085655.html"
+          ],
+          "comments": "Provisional TS025 assignment from the reported total of ten DTG trainsets. Delivered on or before 2026-11-20; exact arrival date and physical identity are unconfirmed."
+        }
+      }
+    },
     "bmrcl-5rs-dm-ts001": {
       "uid":"eb597c35-d408-49ff-9ddd-ed621594d538", "contract":"bmrcl-5rs-dm", "rolling_stock":"bmrcl-5rs-dm",
       "trainset_number":"TS001", "manufacturer":"BEML", "intended_line":"pink",
@@ -515,6 +566,7 @@
         "mainline_testing": {
           "date":"2026-11-07",
           "sources":[
+            "https://www.moneycontrol.com/news/india/bengaluru-metro-blue-line-train-reaches-outer-ring-road-as-trial-runs-begin-14076338.html",
             "https://x.com/ChristinMP_/status/2119707086259192083",
             "https://x.com/ChristinMP_/status/2118997665010901157",
             "https://x.com/ChristinMP_/status/2119014498313069017",
@@ -540,6 +592,7 @@
         "mainline_testing": {
           "date":"2026-11-07",
           "sources":[
+            "https://www.moneycontrol.com/news/india/bengaluru-metro-blue-line-train-reaches-outer-ring-road-as-trial-runs-begin-14076338.html",
             "https://x.com/ChristinMP_/status/2119707086259192083",
             "https://x.com/ChristinMP_/status/2118997665010901157",
             "https://x.com/ChristinMP_/status/2119014498313069017",
