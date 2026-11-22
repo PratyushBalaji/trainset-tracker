@@ -196,7 +196,7 @@ test('delay story counts missed opening targets only while reviewed target text 
   assert.equal(story.missed, 7);
   const edited = yellow.map((m) => m.id === 'feb2024-target' ? { ...m, revised_target: 'March 2024' } : m);
   assert.equal(buildDelayStory('yellow', edited, '2026-11-22').targets.some((t) => t.milestoneId === 'feb2024-target'), false);
-  assert.equal(buildDelayStory('green', [], '2026-11-22'), null);
+  assert.equal(buildDelayStory('purple', [], '2026-11-22'), null);
   assert.equal(monthsBetween('2022-12-31', '2025-08-11'), 32);
 });
 

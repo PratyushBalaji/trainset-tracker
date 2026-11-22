@@ -11,6 +11,7 @@
   import { resolvedTrainsets } from '$lib/data/resolve';
   import { formatDate, todayIsoDate } from '$lib/data/date';
   import { buildLineTimeline } from '$lib/data/line-timeline';
+  import { visibleMilestones } from '$lib/data/timeline-curation';
   import { buildDelayStory, monthsBetween, timelineGaps } from '$lib/data/delay-story';
 
   let { data }: { data: PageData } = $props();
@@ -20,7 +21,8 @@
   };
   const today = todayIsoDate();
   // The feed shows recorded events only; the generated "current date" entry is left out.
-  let entries = $derived(buildLineTimeline(data.line.milestones, resolvedTrainsets, data.lineId, today).filter((entry) => entry.kind !== 'today'));
+  // Recorded events only (no generated current-date entry), minus entries curated off long histories.
+  let entries = $derived(buildLineTimeline(visibleMilestones(data.lineId, data.line.milestones), resolvedTrainsets, data.lineId, today).filter((entry) => entry.kind !== 'today'));
   let story = $derived(buildDelayStory(data.lineId, data.line.milestones, today));
   let gaps = $derived(timelineGaps(entries));
   let atTop = $state(true);

@@ -29,6 +29,8 @@ export interface ReviewedSection {
   label: string;
   /** Passenger opening of this section; null while it has not opened. */
   openingMilestoneId: string | null;
+  /** How the section reads mid-sentence ("the earliest recorded ___ target"); defaults to the label. */
+  noun?: string;
 }
 
 export interface ReviewedLineStory {
@@ -70,8 +72,8 @@ export const reviewedLineStories: Record<string, ReviewedLineStory> = {
   pink: {
     openingMilestoneId: 'passenger-opening',
     sections: [
-      { id: 'elevated', label: 'Elevated', openingMilestoneId: 'passenger-opening' },
-      { id: 'underground', label: 'Underground', openingMilestoneId: null }
+      { id: 'elevated', label: 'Elevated', noun: 'elevated', openingMilestoneId: 'passenger-opening' },
+      { id: 'underground', label: 'Underground', noun: 'underground', openingMilestoneId: null }
     ],
     targets: [
       { section: 'elevated', milestoneId: 'december-phased-forecast', field: 'revised_target', matches: 'December 2025 elevated; December 2026 underground', target: '2025-12-31', label: 'Dec 2025', kind: 'month' },
@@ -101,5 +103,52 @@ export const reviewedLineStories: Record<string, ReviewedLineStory> = {
       { label: 'Final elevated segment → passengers', fromMilestoneId: 'elevated-final-segment', toMilestoneId: 'passenger-opening' },
       { label: 'First mainline run → passengers', fromMilestoneId: 'first-elevated-mainline-movement', toMilestoneId: 'passenger-opening' }
     ]
+  },
+  // Green opened in five stages; each stage's targets are scored against that stage's own passenger
+  // opening. Stage 2 (Nagasandra, 2015) has no stage-specific target on record, so it has no section.
+  // Phase 1 completion targets are scored against Stage 3, the opening that completed Phase 1.
+  // Not scored: the disputed "November 1" Silk Institute date (BMRCL's November clarification is used),
+  // the unofficial October-November 2024 Madavara window, vague "2019, 2020, 2021" Madavara mentions,
+  // and the 2017 / 2020 retrospective lists of earlier dates (reported long after they were set).
+  green: {
+    openingMilestoneId: 'madavara-passenger-opening',
+    sections: [
+      { id: 'stage1', label: 'First section', noun: 'first-section', openingMilestoneId: 'first-section-passenger-opening' },
+      { id: 'stage3', label: 'Phase 1 completion', noun: 'Phase 1', openingMilestoneId: 'yelachenahalli-passenger-opening' },
+      { id: 'stage4', label: 'Silk Institute', openingMilestoneId: 'silk-institute-passenger-opening' },
+      { id: 'stage5', label: 'Madavara', openingMilestoneId: 'madavara-passenger-opening' }
+    ],
+    targets: [
+      { section: 'stage1', milestoneId: 'april2013-first-section-target', field: 'revised_target', matches: 'April 2013', target: '2013-04-30', label: 'Apr 2013', kind: 'month' },
+      { section: 'stage1', milestoneId: 'late2013-first-section-target', field: 'revised_target', matches: 'End-November / early-December 2013', target: '2013-12-07', label: 'End-Nov / early Dec 2013', kind: 'by' },
+      { section: 'stage1', milestoneId: 'first-section-opening-announced', field: 'revised_target', matches: 'February 28, 2014 ceremony; March 1, 2014 passenger opening', target: '2014-03-01', label: '1 Mar 2014 (passengers)', kind: 'by' },
+
+      // Baseline quoted in the Dec 2015 parliamentary answer; placed first as the earliest Phase 1 date.
+      { section: 'stage3', milestoneId: 'phase1-june2016-parliament-target', field: 'previous_target', matches: 'December 2013 baseline in this parliamentary answer', target: '2013-12-31', label: 'Dec 2013 baseline', kind: 'month' },
+      { section: 'stage3', milestoneId: 'phase1-march2015-budget-target', field: 'revised_target', matches: 'March 2015, Phase 1 completion', target: '2015-03-31', label: 'Mar 2015', kind: 'month' },
+      { section: 'stage3', milestoneId: 'phase1-march2016-target', field: 'revised_target', matches: 'March 2016, Phase 1 completion', target: '2016-03-31', label: 'Mar 2016', kind: 'month' },
+      { section: 'stage3', milestoneId: 'phase1-june2016-parliament-target', field: 'revised_target', matches: 'June 2016, Phase 1 completion', target: '2016-06-30', label: 'Jun 2016', kind: 'month' },
+      { section: 'stage3', milestoneId: 'remaining-green-april2017-target', field: 'revised_target', matches: 'April 2017', target: '2017-04-30', label: 'Apr 2017', kind: 'month' },
+      { section: 'stage3', milestoneId: 'remaining-green-may2017-target', field: 'revised_target', matches: 'End-May 2017', target: '2017-05-31', label: 'End-May 2017', kind: 'month' },
+      { section: 'stage3', milestoneId: 'remaining-green-opening-announced', field: 'revised_target', matches: 'June 17, 2017 inauguration; June 18, 2017 passenger opening', target: '2017-06-18', label: '18 Jun 2017 (passengers)', kind: 'by' },
+
+      { section: 'stage4', milestoneId: 'silk-institute-november1-forecast', field: 'previous_target', matches: 'August 15, 2020', target: '2020-08-15', label: '15 Aug 2020', kind: 'by' },
+      { section: 'stage4', milestoneId: 'silk-institute-november-clarification', field: 'revised_target', matches: "November 2020, according to BMRCL's clarification", target: '2020-11-30', label: 'Nov 2020', kind: 'month' },
+      { section: 'stage4', milestoneId: 'silk-institute-late2020-opening-window', field: 'revised_target', matches: 'Month-end November or first week December 2020', target: '2020-12-07', label: 'End-Nov / early Dec 2020', kind: 'by' },
+      { section: 'stage4', milestoneId: 'silk-institute-middecember-target', field: 'revised_target', matches: 'Mid-December 2020', target: '2020-12-15', label: 'Mid-Dec 2020', kind: 'by' },
+      { section: 'stage4', milestoneId: 'silk-institute-opening-announced', field: 'revised_target', matches: 'January 14, 2021 ceremony; January 15, 2021 public service', target: '2021-01-15', label: '15 Jan 2021 (passengers)', kind: 'by' },
+
+      { section: 'stage5', milestoneId: 'madavara-january2022-target-report', field: 'revised_target', matches: 'January 2022', target: '2022-01-31', label: 'Jan 2022', kind: 'month' },
+      { section: 'stage5', milestoneId: 'madavara-august2023-target', field: 'revised_target', matches: 'August 2023', target: '2023-08-31', label: 'Aug 2023', kind: 'month' },
+      { section: 'stage5', milestoneId: 'madavara-september2023-forecast', field: 'revised_target', matches: 'September 2023', target: '2023-09-30', label: 'Sep 2023', kind: 'month' },
+      // April 2024 is known only as the target the January 2024 report moved away from.
+      { section: 'stage5', milestoneId: 'madavara-july2024-target', field: 'previous_target', matches: 'April 2024', target: '2024-04-30', label: 'Apr 2024', kind: 'month' },
+      { section: 'stage5', milestoneId: 'madavara-july2024-target', field: 'revised_target', matches: 'July 2024', target: '2024-07-31', label: 'Jul 2024', kind: 'month' },
+      { section: 'stage5', milestoneId: 'madavara-september2024-target', field: 'revised_target', matches: 'End-September 2024', target: '2024-09-30', label: 'End-Sep 2024', kind: 'month' },
+      { section: 'stage5', milestoneId: 'madavara-september-october-window', field: 'revised_target', matches: 'End-September / first week October 2024', target: '2024-10-07', label: 'End-Sep / early Oct 2024', kind: 'by' },
+      { section: 'stage5', milestoneId: 'madavara-october2024-target', field: 'revised_target', matches: 'Within October 2024', target: '2024-10-31', label: 'Oct 2024', kind: 'month' },
+      { section: 'stage5', milestoneId: 'madavara-opening-announced', field: 'revised_target', matches: 'November 7, 2024 at 5 am', target: '2024-11-07', label: '7 Nov 2024 (passengers)', kind: 'by' }
+    ],
+    spans: []
   }
 };

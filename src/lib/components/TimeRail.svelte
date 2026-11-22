@@ -68,6 +68,7 @@
   });
 
   // Targets dated after the rail's end (still-future underground dates) would pile up at the bottom edge, so they are left off.
+  const openings = $derived([...new Map((story?.sections ?? []).flatMap((x) => (x.opening ? [[x.opening.milestoneId, x.opening] as const] : []))).values()].sort((p, q) => p.date.localeCompare(q.date)));
   const onRail = $derived((story?.targets ?? []).filter((t) => t.target <= end));
   const arcs = $derived(onRail.filter((t) => t.announced).map((target) => {
     const y1 = y(target.announced!);
@@ -121,11 +122,12 @@
       {/if}
     {/each}
 
-    {#if story?.opening}
-      {@const oy = y(story.opening.date)}
-      <line class="opening" x1={compact ? 2 : axis - 22} x2={width - 4} y1={oy} y2={oy} />
-      {#if !compact}<text class="opening-label" x={width - 4} y={oy - 5} text-anchor="end">Opened</text>{/if}
-    {/if}
+    <!-- One line per opening (lines that open in stages get several); only the latest is labelled. -->
+    {#each openings as opening, i (opening.milestoneId)}
+      {@const oy = y(opening.date)}
+      <line class="opening" class:earlier={i < openings.length - 1} x1={compact ? 2 : axis - 22} x2={width - 4} y1={oy} y2={oy} />
+      {#if !compact && i === openings.length - 1}<text class="opening-label" x={width - 4} y={oy - 5} text-anchor="end">{openings.length > 1 ? 'Latest opening' : 'Opened'}</text>{/if}
+    {/each}
     <line class="today" x1={compact ? 2 : axis - 22} x2={width - 4} y1={y(end)} y2={y(end)} />
   </svg>
   {#if !compact && story}
@@ -168,6 +170,7 @@
   .line-dot.visible { r: 4.5; }
   .compact .line-dot.visible { r: 3; }
   .opening { stroke: #17211d; stroke-width: 2; }
+  .opening.earlier { stroke-width: 1.2; stroke-dasharray: 4 3; }
   .opening-label { font-size: 10px; font-weight: 700; fill: #17211d; }
   .today { stroke: #17211d; stroke-width: 1; stroke-dasharray: 2 3; }
   .legend { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 4px; font-size: 10.5px; color: #536055; }

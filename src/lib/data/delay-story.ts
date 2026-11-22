@@ -27,6 +27,8 @@ export interface OpeningTarget {
 export interface SectionStory {
   id: string;
   label: string;
+  /** Mid-sentence wording for the section. */
+  noun: string;
   opening?: { milestoneId: string; date: string };
   targets: OpeningTarget[];
   missed: number;
@@ -115,6 +117,7 @@ export function buildDelayStory(lineId: string, milestones: LineMilestone[], tod
     return {
       id: def.id,
       label: def.label,
+      noun: def.noun ?? def.label,
       opening,
       targets,
       missed: targets.filter((t) => t.outcome === 'missed').length,

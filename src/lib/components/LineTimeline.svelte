@@ -33,7 +33,8 @@
   {#each entries as entry (entry.id)}
     {@const targets = entry.lineMilestone ? (targetsFor.get(entry.lineMilestone.id) ?? []) : []}
     {@const target = targets[0]}
-    {@const isOpening = !!story?.opening && entry.lineMilestone?.id === story.opening.milestoneId}
+    {@const openingSection = story?.sections.find((x) => x.opening && x.opening.milestoneId === entry.lineMilestone?.id && x.earliest)}
+    {@const isOpening = !!openingSection}
     {@const refs = entry.lineMilestone?.sources.length ?? entry.groups?.reduce((sum, group) => sum + group.milestone.sources.length, 0) ?? 0}
     <li id={entry.id} tabindex="-1" class="entry {entry.kind}" class:promise={!!target} class:opening={isOpening}
       style={`--event-color: ${entry.kind === 'train' ? stageColors[phaseOf(entry)].color : '#17211d'}`}>
@@ -54,8 +55,9 @@
           <span class="outcome {t.outcome}">{outcomeText(t)}</span>
         </p>
       {/each}
-      {#if isOpening && story?.earliest && story.opening}
-        <p class="opening-note"><strong>{monthsBetween(story.earliest.target, story.opening.date)} months</strong> after the earliest recorded {multiSection ? `${story.sections[0].label.toLowerCase()} ` : ''}target ({story.earliest.label}), with {story.missed} {multiSection ? `${story.sections[0].label.toLowerCase()} ` : ''}targets missed along the way.</p>
+      {#if openingSection?.opening && openingSection.earliest}
+        {@const scope = multiSection ? `${openingSection.noun} ` : ''}
+        <p class="opening-note"><strong>{monthsBetween(openingSection.earliest.target, openingSection.opening.date)} months</strong> after the earliest recorded {scope}target ({openingSection.earliest.label}), with {openingSection.missed} {scope}target{openingSection.missed === 1 ? '' : 's'} missed along the way.</p>
       {/if}
 
       {#if entry.kind !== 'today'}

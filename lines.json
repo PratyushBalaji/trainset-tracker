@@ -307,7 +307,492 @@
         }
       ]
     },
-    "green": { "name": "Green Line", "research_status": "not_started", "milestones": [] },
+    "green": {
+      "name": "Green Line",
+      "scope": "Five passenger-opening stages: Sampige Road - Peenya Industry; Peenya Industry - Nagasandra; Sampige Road - Yelachenahalli; Yelachenahalli - Silk Institute; Nagasandra - Madavara",
+      "research_status": "preliminary",
+      "milestones": [
+        {
+          "id": "original-phase1-dpr", "title": "Original Phase 1 DPR submitted", "category": "Approval",
+          "period": "2003-05", "date_basis": "period", "scope": "Shared Phase 1 project, including the original north-south corridor",
+          "description": "DMRC submitted the original two-corridor DPR, including approximately 14.9 km from Yeshwanthpur to RV Road.",
+          "comments": "Exact submission day is not established. This is a project-wide record, not a separate Green Line-only approval.",
+          "sources": ["https://d1jmc0u14z2tmp.cloudfront.net/uploads/download_audit_report/2026/CAG-Report-No.-7-of-2026-%28English%29-06a79ba08602d89.76651635.pdf"]
+        },
+        {
+          "id": "original-phase1-union-sanction", "title": "Original Phase 1 receives Union sanction", "category": "Approval",
+          "date": "2006-05-11", "scope": "Shared Phase 1 project",
+          "description": "Union sanction included the original north-south corridor.",
+          "comments": "The original state approval date remains unverified; this Union date must not substitute for it.",
+          "sources": ["https://sansad.in/getFile/loksabhaquestions/annex/183/AU496_saa4IC.pdf"]
+        },
+        {
+          "id": "phase1-extension-dpr-oct2007", "title": "Phase 1 extension DPR submitted in October", "category": "Approval",
+          "period": "2007-10", "date_basis": "period", "scope": "Phase 1 northward and southward additions",
+          "description": "CAG records an extension DPR submission in October 2007 as the original project was expanded.",
+          "comments": "Original submission letters and exact days were not recovered. The supplied research does not identify which addition belongs to each submission month.",
+          "sources": ["https://d1jmc0u14z2tmp.cloudfront.net/uploads/download_audit_report/2026/CAG-Report-No.-7-of-2026-%28English%29-06a79ba08602d89.76651635.pdf"]
+        },
+        {
+          "id": "phase1-extension-dpr-jun2008", "title": "Further Phase 1 extension DPR submitted", "category": "Approval",
+          "period": "2008-06", "date_basis": "period", "scope": "Phase 1 northward and southward additions",
+          "description": "CAG records a further extension DPR submission in June 2008.",
+          "comments": "Month precision only; no unsupported assignment to a particular northward or southward addition is made.",
+          "sources": ["https://d1jmc0u14z2tmp.cloudfront.net/uploads/download_audit_report/2026/CAG-Report-No.-7-of-2026-%28English%29-06a79ba08602d89.76651635.pdf"]
+        },
+        {
+          "id": "phase1-extensions-union-approval", "title": "Union approves Phase 1 extensions", "category": "Approval",
+          "date": "2010-01-21", "scope": "Enlarged Phase 1 project",
+          "description": "Approval of the extensions contributed to the enlarged 42.3-km Phase 1 project and 24.2-km Green Line.",
+          "comments": "Sanctioned-route, civil-package and operational-section lengths are not interchangeable.",
+          "sources": ["https://kla.kar.nic.in/council/Replies/unstarred/06032025/usq302%2806032025%29.pdf"]
+        },
+        {
+          "id": "reach3b-letter-of-acceptance", "title": "Reach 3B letter of acceptance issued", "category": "Construction",
+          "date": "2010-07-21", "scope": "Peenya - Hesaraghatta Cross / Nagasandra, Reach 3B",
+          "description": "JMC received the viaduct and three-station package at approximately INR 212.65 crore, with a 27-month period.",
+          "sources": ["https://indiankanoon.org/doc/187411151/"]
+        },
+        {
+          "id": "reach3b-agreement", "title": "Reach 3B agreement signed", "category": "Construction",
+          "date": "2010-09-17", "scope": "Northern Phase 1 extension, Reach 3B",
+          "description": "The formal Reach 3B agreement was signed.",
+          "comments": "The judgment contains an apparent 2022 typo for an original completion year; later passages explicitly identify 2012. These particulars do not establish dates for Reach 3, 3A, 4 or 4A.",
+          "sources": ["https://indiankanoon.org/doc/187411151/"]
+        },
+        {
+          "id": "ug1-award-reported", "title": "Green Line underground package awarded to Coastal-TTS", "category": "Construction",
+          "period": "2011-03", "date_basis": "period", "scope": "Green Line UG-1 package",
+          "description": "Specialist construction history places the Coastal-TTS JV award in March 2011.",
+          "comments": "Exact agreement date and original value need primary corroboration. This is not Purple Line's CEC-Soma-CICI package.",
+          "sources": ["https://themetrorailguy.com/2017/06/16/history-of-bangalore-metro-green-lines-underground-section/"]
+        },
+        {
+          "id": "phase2-state-approval", "title": "Karnataka approves Phase 2", "category": "Approval",
+          "date": "2012-02-21", "scope": "Shared Phase 2 project, including both Green Line extensions",
+          "description": "Formal state approval included Yelachenahalli - Anjanapura and Nagasandra - BIEC.",
+          "sources": ["https://www.aiib.org/en/projects/approved/2017/_download/india/document/bangalore-metro-document.pdf"]
+        },
+        {
+          "id": "april2013-first-section-target", "title": "First Green section forecast for April 2013", "category": "Deadline",
+          "date": "2012-06-27", "date_basis": "reported_on", "scope": "Sampige Road - Peenya",
+          "revised_target": "April 2013",
+          "description": "A forecast accompanying depot-testing coverage expected the initial Green section in April 2013; it was subsequently missed.",
+          "comments": "Full article access was blocked in the supplied research; indexed text supported the target. The depot tests are not classified as mainline testing.",
+          "sources": ["https://www.railjournal.com/regions/asia/testing-begins-on-bangalore-green-line/"]
+        },
+        {
+          "id": "north-south-tunnelling-start", "title": "North-south tunnelling commences", "category": "Construction",
+          "period": "2012-12", "date_basis": "period", "scope": "Green Line underground corridor",
+          "description": "Coastal-TTS began tunnelling the north-south corridor.",
+          "comments": "Retrospective evidence establishes December, not an exact commencement day.",
+          "sources": ["https://economictimes.indiatimes.com/industry/transportation/railways/expertise-lost-bengaluru-metro-phase-i-contractors-opt-out-of-tunnelling-phase-ii/articleshow/61624173.cms"]
+        },
+        {
+          "id": "northern-mainline-trials", "title": "Northern mainline trials begin", "category": "Testing",
+          "date": "2013-06-10", "scope": "Limited Peenya - Yeshwanthpur section",
+          "description": "Trials began on a limited part of Reach 3, as reported the following day.",
+          "comments": "This is the first confirmed northern mainline start located in the supplied research, not a claim that no earlier movement occurred. The 2012 depot testing is a different milestone.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2013/Jun/11/trials-along-reach-3-begin-485697.html"]
+        },
+        {
+          "id": "late2013-first-section-target", "title": "First-section forecast moves to late November or early December", "category": "Deadline",
+          "date": "2013-10-16", "date_basis": "reported_on", "scope": "Sampige Road - Peenya",
+          "revised_target": "End-November / early-December 2013",
+          "description": "Reporting forecast initial operation around late November or early December; remaining works and approvals intervened and the window was missed.",
+          "comments": "The original announcement date and an exact deadline day are not established.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2013/Oct/16/changes-in-jayadeva-metro-route-526685.html"]
+        },
+        {
+          "id": "phase2-union-cabinet-approval", "title": "Union Cabinet approves Phase 2", "category": "Approval",
+          "date": "2014-01-30", "scope": "Shared Phase 2, including both Green Line extensions",
+          "description": "The Cabinet approved the project including the southern Yelachenahalli - Anjanapura and northern Nagasandra - BIEC extensions.",
+          "sources": ["https://www.pib.gov.in/newsite/PrintRelease.aspx?relid=102854"]
+        },
+        {
+          "id": "phase1-march2015-budget-target", "title": "Budget forecasts Phase 1 completion by March 2015", "category": "Deadline",
+          "date": "2014-02-14", "scope": "Shared Phase 1 project, including Purple and Green",
+          "revised_target": "March 2015, Phase 1 completion",
+          "description": "The state budget statement forecast Phase 1 completion in March 2015; the target was missed.",
+          "comments": "A shared project-wide promise, not an independently countable Green Line-only opening deadline.",
+          "sources": ["https://www.business-standard.com/amp/article/pti-stories/1st-phase-of-bangalore-metro-to-complete-by-march-2015-114021401119_1.html"]
+        },
+        {
+          "id": "phase2-formal-union-sanction", "title": "Formal Union sanction of Phase 2 issued", "category": "Approval",
+          "date": "2014-02-21", "scope": "Shared Phase 2 project",
+          "description": "Formal sanction followed the January Cabinet approval.",
+          "sources": ["https://mohua.gov.in/upload/uploadfiles/files/Annual-Report-2015-16.pdf"]
+        },
+        {
+          "id": "first-section-opening-announced", "title": "First Green section ceremony and passenger dates announced", "category": "Deadline",
+          "date": "2014-02-25", "date_basis": "reported_on", "scope": "Sampige Road - Peenya Industry",
+          "revised_target": "February 28, 2014 ceremony; March 1, 2014 passenger opening",
+          "description": "The reported ceremony and passenger-service dates were both achieved.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/others/namma-metro-bmtc/articleshow/30956601.cms"]
+        },
+        {
+          "id": "first-section-inauguration", "title": "Sampige Road - Peenya Industry inaugurated", "category": "Opening",
+          "date": "2014-02-28", "scope": "Stage 1: Sampige Road - Peenya Industry",
+          "description": "The first Green Line section was inaugurated ceremonially.",
+          "comments": "Passenger service began the next day, not on the ceremony date.",
+          "sources": ["https://www.deccanherald.com/content/389092/chaos-mars-metro-green-line.html"]
+        },
+        {
+          "id": "first-section-passenger-opening", "title": "Sampige Road - Peenya Industry passenger service begins", "category": "Opening",
+          "date": "2014-03-01", "scope": "Stage 1: Sampige Road - Peenya Industry",
+          "description": "Public operation began on the first Green Line section.",
+          "comments": "Exact preceding CMRS inspection and authorisation dates remain unestablished.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/others/namma-metro-bmtc/articleshow/30956601.cms"]
+        },
+        {
+          "id": "reach3b-cmrs-inspection", "title": "CMRS inspects Reach 3B", "category": "Inspection",
+          "date": "2015-04-02", "scope": "Peenya Industry - Nagasandra stations and Peenya depot",
+          "description": "CMRS inspected the three northern extension stations and Peenya depot.",
+          "comments": "Primary-authored BMRCL April 2015 newsletter accessed through a third-party mirror; original hosting was not recovered.",
+          "sources": ["https://abcdocz.com/doc/958834/april-2015---bangalore-metro"]
+        },
+        {
+          "id": "reach3b-cmrs-authorisation", "title": "Reach 3B receives CMRS authorisation", "category": "Certification",
+          "date": "2015-04-08", "scope": "Peenya Industry - Nagasandra",
+          "description": "The authorisation certificate for commercial operations was issued.",
+          "comments": "Date from BMRCL's April 2015 newsletter, retained on a third-party mirror.",
+          "sources": ["https://abcdocz.com/doc/958834/april-2015---bangalore-metro"]
+        },
+        {
+          "id": "nagasandra-inauguration", "title": "Peenya Industry - Nagasandra inaugurated", "category": "Opening",
+          "date": "2015-05-01", "scope": "Stage 2: Peenya Industry - Nagasandra",
+          "description": "The northern extension was inaugurated; public operation also began that day.",
+          "sources": ["https://www.ndtv.com/bangalore-news/bengaluru-metro-opens-new-stretch-to-commuters-759783"]
+        },
+        {
+          "id": "nagasandra-passenger-opening", "title": "Peenya Industry - Nagasandra passenger service begins", "category": "Opening",
+          "date": "2015-05-01", "scope": "Stage 2: Peenya Industry - Nagasandra",
+          "description": "Passenger service began on the same date as the inauguration.",
+          "sources": ["https://www.ndtv.com/bangalore-news/bengaluru-metro-opens-new-stretch-to-commuters-759783"]
+        },
+        {
+          "id": "phase1-march2016-target", "title": "Minister forecasts Phase 1 completion by March 2016", "category": "Deadline",
+          "date": "2015-05-01", "scope": "Shared Phase 1 project",
+          "revised_target": "March 2016, Phase 1 completion",
+          "description": "The Union minister forecast Phase 1 completion at the Reach 3B inauguration. The target was missed.",
+          "comments": "Not a new deadline for the Reach 3B section that opened that day.",
+          "sources": ["https://economictimes.indiatimes.com/infrastructure/namma-metros-peenya-industry-nagasandra-stretch-inaugurated/benefit-by-march-2016/slideshow/47128853.cms"]
+        },
+        {
+          "id": "phase1-june2016-parliament-target", "title": "Parliamentary answer forecasts Phase 1 completion by June 2016", "category": "Deadline",
+          "date": "2015-12-02", "scope": "Shared Phase 1 project",
+          "previous_target": "December 2013 baseline in this parliamentary answer", "revised_target": "June 2016, Phase 1 completion",
+          "description": "The answer cited delayed land possession, litigation, retendering and difficult tunnelling geology. The revised deadline was missed.",
+          "comments": "This answer's original baseline differs from CAG's earlier baseline descriptions; do not label all of them the same original deadline or count them again as Green-only promises.",
+          "sources": ["https://sansad.in/getFile/loksabhaquestions/annex/6/AU630.pdf"]
+        },
+        {
+          "id": "silk-institute-civil-award", "title": "NCC awarded southern Phase 2 civil package", "category": "Construction",
+          "period": "2016-01", "date_basis": "period", "scope": "Reach 4B: Yelachenahalli towards Anjanapura / Silk Institute",
+          "description": "NCC was awarded the elevated southern extension and five stations at a reported approximately INR 508.86 crore.",
+          "comments": "Exact award day is not established.",
+          "sources": ["https://kla.kar.nic.in/council/house/Paperlaid/143/43/43.pdf"]
+        },
+        {
+          "id": "green-tunnelling-complete", "title": "Green Line underground tunnelling completed", "category": "Construction",
+          "date": "2016-09-23", "scope": "Green Line underground corridor",
+          "description": "TBM Krishna's final breakthrough at Majestic completed the tunnelling programme.",
+          "comments": "Not completion of stations, tracks or systems.",
+          "sources": ["https://themetrorailguy.com/2017/06/16/history-of-bangalore-metro-green-lines-underground-section/"]
+        },
+        {
+          "id": "train-hauled-through-tunnels", "title": "Train hauled through tunnels to isolated southern section", "category": "Construction",
+          "period": "2016-11", "date_basis": "period", "scope": "Transfer to southern elevated Green Line",
+          "presentation": { "disputed": true },
+          "description": "A battery locomotive hauled a train through the new tunnels to the isolated southern elevated section.",
+          "comments": "An archived contemporary account says November 18; later history says November 19. The day remains disputed. This transfer is not powered mainline testing.",
+          "sources": ["https://bangalore2009.rssing.com/chan-64849069/all_p2.html", "https://themetrorailguy.com/2017/06/16/history-of-bangalore-metro-green-lines-underground-section/"]
+        },
+        {
+          "id": "southern-elevated-trials", "title": "Southern elevated trials begin", "category": "Testing",
+          "period": "2016-11", "date_basis": "period", "scope": "National College - Yelachenahalli",
+          "description": "Testing began on the southern elevated section before the underground connection opened.",
+          "comments": "Exact day differs between secondary accounts; month precision is retained.",
+          "sources": ["https://www.newindianexpress.com/bengaluru/2017/Apr/17/namma-metro-phase--1-to-become-fully-functional-by-may-end-1594366.html"]
+        },
+        {
+          "id": "madavara-civil-award", "title": "Simplex awarded Madavara extension civil works", "category": "Construction",
+          "period": "2017-02", "date_basis": "period", "scope": "Reach 3C: Nagasandra - BIEC / Madavara",
+          "description": "The viaduct and three-station package was awarded at approximately INR 298.65 crore with a reported 27-month period.",
+          "comments": "Exact award day is not established. Do not derive an exact contractual completion day from the month and duration.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/namma-metro-starts-trial-runs-nagasandra-madavara-9521052/lite/"]
+        },
+        {
+          "id": "remaining-green-april2017-target", "title": "Remaining Green Line forecast for April 2017", "category": "Deadline",
+          "date": "2017-03-09", "date_basis": "reported_on", "scope": "Remaining Green Line connection completing Phase 1",
+          "revised_target": "April 2017",
+          "description": "The April opening forecast was missed while tunnel sealing, systems tests, trials and safety inspection remained.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/april-deadline-nears-but-trial-runs-yet-to-begin/articleshow/57547938.cms"]
+        },
+        {
+          "id": "underground-powered-trials", "title": "Underground powered trials begin in late March", "category": "Testing",
+          "period": "2017-03", "date_basis": "period", "scope": "Sampige Road - National College underground connection",
+          "presentation": { "disputed": true },
+          "description": "Powered trials connected the northern and southern sections for testing.",
+          "comments": "TNIE reports March 30; specialist history says March 31. Neither day is selected as settled, and the two dates are not represented as a testing-duration interval. November 2016 hauling was a different event.",
+          "sources": ["https://www.newindianexpress.com/bengaluru/2017/Apr/17/namma-metro-phase--1-to-become-fully-functional-by-may-end-1594366.html", "https://themetrorailguy.com/2017/06/16/history-of-bangalore-metro-green-lines-underground-section/"]
+        },
+        {
+          "id": "phase1-historical-targets-recalled", "title": "Retrospective recalls successive Phase 1 deadlines", "category": "Deadline",
+          "date": "2017-04-17", "date_basis": "reported_on", "scope": "Shared Phase 1 project; remaining Green Line in the later forecasts",
+          "revised_target": "Historical targets recalled: December 2012; March 2015; September 2015; December 2015; November 2016",
+          "description": "The retrospective recalled missed project schedules before the final Green connection opened.",
+          "comments": "These are historical target claims grouped under their evidence date, not five announcements made in April 2017. Original revision dates are unknown. The November 1 exact-day reading in secondary reporting needs stronger corroboration; November is retained as the supported target month.",
+          "sources": ["https://www.newindianexpress.com/bengaluru/2017/Apr/17/namma-metro-phase--1-to-become-fully-functional-by-may-end-1594366.html", "https://archive.newskarnataka.com/karnataka/bengaluru/metro-green-line-completion-deadline-postponed-again/21042017"]
+        },
+        {
+          "id": "remaining-green-may2017-target", "title": "Remaining Green opening forecast moves to end-May", "category": "Deadline",
+          "date": "2017-04-17", "date_basis": "reported_on", "scope": "Remaining Green Line connection completing Phase 1",
+          "previous_target": "April 2017", "revised_target": "End-May 2017",
+          "description": "Pending station finishes and time for safety certification pushed the forecast to end-May; that target was also missed.",
+          "sources": ["https://www.newindianexpress.com/bengaluru/2017/Apr/17/namma-metro-phase--1-to-become-fully-functional-by-may-end-1594366.html"]
+        },
+        {
+          "id": "remaining-green-rdso-speed-trials", "title": "RDSO speed trials reported to begin", "category": "Testing",
+          "date": "2017-05-05", "scope": "Remaining Phase 1 Green Line section",
+          "description": "Specialist history reports commencement of the speed-testing programme on May 5.",
+          "comments": "Original test report and clearance date were not recovered; a reported trial start is not a clearance certificate.",
+          "sources": ["https://themetrorailguy.com/2017/06/16/history-of-bangalore-metro-green-lines-underground-section/"]
+        },
+        {
+          "id": "remaining-green-cmrs-inspection", "title": "CMRS inspects final Phase 1 Green section", "category": "Inspection",
+          "date": "2017-05-29", "end_date": "2017-06-01", "scope": "Remaining Phase 1 Green Line section",
+          "presentation": { "disputed": true },
+          "description": "Contemporary specialist coverage describes a four-day inspection from May 29 through June 1.",
+          "comments": "Some agency reporting instead describes three days from May 29. Preserve that interval discrepancy pending original inspection records.",
+          "sources": ["https://themetrorailguy.com/2017/06/08/president-to-inaugurate-last-leg-of-bangalore-metros-ph1-on-june-17/"]
+        },
+        {
+          "id": "remaining-green-cmrs-authorisation", "title": "CMRS signs conditional authorisation for remaining Green Line", "category": "Certification",
+          "date": "2017-06-07", "scope": "Remaining Phase 1 Green Line section",
+          "description": "CMRS signed conditional authorisation on Wednesday evening. Handover was scheduled for Thursday, June 8. Maximum authorised speed was reported as 80 km/h.",
+          "comments": "Signing and scheduled handover are different events. Passenger facilities, firefighting/electrical space and minor works required attention; this does not establish unconditional clearance.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2017/Jun/08/all-of-bangalore-metro-phase-1-will-be-up-and-running-from-june-18-1614155.html"]
+        },
+        {
+          "id": "remaining-green-opening-announced", "title": "June 17 ceremony and June 18 passenger opening announced", "category": "Deadline",
+          "date": "2017-06-08", "date_basis": "reported_on", "scope": "Remaining Phase 1 Green Line section",
+          "revised_target": "June 17, 2017 inauguration; June 18, 2017 passenger opening",
+          "description": "The announced dates followed conditional authorisation and were achieved.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2017/Jun/08/all-of-bangalore-metro-phase-1-will-be-up-and-running-from-june-18-1614155.html"]
+        },
+        {
+          "id": "madavara-construction-start", "title": "Madavara extension construction commences", "category": "Construction",
+          "date": "2017-06-09", "scope": "Reach 3C: Nagasandra - Madavara",
+          "description": "A January 2024 retrospective dates commencement of the northern extension works to June 9, 2017.",
+          "comments": "A contemporary commencement record remains desirable.",
+          "sources": ["https://www.newindianexpress.com/states/karnataka/2024/jan/11/bengaluru-metros-green-line-extension-likely-to-open-by-july-2649865.html"]
+        },
+        {
+          "id": "phase1-completion-inauguration", "title": "Remaining Phase 1 section inaugurated", "category": "Opening",
+          "date": "2017-06-17", "scope": "Stage 3: Sampige Road - Yelachenahalli; shared Phase 1 dedication",
+          "description": "The President dedicated the completed Phase 1 project, including the remaining Green Line connection.",
+          "comments": "Ceremony date only; Green passenger operation through to Yelachenahalli began June 18.",
+          "sources": ["https://www.pib.gov.in/newsite/PrintRelease.aspx?relid=165725"]
+        },
+        {
+          "id": "yelachenahalli-passenger-opening", "title": "Full Phase 1 Green Line passenger operation begins", "category": "Opening",
+          "date": "2017-06-18", "scope": "Stage 3: Sampige Road - Yelachenahalli",
+          "description": "Public services commenced through to Yelachenahalli, completing Phase 1 Green passenger operation.",
+          "sources": ["https://kla.kar.nic.in/council/house/Paperlaid/140/1.pdf"]
+        },
+        {
+          "id": "madavara-january2022-target-report", "title": "Madavara schedule pushed to January 2022", "category": "Deadline",
+          "date": "2020-01-14", "date_basis": "reported_on", "scope": "Nagasandra - Madavara extension",
+          "previous_target": "Earlier reported targets: 2019, then 2020 and 2021", "revised_target": "January 2022",
+          "description": "Reporting described repeated delays from land acquisition and contractor finances, with outstanding land from multiple agencies including NICE.",
+          "comments": "The January 2022 target was missed. Earlier revisions are retrospective claims, not newly dated announcements. The original agreement is needed to reconcile the 27-month duration, mid-2019 contractual descriptions and reported August 2019 opening target.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/3-km-metro-line-on-tumakuru-road-delayed-again-land-hurdle-to-blame/articleshow/73236023.cms"]
+        },
+        {
+          "id": "silk-institute-trials", "title": "Silk Institute extension trials begin", "category": "Testing",
+          "date": "2020-08-27", "scope": "Yelachenahalli - Anjanapura / Silk Institute",
+          "description": "Initial low-speed infringement checks began on the new southern extension. The account also reports subsequent September high-speed testing.",
+          "sources": ["https://themetrorailguy.com/2020/11/16/cmrs-to-inspect-bangalore-metros-anjanapura-extn-on-nov-18-19/"]
+        },
+        {
+          "id": "silk-institute-november1-forecast", "title": "Silk Institute forecast shifts from August 15 to November 1", "category": "Deadline",
+          "date": "2020-10-06", "date_basis": "reported_on", "scope": "Yelachenahalli - Silk Institute",
+          "previous_target": "August 15, 2020", "revised_target": "November 1, 2020 (disputed exact-day promise)",
+          "presentation": { "disputed": true },
+          "description": "Coverage forecast November 1 opening after the August target was missed.",
+          "comments": "BMRCL's chief PRO later disputed that November 1 had been specifically promised, saying the target was November. The clarification is retained separately; do not count both as independent promises.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/others/going-green-by-november-1/amp_articleshow/78503436.cms", "https://bangaloremirror.indiatimes.com/bangalore/others/train-delay-bmrcl-to-miss-its-november-1-date-with-deadline/articleshow/78922506.cms"]
+        },
+        {
+          "id": "silk-institute-historical-schedules-recalled", "title": "Retrospective recalls earlier Phase 2 and southern schedules", "category": "Deadline",
+          "date": "2020-10-06", "date_basis": "reported_on", "scope": "Phase 2 DPR ambition and Silk Institute civil/extension schedules",
+          "revised_target": "Phase 2 DPR ambition 2016; southern civil target end-2018; later mid-2019 and mid-2020 forecasts",
+          "description": "The account recalled an earlier Phase 2 ambition and successive missed southern-extension schedules, including land and right-of-way delays.",
+          "comments": "Original revision announcements were not established. The end-2018 target concerns civil completion, not passenger opening; the 2016 DPR ambition was not an executed contractor deadline.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/others/going-green-by-november-1/amp_articleshow/78503436.cms"]
+        },
+        {
+          "id": "silk-institute-november-clarification", "title": "BMRCL disputes November 1 as a specific promised date", "category": "Deadline",
+          "date": "2020-10-29", "date_basis": "reported_on", "scope": "Yelachenahalli - Silk Institute",
+          "revised_target": "November 2020, according to BMRCL's clarification",
+          "description": "The chief PRO said the target was November rather than a specifically promised November 1.",
+          "comments": "Preserves a disputed reading of an existing target, not a new independent deadline.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/others/train-delay-bmrcl-to-miss-its-november-1-date-with-deadline/articleshow/78922506.cms"]
+        },
+        {
+          "id": "silk-institute-cmrs-inspection", "title": "CMRS inspects Silk Institute extension", "category": "Inspection",
+          "date": "2020-11-18", "end_date": "2020-11-19", "scope": "Yelachenahalli - Silk Institute",
+          "description": "The two-day inspection covered infrastructure, systems and passenger facilities.",
+          "comments": "November 18-19, not December 18-19 as stated in some summaries.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/kanakapura-road-metro-safety-check-over/articleshow/79315289.cms"]
+        },
+        {
+          "id": "silk-institute-late2020-opening-window", "title": "Southern opening forecast for late November or early December", "category": "Deadline",
+          "date": "2020-11-20", "date_basis": "reported_on", "scope": "Yelachenahalli - Silk Institute",
+          "revised_target": "Month-end November or first week December 2020",
+          "description": "After inspection, report preparation, compliance and inauguration arrangements remained. The forecast window was missed.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/kanakapura-road-metro-safety-check-over/articleshow/79315289.cms"]
+        },
+        {
+          "id": "silk-institute-cmrs-authorisation", "title": "Silk Institute extension authorised with 37 conditions", "category": "Certification",
+          "date": "2020-11-23", "scope": "Yelachenahalli - Silk Institute",
+          "description": "CMRS approval was received with 37 conditions covering matters including electrical/fire safety and remaining civil defects.",
+          "comments": "Conditional authorisation is not unconditional completion of all remaining work.",
+          "sources": ["https://themetrorailguy.com/2020/11/25/cmrs-approves-bangalore-metros-anjanapura-extn-with-37-conditions/"]
+        },
+        {
+          "id": "silk-institute-middecember-target", "title": "Silk Institute forecast moves to mid-December", "category": "Deadline",
+          "date": "2020-12-01", "date_basis": "reported_on", "scope": "Yelachenahalli - Silk Institute",
+          "revised_target": "Mid-December 2020",
+          "description": "Reporting forecast mid-December opening and retrospectively listed November 30 as another missed target. The December forecast was also missed.",
+          "comments": "The original November 30 exact-date announcement was not located; it is not added as a separate precisely dated promise.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-anjanapura-metro-station-to-be-renamed-as-silk-institute-station/articleshow/79516020.cms"]
+        },
+        {
+          "id": "silk-institute-opening-announced", "title": "Silk Institute ceremony and passenger opening announced", "category": "Deadline",
+          "date": "2021-01-06", "scope": "Yelachenahalli - Silk Institute",
+          "revised_target": "January 14, 2021 ceremony; January 15, 2021 public service",
+          "description": "The announced dates were achieved. The retrospective also described pandemic disruption, equipment supply and skilled-labour shortages behind earlier delay.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-kanakapura-metro-section-to-be-inaugurated-on-january-14-commercial-operations-from-jan-15/articleshow/80138755.cms"]
+        },
+        {
+          "id": "silk-institute-inauguration", "title": "Silk Institute extension inaugurated", "category": "Opening",
+          "date": "2021-01-14", "scope": "Stage 4: Yelachenahalli - Silk Institute",
+          "description": "The southern extension was ceremonially inaugurated.",
+          "comments": "Public service began the following morning, not on the ceremony date.",
+          "sources": ["https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1688594"]
+        },
+        {
+          "id": "silk-institute-passenger-opening", "title": "Silk Institute passenger service begins", "category": "Opening",
+          "date": "2021-01-15", "scope": "Stage 4: Yelachenahalli - Silk Institute",
+          "description": "Commercial operation began the morning after inauguration.",
+          "sources": ["https://www.ndtv.com/india-news/bengaluru-to-get-new-6-km-metro-line-on-namma-metros-green-line-on-makar-sankranti-today-2352415"]
+        },
+        {
+          "id": "madavara-august2023-target", "title": "Madavara opening forecast for August 2023", "category": "Deadline",
+          "period": "2023-02", "date_basis": "period", "scope": "Nagasandra - Madavara",
+          "revised_target": "August 2023",
+          "description": "February reporting forecast an August opening; the target was missed.",
+          "comments": "Only the evidence month is established in the supplied research, not an exact announcement day.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/others/bengalurus-sky-high-ride-near-jayadeva-hospital/amp_articleshow/97561068.cms"]
+        },
+        {
+          "id": "madavara-final-segment", "title": "Madavara final precast segment launched overnight", "category": "Construction",
+          "date": "2023-04-30", "end_date": "2023-05-01", "scope": "Reach 3C: Nagasandra - Madavara",
+          "description": "Simplex completed the final precast segment launch during the night of April 30/May 1.",
+          "comments": "Not station, track, systems or overall civil completion. Contemporary credit to Simplex must be reconciled with retrospective claims of cancellation/reassignment; no replacement-contract event is inferred.",
+          "sources": ["https://themetrorailguy.com/2023/05/02/simplex-launches-bangalore-metro-reach-3cs-final-segment/"]
+        },
+        {
+          "id": "madavara-september2023-forecast", "title": "September 2023 Madavara opening window reported", "category": "Deadline",
+          "date": "2023-06-28", "date_basis": "reported_on", "scope": "Nagasandra - Madavara",
+          "revised_target": "September 2023",
+          "description": "Reporting suggested a September opening window, which was missed.",
+          "comments": "A likely opening forecast, not a recovered formal commitment.",
+          "sources": ["https://vijaykarnataka.com/news/bengaluru-city/nagasandra-madavara-metro-line-on-tumakuru-road-will-be-launched-by-september/articleshow/101318221.cms"]
+        },
+        {
+          "id": "madavara-july2024-target", "title": "Madavara opening forecast moves from April to July", "category": "Deadline",
+          "date": "2024-01-11", "date_basis": "reported_on", "scope": "Nagasandra - Madavara",
+          "previous_target": "April 2024", "revised_target": "July 2024",
+          "description": "Track work, trials and CMRS inspection remained. Reporting described protests, supplier problems, NICE access and pandemic delays. The July forecast was missed.",
+          "sources": ["https://www.newindianexpress.com/states/karnataka/2024/jan/11/bengaluru-metros-green-line-extension-likely-to-open-by-july-2649865.html"]
+        },
+        {
+          "id": "madavara-september2024-target", "title": "Madavara forecast moves to end-September", "category": "Deadline",
+          "date": "2024-06-17", "date_basis": "reported_on", "scope": "Nagasandra - Madavara",
+          "previous_target": "July 2024", "revised_target": "End-September 2024",
+          "description": "Electrical/signalling systems, third rail and testing remained, pushing the forecast later. The end-September target was missed.",
+          "sources": ["https://www.newindianexpress.com/amp/story/states/karnataka/2024/Jun/17/bengaluru-green-line-extension-to-madavara-will-start-operations-only-by-sept-end"]
+        },
+        {
+          "id": "madavara-september-october-window", "title": "Madavara public-opening window widens into October", "category": "Deadline",
+          "date": "2024-07-31", "date_basis": "reported_on", "scope": "Nagasandra - Madavara passenger opening; trials separately planned",
+          "revised_target": "End-September / first week October 2024",
+          "description": "The MD's revised public-opening window anticipated inspection in September and proposed trials from August 6. The opening window was missed.",
+          "comments": "The planned August 6 trial start is not itself proof that trials actually began that day.",
+          "sources": ["https://www.newindianexpress.com/states/karnataka/2024/Jul/31/bangalore-metro-to-start-trial-runs-on-nagasandra-madavara-line-from-august-6"]
+        },
+        {
+          "id": "madavara-trials-disputed", "title": "Madavara trials begin in August; exact day unresolved", "category": "Testing",
+          "period": "2024-08", "date_basis": "period", "scope": "Nagasandra - Madavara",
+          "presentation": { "disputed": true },
+          "description": "Reports place trial commencement in August, with August 6 and August 17 both claimed.",
+          "comments": "August 6 was first announced as a plan and later described retrospectively as the start; contemporary Indian Express reporting says Saturday, August 17. No unsupported distinction between two testing stages is invented.",
+          "sources": ["https://www.newindianexpress.com/states/karnataka/2024/Jul/31/bangalore-metro-to-start-trial-runs-on-nagasandra-madavara-line-from-august-6", "https://metrorailnews.in/trial-run-on-bangalore-metros-extension/", "https://indianexpress.com/article/cities/bangalore/namma-metro-starts-trial-runs-nagasandra-madavara-9521052/lite/"]
+        },
+        {
+          "id": "madavara-unofficial-october-november-window", "title": "Unofficial Madavara forecast spans October-November", "category": "Deadline",
+          "date": "2024-08-18", "date_basis": "reported_on", "scope": "Nagasandra - Madavara",
+          "revised_target": "October-November 2024, unofficial forecast",
+          "description": "An unofficial source forecast opening within October-November; the eventual November 7 opening fell inside this broad window.",
+          "comments": "Not a formal announced date and not a missed target.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/namma-metro-starts-trial-runs-nagasandra-madavara-9521052/lite/"]
+        },
+        {
+          "id": "madavara-cmrs-inspection", "title": "CMRS inspects Madavara extension", "category": "Inspection",
+          "date": "2024-10-03", "scope": "Nagasandra - Madavara",
+          "description": "Statutory inspection covered the new northern extension.",
+          "sources": ["https://www.moneycontrol.com/news/india/3-km-in-7-years-bengaluru-metros-most-delayed-section-ready-for-commercial-operations-gets-cmrs-nod-12835794.html"]
+        },
+        {
+          "id": "madavara-cmrs-authorisation", "title": "Madavara receives conditional CMRS authorisation", "category": "Certification",
+          "date": "2024-10-04", "scope": "Nagasandra - Madavara",
+          "description": "A six-page sanction letter authorised commercial operation subject to conditions covering safety, operations, civil/track, electrical, stations and signalling.",
+          "comments": "Moneycontrol reported inspecting the letter. This is conditional authorisation, not passenger-service commencement.",
+          "sources": ["https://www.moneycontrol.com/news/india/3-km-in-7-years-bengaluru-metros-most-delayed-section-ready-for-commercial-operations-gets-cmrs-nod-12835794.html"]
+        },
+        {
+          "id": "madavara-october2024-target", "title": "Madavara opening forecast within October", "category": "Deadline",
+          "date": "2024-10-04", "date_basis": "reported_on", "scope": "Nagasandra - Madavara",
+          "revised_target": "Within October 2024",
+          "description": "After conditional sanction, compliance and government/inauguration arrangements remained. The October opening forecast was missed.",
+          "sources": ["https://www.moneycontrol.com/news/india/3-km-in-7-years-bengaluru-metros-most-delayed-section-ready-for-commercial-operations-gets-cmrs-nod-12835794.html"]
+        },
+        {
+          "id": "madavara-ministerial-inspection-ride", "title": "Ministerial inspection ride reaches Madavara", "category": "Inspection",
+          "date": "2024-11-06", "scope": "Nagasandra - Madavara",
+          "description": "The Deputy CM and other representatives rode to Madavara ahead of public opening.",
+          "comments": "Not automatically a formal inauguration; a separate ceremony was described as a later event.",
+          "sources": ["https://www.deccanherald.com/india/karnataka/bengaluru/day-before-public-launch-dk-shivakumar-takes-metro-ride-to-madavara-3265346"]
+        },
+        {
+          "id": "madavara-opening-announced", "title": "November 7 Madavara public opening announced", "category": "Deadline",
+          "date": "2024-11-06", "scope": "Nagasandra - Madavara",
+          "revised_target": "November 7, 2024 at 5 am",
+          "description": "The announcement was achieved the following morning, while a separate formal ceremony was deferred.",
+          "sources": ["https://www.deccanherald.com/india/karnataka/bengaluru/day-before-public-launch-dk-shivakumar-takes-metro-ride-to-madavara-3265346", "https://www.newindianexpress.com/amp/story/cities/bengaluru/2024/Nov/07/green-line-extension-launch-madavara-nagasandra-route-gains-popularity"]
+        },
+        {
+          "id": "madavara-passenger-opening", "title": "Madavara passenger service begins", "category": "Opening",
+          "date": "2024-11-07", "scope": "Stage 5: Nagasandra - Madavara",
+          "description": "The extension opened to passengers at 5 am, completing the currently operating Green Line at the research cutoff.",
+          "comments": "Contemporary opening-day reports support November 7. A later ministry-summary report says November 17 and conflicts with those records; it does not replace the opening date. A separate formal inauguration date remains unestablished.",
+          "sources": ["https://www.newindianexpress.com/amp/story/cities/bengaluru/2024/Nov/07/green-line-extension-launch-madavara-nagasandra-route-gains-popularity", "https://www.biec.in/enewsletter/2024/november/", "https://www.moneycontrol.com/news/india/bengaluru-metro-phase-2-deadline-pushed-to-sept-2026-pink-line-to-open-in-two-phases-13431148.html"]
+        }
+      ]
+    },
     "purple": { "name": "Purple Line", "research_status": "not_started", "milestones": [] },
     "pink": {
       "name": "Pink Line",
