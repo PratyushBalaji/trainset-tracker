@@ -1,50 +1,74 @@
 <script lang="ts">
-  import { ExternalLink, X } from '@lucide/svelte';
-  import { formatDate } from '$lib/data/date';
+  import { X } from '@lucide/svelte';
+  import { milestoneDateLabel } from '$lib/data/evidence';
+  import { daysBetween } from '$lib/data/date';
+  import { rollingStockDesign } from '$lib/data/presentation';
+  import TrainIcon from './TrainIcon.svelte';
+  import SourceLinks from './SourceLinks.svelte';
   import { getMilestoneStage } from '$lib/data/lifecycle';
-  import { lineColors, stageColors } from '$lib/data/resolve';
+  import { lineColors } from '$lib/data/presentation';
+  import { stageColors } from '$lib/data/lifecycle';
   import type { DatedTrainset } from '$lib/data/types';
 
   interface Props {
     trainset: DatedTrainset;
+    asOf: string;
+    chartHref?: string;
     onClear: () => void;
   }
 
-  let { trainset, onClear }: Props = $props();
+  let { trainset, asOf, chartHref, onClear }: Props = $props();
+  const steps = [
+    { label: 'Dispatched', keys: ['factory_dispatch'], color: '#dfab06' },
+    { label: 'Delivered', keys: ['depot_arrival'], color: '#2f7fbd' },
+    { label: 'Mainline tests', keys: ['first_mainline_run', 'mainline_testing'], color: '#2f7fbd' },
+    { label: 'In service', keys: ['revenue_induction'], color: '#15884d' }
+  ];
+  let stepState = $derived(steps.map((step) => {
+    const milestone = trainset.milestones.find((m) => step.keys.includes(m.key));
+    return { ...step, milestone, done: !!milestone && milestone.date <= asOf };
+  }));
+  let daysInStage = $derived(trainset.statusMilestone ? daysBetween(trainset.statusMilestone.date, asOf) : null);
 
   let lineColor = $derived(lineColors[trainset.displayLine] ?? '#6f786f');
   let stageColor = $derived(stageColors[trainset.currentStage.id]);
 
-  function sourceLabel(source: string): string {
-    try {
-      return new URL(source).hostname.replace(/^www\./, '');
-    } catch {
-      return source;
-    }
-  }
 </script>
 
 <aside
   class="detail-panel"
+  id="trainset-detail"
+  tabindex="-1"
   style={`--line-color: ${lineColor}; --stage-color: ${stageColor.color}; --stage-soft: ${stageColor.softColor}; --stage-text: ${stageColor.textColor}`}
   aria-label={`${trainset.trainsetNumber} details`}
 >
   <header class="detail-header">
-    <div>
-      <p class="eyebrow">{trainset.contractId}</p>
-      <h2>{trainset.trainsetNumber}</h2>
-      <p>{trainset.manufacturer}</p>
+    {#if rollingStockDesign[trainset.rollingStockId]}<TrainIcon design={rollingStockDesign[trainset.rollingStockId]} variant="outline" size={64} color={lineColor} />{/if}
+    <div class="title-block">
+      <p class="eyebrow">{trainset.lineSummary} · {trainset.contractId.replace('bmrcl-', '').toUpperCase()} · {trainset.manufacturer}</p>
+      <h2 class="tnum">{trainset.trainsetNumber}</h2>
     </div>
 
-    <button class="icon-button" type="button" aria-label="Close detail panel" onclick={onClear}>
+    <button class="icon-button" type="button" aria-label="Close details" onclick={onClear}>
       <X size={17} />
     </button>
   </header>
 
+  <ol class="steps" aria-label="Progress">
+    {#each stepState as step}
+      <li class:done={step.done} style={`--step: ${step.color}`}>
+        <span class="bar"></span>
+        <span class="step-label">{step.label}</span>
+        <span class="step-date tnum">{step.milestone ? milestoneDateLabel(step.milestone) : 'Not recorded'}</span>
+      </li>
+    {/each}
+  </ol>
+
   <div class="status-strip">
-    <span>{trainset.currentStage.label}</span>
-    <strong>{formatDate(trainset.statusDate)}</strong>
+    <strong>{trainset.currentStage.label}{#if daysInStage !== null && trainset.currentStage.id !== 'no_data'} · {daysInStage} days{/if}</strong>
+    {#if trainset.statusMilestone}<span class="tnum">Since {trainset.statusMilestone.label.toLowerCase()} on {milestoneDateLabel(trainset.statusMilestone)}</span>{/if}
   </div>
+  {#if chartHref}<a class="return-chart" href={chartHref}>See on lifecycle chart →</a>{/if}
 
   <dl class="spec-grid">
     <div>
@@ -87,7 +111,7 @@
           >
             <div class="milestone-main">
               <span>{milestone.label}</span>
-              <time datetime={milestone.date}>{formatDate(milestone.date)}</time>
+              <time datetime={milestone.date}>{milestoneDateLabel(milestone)}</time>
             </div>
 
             {#if milestone.comments}
@@ -95,17 +119,8 @@
             {/if}
 
             {#if milestone.sources.length > 0}
-              <div class="sources">
-                {#each milestone.sources.slice(0, 3) as source}
-                  <a href={source} target="_blank" rel="noreferrer">
-                    {sourceLabel(source)}
-                    <ExternalLink size={12} />
-                  </a>
-                {/each}
-                {#if milestone.sources.length > 3}
-                  <span>+{milestone.sources.length - 3} more</span>
-                {/if}
-              </div>
+              <SourceLinks sources={milestone.sources} label={`${trainset.trainsetNumber} ${trainset.lineSummary}, ${milestone.label}, ${milestoneDateLabel(milestone)}`} />
+            {:else}<p>No direct reference recorded.</p>
             {/if}
           </li>
         {/each}
@@ -122,28 +137,33 @@
     max-height: 100%;
     min-height: 0;
     overflow: auto;
-    padding: 14px;
+    padding: 18px 20px 20px;
     border: 1px solid #d8ded4;
-    border-top: 5px solid var(--line-color);
-    border-radius: 8px;
+    border-top: 6px solid var(--line-color);
+    border-radius: 14px;
     background: #fffdfa;
-    box-shadow: 0 18px 42px rgba(27, 34, 30, 0.12);
+    box-shadow: none;
   }
 
   .detail-header {
+    position: sticky;
+    top: -14px;
+    z-index: 3;
+    background: #fffdfa;
+    padding: 12px 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center !important;
     justify-content: space-between;
     gap: 16px;
   }
 
   .eyebrow {
     margin: 0 0 5px;
-    color: #687267;
-    font-size: 0.72rem;
-    font-weight: 760;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 500;
     letter-spacing: 0;
-    text-transform: uppercase;
+    text-transform: none;
   }
 
   h2,
@@ -153,7 +173,10 @@
   }
 
   h2 {
-    font-size: 1.45rem;
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     line-height: 1;
   }
 
@@ -165,8 +188,8 @@
 
   .icon-button {
     display: inline-grid;
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
     place-items: center;
     border: 1px solid #d8ded4;
     border-radius: 8px;
@@ -177,24 +200,27 @@
   .icon-button:hover,
   .icon-button:focus-visible {
     border-color: var(--line-color);
-    outline: none;
+    outline: 2px solid #2377b9;
   }
 
   .status-strip {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 12px;
-    padding: 8px 10px;
-    border-radius: 8px;
+    gap: 3px;
+    padding: 12px 14px;
+    border-radius: 10px;
     background: var(--stage-soft);
     color: #1f2924;
     font-size: 0.88rem;
   }
 
   .status-strip span {
-    color: color-mix(in srgb, var(--stage-color) 74%, #17211d);
-    font-weight: 760;
+    color: var(--ink-3);
+    font-weight: 400;
+    font-size: 12px;
   }
 
   .spec-grid {
@@ -256,12 +282,12 @@
   }
 
   .milestone-main span {
-    color: color-mix(in srgb, var(--milestone-color) 68%, #111913);
+    color: #26342e;
   }
 
   time {
-    color: color-mix(in srgb, var(--milestone-color) 58%, #445048);
-    white-space: nowrap;
+    color: #445048;
+    text-align: right;
   }
 
   li p,
@@ -271,27 +297,19 @@
     line-height: 1.45;
   }
 
-  .sources {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .sources a,
-  .sources span {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    max-width: 100%;
-    padding: 4px 6px;
-    border: 1px solid color-mix(in srgb, var(--milestone-color) 36%, #d8ded4);
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--milestone-soft) 46%, #ffffff);
-    color: #445048;
-    font-size: 0.68rem;
-    line-height: 1.1;
-    text-decoration: none;
-  }
+  ol.steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+  .steps li { display: flex; flex-direction: column; gap: 5px; padding: 0; border: 0; }
+  .steps .bar { height: 6px; border-radius: 3px; background: #dfe4db; }
+  .steps li.done .bar { background: var(--step); }
+  .step-label { font-size: 11px; font-weight: 600; color: var(--ink-2); }
+  .steps li:not(.done) .step-label { color: var(--muted); }
+  .step-date { font-size: 11px; color: var(--muted); line-height: 1.3; }
+  .status-strip strong { font-size: 14px; color: var(--ink); }
+  .detail-header .title-block { flex: 1; min-width: 0; }
+  .detail-panel:focus-visible { outline: none !important; }
+  .return-chart { font-weight: 600; color: var(--ink) !important; font-size: 13px !important; line-height: 1.6; }
+  .detail-panel :global(a:focus-visible) { scroll-margin-top: calc(var(--site-header-height) + 150px); }
+  .detail-panel { scroll-margin-top: calc(var(--site-header-height) + 12px); }
 
   @media (max-width: 720px) {
     .spec-grid {
@@ -301,7 +319,10 @@
 
   @media (max-width: 820px) {
     .detail-panel {
-      max-height: 360px;
+      max-height: none;
+      overflow: visible;
     }
+    .detail-header { top: var(--site-header-height); }
+    .milestone-main { flex-wrap: wrap; }
   }
 </style>

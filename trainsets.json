@@ -1,8 +1,159 @@
 {
   "schema_version": "1.1.0",
   "contracts": {
-    "bmrcl-4rs-dm": {"uid":"a5988fd8-a64d-4fa5-ae39-64969242adef","awardee":"CRRC Nanjing Puzhen","awarded_on":"2019-12-02","base_cars":216,"base_contract_value":{"amount":1578,"currency":"INR","unit":"crore"},"rolling_stock":["bmrcl-4rs-dm-cbtc","bmrcl-4rs-dm-dtg"]},
-    "bmrcl-5rs-dm": {"uid":"ecfca714-b042-46e7-8e2e-8b5eea674c7e","awardee":"BEML","tendered_on":"2022-09-19","awarded_on":"2023-08-07","signed_on":"2023-08-19","base_trainsets":53,"base_cars":318,"base_contract_value":{"amount":3176.43,"currency":"INR","unit":"crore"},"variations":[{"ordered_on":"2025-03-28","additional_trainsets":7,"additional_cars":42,"contract_value":{"amount":405,"currency":"INR","unit":"crore"},"intended_line":"pink"},{"ordered_on":"2025-12-03","additional_trainsets":6,"additional_cars":36,"contract_value":{"amount":414,"currency":"INR","unit":"crore"},"intended_line":"yellow"}],"rolling_stock":["bmrcl-5rs-dm"]}
+    "bmrcl-2rs-dm": {
+      "uid": "84701a53-0082-4d4a-b8fc-53d8eb856775",
+      "tracked": false,
+      "year": "2009",
+      "description": "50 three-car trains for the original Purple and Green Line fleet",
+      "awardee": "BEML-led consortium: BEML, Hyundai Rotem, Mitsubishi Corporation and Mitsubishi Electric",
+      "manufacturers": [
+        "BEML",
+        "Hyundai Rotem"
+      ],
+      "lines": [
+        "purple",
+        "green"
+      ],
+      "base_trainsets": 50,
+      "base_cars": 150,
+      "order_description": "50 three-car trains \u00b7 150 cars; later lengthened under 3RS-DM",
+      "base_contract_value": {
+        "amount": 1672.5,
+        "currency": "INR",
+        "unit": "crore"
+      },
+      "contract_period": "Original delivery target: October 2010; subsequently delayed",
+      "comments": "Exact award and agreement dates not established. Value includes spares; a later ministry cost comparison uses a different valuation basis.",
+      "sources": [
+        "https://eparlib.sansad.in/bitstream/123456789/642125/1/77851.pdf",
+        "https://indiankanoon.org/doc/42010710/",
+        "https://indiankanoon.org/doc/46555462/",
+        "https://www.rediff.com/business/report/beml-bags-rs-1672-cr-metro-rail-order/20090210.htm",
+        "https://www.mohua.gov.in/upload/uploadfiles/files/Report%204%20Traction%20System.pdf"
+      ],
+      "rolling_stock": []
+    },
+    "bmrcl-3rs-dm": {
+      "uid": "80837727-702a-4653-b9d2-81be50f62a39",
+      "tracked": false,
+      "year": "2017",
+      "description": "150 intermediate cars to lengthen 50 existing trains, plus seven new six-car trains",
+      "awardee": "BEML",
+      "manufacturers": [
+        "BEML"
+      ],
+      "lines": [
+        "purple",
+        "green"
+      ],
+      "signed_on": "2017-03-25",
+      "base_cars": 150,
+      "order_description": "150 intermediate cars to convert 50 three-car trains into six-car trains",
+      "base_contract_value": {
+        "amount": 1421,
+        "currency": "INR",
+        "unit": "crore"
+      },
+      "contract_period": "Original announced supply schedule: June 2018\u2013December 2019; subsequently extended",
+      "variations": [
+        {
+          "additional_trainsets": 7,
+          "additional_cars": 42,
+          "contract_value": {
+            "amount": 400,
+            "currency": "INR",
+            "unit": "crore"
+          },
+          "comments": "Announced in February 2019; exact order date not established.",
+          "sources": [
+            "https://economictimes.indiatimes.com/industry/beml-to-supply-42-metro-coaches-to-bangalore-metro-corporation-limited-for-rs-400-crore/articleshow/68202036.cms",
+            "https://themetrorailguy.com/2020/06/12/beml-to-deliver-42-new-coaches-to-bangalore-metro-from-july/",
+            "https://bsmedia.business-standard.com/_media/bs/data/announcements/bse/02092021/ee976813-4bea-4741-b1a2-93dc23b5ddbc.pdf"
+          ]
+        }
+      ],
+      "comments": "The base order augmented existing trains; it did not add 50 new trainsets. The tax ruling quotes about \u20b9670.05 crore for the activities it examines, while BEML announced the procurement at \u20b91,421 crore; these figures should not be treated as interchangeable.",
+      "sources": [
+        "https://gstcouncil.gov.in/sites/default/files/2024-02/kar_aaar_08_2021-22_beml.pdf",
+        "https://www.bemlindia.in/writereaddata/Downloads/201811261028BEML_Journal_October_2018.pdf",
+        "https://economictimes.indiatimes.com/industry/transportation/railways/bangalore-metro-rush-to-continue-till-june-2018/articleshow/58022717.cms",
+        "https://timesofindia.indiatimes.com/city/bengaluru/six-coach-trains-may-be-delayed/articleshow/71130730.cms"
+      ],
+      "rolling_stock": []
+    },
+    "bmrcl-4rs-dm": {
+      "uid": "a5988fd8-a64d-4fa5-ae39-64969242adef",
+      "awardee": "CRRC Nanjing Puzhen",
+      "awarded_on": "2019-12-02",
+      "base_cars": 216,
+      "base_contract_value": {
+        "amount": 1578,
+        "currency": "INR",
+        "unit": "crore"
+      },
+      "rolling_stock": [
+        "bmrcl-4rs-dm-cbtc",
+        "bmrcl-4rs-dm-dtg"
+      ],
+      "description": "36 six-car trains: 21 DTG trains for Purple/Green and 15 CBTC trains for Yellow",
+      "contract_period": "Original delivery period: 173 weeks; subsequently delayed",
+      "comments": "Agreement signing is reported as 7 February 2020, but requires corroboration because that report contains conflicting award-year and value text.",
+      "sources": [
+        "https://timesofindia.indiatimes.com/city/bengaluru/bmrcl-floats-tender-to-induct-72-coaches-after-chinese-firm-misses-deadline/articleshow/91054251.cms",
+        "https://www.moneycontrol.com/news/india/bengaluru-metro-s-green-line-to-get-full-fleet-of-crrc-trains-existing-rakes-to-move-to-purple-line-13744901.html",
+        "https://urbantransportnews.com/news/crrc-wins-rs-855-crore-rolling-stock-contract-of-bangalore-metro-phase-2"
+      ]
+    },
+    "bmrcl-5rs-dm": {
+      "uid": "ecfca714-b042-46e7-8e2e-8b5eea674c7e",
+      "awardee": "BEML",
+      "tendered_on": "2022-09-19",
+      "awarded_on": "2023-08-07",
+      "signed_on": "2023-08-19",
+      "base_trainsets": 53,
+      "base_cars": 318,
+      "base_contract_value": {
+        "amount": 3176.43,
+        "currency": "INR",
+        "unit": "crore"
+      },
+      "variations": [
+        {
+          "ordered_on": "2025-03-28",
+          "additional_trainsets": 7,
+          "additional_cars": 42,
+          "contract_value": {
+            "amount": 405,
+            "currency": "INR",
+            "unit": "crore"
+          },
+          "intended_line": "pink"
+        },
+        {
+          "ordered_on": "2025-12-03",
+          "additional_trainsets": 6,
+          "additional_cars": 36,
+          "contract_value": {
+            "amount": 414,
+            "currency": "INR",
+            "unit": "crore"
+          },
+          "intended_line": "yellow"
+        }
+      ],
+      "rolling_stock": [
+        "bmrcl-5rs-dm"
+      ],
+      "description": "53 six-car trains for Pink and Blue, plus seven Pink and six Yellow Line trains",
+      "contract_period": "Original base-order delivery schedule: June 2025\u2013May 2027; comprehensive maintenance for up to 15 years",
+      "comments": "The delivery window is the original schedule for the 53-train base order, not a separately verified deadline for either variation. BEML's December 2025 release contains a typo saying 69 trains for 360 cars; the March release and December opening paragraph establish 60 before the six-train top-up, and 66 after it.",
+      "sources": [
+        "https://staging.bemlindia.in/wp-content/uploads/2025/01/BEML-Annual-Report_2023-24_english.pdf",
+        "https://www.bemlindia.in/wp-content/uploads/2025/03/28032025.pdf",
+        "https://www.bemlindia.in/wp-content/uploads/2025/12/pressrelease041225_2.pdf"
+      ]
+    }
   },
   "rolling_stock": {
     "bmrcl-4rs-dm-cbtc": {"signalling":"CBTC","cars_per_trainset":6,"gauge_mm":1435,"traction_power":"750 V DC third rail","carbody":"stainless steel","intended_lines":["yellow"]},

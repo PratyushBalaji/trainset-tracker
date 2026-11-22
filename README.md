@@ -8,7 +8,19 @@ A timeline from rolling stock procurement to induction.
 
 Parts of this project, especially the Svelte UI and supporting documentation, are being developed with AI assistance. I am not a frontend developer, so these tools are my interface between the data side I know and love, and being able to tell a story. The trainset data is source-backed and human-reviewed; I've spent hours tracing Twitter posts, news articles, and press releases. All factual information is backed by reputable sources to the best of my abilities to ensure a clear audit trail.
 
-## Data
+## Local website preview
+
+Run `npm install`, then `npm run dev`. The SvelteKit routes are Home (`/`), Fleet (`/fleet`), Lifecycle (`/lifecycle`), Timeline (`/timeline/yellow`) and Route Map (`/routemap`). The old `/tracker` URL redirects to `/fleet`, keeping `?trainset=` deep links. Validate with `npm test`, `npm run check` and `npm run build`.
+
+Line history lives separately in [`lines.json`](./lines.json), leaving the trainset format unchanged. Entries distinguish exact dates, month-only periods, inspection intervals, reported dates and disputed derived dates. Research for all five lines is preliminary. Undated claims and scoring qualifications are retained in the [Pink](./research/pink-line-milestones.md), [Blue](./research/blue-line-milestones.md), [Green](./research/green-line-milestones.md) and [Purple](./research/purple-line-milestones.md) research notes. Green and Purple are scored per opening stage; Blue retains section-specific histories without exact-date delay scorecards.
+
+Timeline presentation is built by the pure `buildLineTimeline` function, then rendered by `LineTimeline.svelte`. Chart and card components accept resolved data as props rather than importing the dataset, allowing reuse in a future Metro Central application.
+
+The Route Map shows Pratyush Balaji's artistic rendition of the official Namma Metro map from [the map project](https://github.com/PratyushBalaji/maps), revision 18 January 2026, extended with upcoming lines and the city's natural features. It is a schematic artwork, not a live operating-status map. `static/maps/namma-metro-layers.svg` is built from the Inkscape file with `python scripts/build-map.py "<path to metro map.svg>"`, which keeps layer names for the page's toggles. The Timeline mini-map reuses route paths from the 24 June 2025 revision.
+
+The map artwork is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/): free to share and adapt with credit, not for commercial use.
+
+## Trainset data
 
 The canonical dataset is stored in [`trainsets.json`](./trainsets.json). Version 1 keeps the data model deliberately small: contracts describe procurement packages, rolling stock entries describe materially distinct train designs/specifications, and trainsets represent the individual physical trains whose timelines are being tracked.
 
@@ -71,6 +83,8 @@ Each contract and trainset also has an immutable generated `uid`, independent of
 ## Contracts
 
 A contract describes the procurement package itself. It stores the awardee, known procurement dates, original contract scope/value, later contract variations, and the rolling stock types sanctioned under that contract.
+
+All four procurement records live in the `contracts` section of `trainsets.json`, including descriptions, original delivery periods, qualifications and sources. Legacy 2RS-DM/3RS-DM records have `tracked: false` and no individual trainsets; they do not contribute to tracked order or pending totals. Their empty `rolling_stock` arrays indicate that no legacy design is tracked. In particular, 3RS-DM's base 150 intermediate cars lengthened existing trains rather than creating 50 new trains. Original delivery schedules are historical commitments, not current forecasts. Unknown exact dates are omitted.
 
 ```jsonc
 "bmrcl-5rs-dm": {

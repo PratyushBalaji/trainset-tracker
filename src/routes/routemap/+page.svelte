@@ -1,0 +1,221 @@
+<script lang="ts">
+  import { onMount, tick } from 'svelte';
+  import { Download, Layers, Maximize, Minus, Plus } from '@lucide/svelte';
+  import { isLineLayer, lineLayerColor, mapDetailLayers, mapPhases } from '$lib/data/map-layers';
+
+  let viewport: HTMLDivElement;
+  let image = $state<HTMLElement>() as HTMLElement;
+  let svgMarkup = $state('');
+  let found = $state<string[]>([]);
+  let hidden = $state(new Set<string>());
+  let markers = $state(true);
+  // Phases list only line layers present in the file; any other line layer goes to "Other lines".
+  let phases = $derived(mapPhases.map((p) => ({ ...p, layers: p.layers.filter((l) => found.includes(l)) })).filter((p) => p.layers.length));
+  let otherLines = $derived(found.filter((l) => isLineLayer(l) && !mapPhases.some((p) => p.layers.includes(l))));
+  let details = $derived([
+    ...mapDetailLayers.filter((d) => found.includes(d.layer)),
+    ...found.filter((l) => !isLineLayer(l) && !mapDetailLayers.some((d) => d.layer === l)).map((l) => ({ layer: l, label: l }))
+  ]);
+
+  function toggle(layers: string[], show: boolean) {
+    const next = new Set(hidden);
+    for (const l of layers) { if (show) next.delete(l); else next.add(l); }
+    hidden = next;
+  }
+  const phaseState = (layers: string[]) => (layers.every((l) => !hidden.has(l)) ? 'on' : layers.every((l) => hidden.has(l)) ? 'off' : 'mixed');
+
+  $effect(() => {
+    const hiddenNow = hidden;
+    const showMarkers = markers;
+    if (!svgMarkup || !image) return;
+    for (const g of image.querySelectorAll<SVGGElement>('[data-layer]')) g.style.display = hiddenNow.has(g.dataset.layer ?? '') ? 'none' : '';
+    image.classList.toggle('no-markers', !showMarkers);
+  });
+  let width = $state(1000);
+  let height = $state(620);
+  let zoom = $state(1);
+  let dragging = $state(false);
+  let origin = { x: 0, y: 0, left: 0, top: 0 };
+  const originalWidth = 1126.2992;
+  const originalHeight = 977.229;
+  // On wide screens the info card floats over the map: the fitted map sits in the space between the
+  // card and the zoom toolbar, so the card only covers it once you zoom in and pan.
+  let overlay = $state(true);
+  let card: HTMLDivElement;
+  let cardRight = $state(340);
+  const pad = 16;
+  let insetLeft = $derived(overlay ? cardRight + pad : pad);
+  let insetRight = $derived(overlay ? 84 : pad);
+  let fitScale = $derived(Math.min((width - insetLeft - insetRight) / originalWidth, (height - pad * 2) / originalHeight));
+  let mapWidth = $derived(originalWidth * fitScale * zoom);
+  let mapHeight = $derived(originalHeight * fitScale * zoom);
+
+  onMount(() => {
+    fetch('/maps/namma-metro-layers.svg')
+      .then((r) => (r.ok ? r.text() : ''))
+      .then((text) => {
+        if (!text) return;
+        svgMarkup = text;
+        found = [...text.matchAll(/data-layer="([^"]+)"/g)].map((m) => m[1].replaceAll('&amp;', '&'));
+      })
+      .catch(() => {});
+    const wide = window.matchMedia('(min-width: 861px)');
+    const sync = () => { overlay = wide.matches; cardRight = card.offsetLeft + card.offsetWidth; };
+    const observer = new ResizeObserver(() => { width = viewport.clientWidth; height = viewport.clientHeight; sync(); });
+    observer.observe(viewport);
+    observer.observe(card);
+    wide.addEventListener('change', sync);
+    sync();
+    return () => { observer.disconnect(); wide.removeEventListener('change', sync); };
+  });
+
+  async function setZoom(next: number) {
+    // Zoom about the centre of the uncovered area (right of the card, left of the toolbar).
+    const cx = (insetLeft + viewport.clientWidth - insetRight) / 2;
+    const x = (viewport.scrollLeft + cx - image.offsetLeft) / mapWidth;
+    const y = (viewport.scrollTop + viewport.clientHeight / 2 - image.offsetTop) / mapHeight;
+    zoom = Math.max(1, Math.min(8, next));
+    await tick();
+    viewport.scrollLeft = image.offsetLeft + x * mapWidth - cx;
+    viewport.scrollTop = image.offsetTop + y * mapHeight - viewport.clientHeight / 2;
+  }
+
+  async function fit() {
+    zoom = 1;
+    await tick();
+    viewport.scrollTo(0, 0);
+  }
+
+  function startPan(event: PointerEvent) {
+    if (event.pointerType !== 'mouse' || event.button !== 0) return;
+    dragging = true;
+    origin = { x: event.clientX, y: event.clientY, left: viewport.scrollLeft, top: viewport.scrollTop };
+    viewport.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  }
+
+  function pan(event: PointerEvent) {
+    if (!dragging) return;
+    viewport.scrollLeft = origin.left - (event.clientX - origin.x);
+    viewport.scrollTop = origin.top - (event.clientY - origin.y);
+  }
+
+  function stopPan(event: PointerEvent) {
+    dragging = false;
+    if (viewport.hasPointerCapture(event.pointerId)) viewport.releasePointerCapture(event.pointerId);
+  }
+</script>
+
+<svelte:head><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;600&display=swap" /><title>Route Map | Namma Metro Trainset Tracker</title><meta name="description" content="Pratyush Balaji's artistic rendition of the Namma Metro map, extended with upcoming lines and the city's natural features. CC BY-NC 4.0." /></svelte:head>
+
+<main class="map-page">
+  <section class="map-viewer" aria-label="Namma Metro route map">
+    <!-- svelte-ignore a11y_no_noninteractive_tabindex (The scrollable map needs keyboard focus for native arrow-key panning.) -->
+    <div bind:this={viewport} class:dragging class="map-viewport" role="region" aria-label="Scrollable route map. Drag to pan." tabindex="0" onpointerdown={startPan} onpointermove={pan} onpointerup={stopPan} onpointercancel={stopPan}>
+      <div class="map-stage" style={`width: ${Math.max(width, mapWidth + insetLeft + insetRight)}px; height: ${Math.max(height, mapHeight + pad * 2)}px; padding: 0 ${insetRight}px 0 ${insetLeft}px`}>
+        {#if svgMarkup}
+          <!-- Our own static map file, generated by scripts/build-map.py. -->
+          <div bind:this={image} class="map-svg" role="img" aria-label="Namma Metro schematic with operational and planned lines, station names, interchanges and surrounding roads." style={`width: ${mapWidth}px; height: ${mapHeight}px`}>{@html svgMarkup}</div>
+        {:else}
+          <img bind:this={image} src="/maps/namma-metro-download.svg" alt="Namma Metro schematic with operational and planned lines, station names, interchanges and surrounding roads. Revision 18 January 2026." draggable="false" width={mapWidth} height={mapHeight} />
+        {/if}
+      </div>
+    </div>
+
+    <div class="info-card" bind:this={card}>
+      <h1 class="page-heading">Route Map</h1>
+      <p class="about">My artistic rendition of the official Namma Metro map, extended with upcoming metro lines and our city's natural features.</p>
+      <p class="revision tnum">Revision 18 Jan 2026</p>
+      <p class="license"><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noreferrer">CC BY-NC 4.0</a>: free to share and modify, not for commercial use.</p>
+      <a class="download" href="/maps/namma-metro-download.svg" download="namma-metro-map-2026-01-18.svg"><Download size={15} />Download SVG</a>
+
+      {#if found.length}
+        <details class="layers" open>
+          <summary><Layers size={15} /> Layers</summary>
+          <div class="layer-body">
+            {#each phases as phase (phase.id)}
+              {@const state = phaseState(phase.layers)}
+              <div class="phase">
+                <label class="phase-toggle"><input type="checkbox" checked={state === 'on'} indeterminate={state === 'mixed'} onchange={(e) => toggle(phase.layers, e.currentTarget.checked)} />{phase.label}</label>
+                <div class="line-chips">
+                  {#each phase.layers as layer}
+                    <button type="button" class="line-chip" aria-pressed={!hidden.has(layer)} onclick={() => toggle([layer], hidden.has(layer))}><span class="swatch" style={`background: ${lineLayerColor[layer] ?? '#687267'}`}></span>{layer.replace(' Line', '')}</button>
+                  {/each}
+                </div>
+              </div>
+            {/each}
+            {#if otherLines.length}
+              <div class="phase">
+                <span class="phase-toggle">Other lines</span>
+                <div class="line-chips">{#each otherLines as layer}<button type="button" class="line-chip" aria-pressed={!hidden.has(layer)} onclick={() => toggle([layer], hidden.has(layer))}>{layer}</button>{/each}</div>
+              </div>
+            {/if}
+            <div class="detail-toggles">
+              <label><input type="checkbox" bind:checked={markers} />Station markers</label>
+              {#each details as d (d.layer)}
+                <label><input type="checkbox" checked={!hidden.has(d.layer)} onchange={(e) => toggle([d.layer], e.currentTarget.checked)} />{d.label}</label>
+              {/each}
+            </div>
+            <button type="button" class="reset" disabled={!hidden.size && markers} onclick={() => { hidden = new Set(); markers = true; }}>Show everything</button>
+          </div>
+        </details>
+      {/if}
+    </div>
+
+    <div class="map-toolbar" role="group" aria-label="Map zoom controls">
+      <button type="button" aria-label="Zoom in" title="Zoom in" disabled={zoom >= 8} onclick={() => setZoom(zoom * 1.3)}><Plus size={18} /></button>
+      <output aria-live="polite" class="tnum">{Math.round(zoom * 100)}%</output>
+      <button type="button" aria-label="Zoom out" title="Zoom out" disabled={zoom <= 1} onclick={() => setZoom(zoom / 1.3)}><Minus size={18} /></button>
+      <span class="sep" aria-hidden="true"></span>
+      <button type="button" aria-label="Fit map to screen" title="Fit to screen" onclick={fit}><Maximize size={16} /></button>
+    </div>
+  </section>
+</main>
+
+<style>
+  .map-viewer { position: relative; height: calc(100svh - var(--site-header-height)); min-height: 520px; background: #d0cdc6; overflow: hidden; }
+  .map-viewport { position: absolute; inset: 0; overflow: auto; cursor: grab; overscroll-behavior: contain; scrollbar-width: thin; }
+  .map-viewport.dragging { cursor: grabbing; }
+  .map-stage { display: grid; place-items: center; position: relative; box-sizing: border-box; }
+  img { display: block; max-width: none; user-select: none; }
+  .map-svg { user-select: none; }
+  .map-svg :global(svg) { display: block; width: 100%; height: 100%; }
+  /* !important: many circles carry an inline display:inline from Inkscape. */
+  :global(.map-svg.no-markers [data-layer$=' Line'] circle) { display: none !important; }
+  .layers { margin-top: 6px; border-top: 1px solid var(--border-soft); padding-top: 10px; }
+  .layers summary { display: flex; align-items: center; gap: 8px; min-height: 32px; font-size: 13px; font-weight: 700; list-style: none; }
+  .layers summary::-webkit-details-marker { display: none; }
+  .layer-body { display: flex; flex-direction: column; gap: 12px; padding-top: 6px; max-height: calc(100svh - var(--site-header-height) - 330px); overflow: auto; }
+  .phase { display: flex; flex-direction: column; gap: 6px; }
+  .phase-toggle { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--ink-2); }
+  .line-chips { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 24px; }
+  .line-chip { display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); font-size: 12px; }
+  .line-chip[aria-pressed='false'] { opacity: 0.45; text-decoration: line-through; }
+  .swatch { width: 14px; height: 4px; border-radius: 2px; }
+  .detail-toggles { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; padding-top: 8px; border-top: 1px solid var(--border-soft); }
+  .detail-toggles label { display: flex; align-items: center; gap: 7px; min-height: 28px; font-size: 12px; color: var(--ink-3); }
+  input[type='checkbox'] { width: 16px; height: 16px; margin: 0; accent-color: var(--ink); }
+  .reset { align-self: flex-start; height: 30px; padding: 0 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); font-size: 12px; }
+  .reset:disabled { opacity: 0.45; cursor: default; }
+  .info-card { position: absolute; z-index: 2; top: 20px; left: 20px; width: 300px; display: flex; flex-direction: column; gap: 8px; padding: 18px 18px 16px; border-radius: var(--radius-lg); background: var(--surface); box-shadow: 0 1px 2px #17211d14, 0 8px 24px #17211d1a; }
+  .info-card .page-heading { font-size: 26px; }
+  .about { margin: 0; font-size: 13px; line-height: 1.55; color: var(--ink-3); }
+  .revision { margin: 0; font-size: 11px; color: var(--muted); }
+  .license { margin: 0; font-size: 11px; line-height: 1.5; color: var(--muted); }
+  .license a { font-weight: 600; color: var(--ink-2); text-underline-offset: 2px; }
+  .download { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; height: 34px; margin-top: 4px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); font-size: 12px; font-weight: 600; text-decoration: none; }
+  .download:hover { border-color: var(--muted); }
+  .map-toolbar { position: absolute; z-index: 2; right: 20px; bottom: 20px; display: flex; flex-direction: column; align-items: center; padding: 4px; border-radius: 12px; background: var(--surface); box-shadow: 0 1px 2px #17211d14, 0 8px 24px #17211d1a; }
+  .map-toolbar button { display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 8px; background: transparent; }
+  .map-toolbar button:hover:not(:disabled) { background: var(--hover); }
+  .map-toolbar button:disabled { opacity: 0.35; cursor: default; }
+  output { font-size: 11px; color: var(--muted); padding: 2px 0; }
+  .sep { width: 24px; height: 1px; margin: 3px 0; background: var(--border-soft); }
+  @media (max-width: 860px) {
+    .map-viewer { height: calc(100svh - var(--site-header-height) - 150px); min-height: 380px; }
+    .info-card { position: static; width: auto; border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--border); padding: 16px; }
+    .map-viewer { display: flex; flex-direction: column; height: auto; }
+    .map-viewport { position: relative; height: 62svh; flex: none; }
+    .map-toolbar { bottom: 16px; right: 16px; }
+  }
+</style>

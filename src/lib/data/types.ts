@@ -11,6 +11,7 @@ export type MilestoneKey =
 export type LineId = 'yellow' | 'green' | 'purple' | 'pink' | 'blue' | string;
 
 export interface RawContract {
+  tracked?: boolean;
   uid: string;
   awardee: string;
   rolling_stock: string[];
@@ -58,6 +59,14 @@ export interface LifecycleStageDefinition {
 }
 
 export interface ResolvedMilestone {
+  presentation?: {
+    relation: 'exact' | 'before' | 'after' | 'uncertain';
+    inferred?: boolean;
+    derived?: boolean;
+    disputed?: boolean;
+    provisional?: boolean;
+    approximate?: boolean;
+  };
   key: MilestoneKey;
   label: string;
   date: string;

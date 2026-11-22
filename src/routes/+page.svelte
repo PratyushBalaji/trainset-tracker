@@ -1,981 +1,201 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
-  import { CalendarDays, ChevronDown, Eye, Filter, Minus, PanelLeftClose, PanelLeftOpen, Pause, Play, RotateCcw } from '@lucide/svelte';
-  import GanttChart from '$lib/components/GanttChart.svelte';
-  import TrainsetCard from '$lib/components/TrainsetCard.svelte';
-  import TrainsetDetail from '$lib/components/TrainsetDetail.svelte';
-  import {
-    addDays,
-    clampIsoDate,
-    compareIsoDate,
-    daysBetween,
-    formatDate,
-    maxIsoDate,
-    minIsoDate,
-    todayIsoDate
-  } from '$lib/data/date';
-  import { buildTimelineSegments } from '$lib/data/lifecycle';
-  import {
-    decorateTrainsetForDate,
-    getTrainsetTimelineBounds,
-    lineLabels,
-    lineOptions,
-    manufacturerOptions,
-    resolvedTrainsets,
-    stageDefinitions,
-    timelineBounds
-  } from '$lib/data/resolve';
-  import type { DatedTrainset, LineId, StageId } from '$lib/data/types';
+  import { ArrowRight } from '@lucide/svelte';
+  import { formatDate, todayIsoDate } from '$lib/data/date';
+  import { lineColors, lineLabels, lineOrder, rollingStockDesign, trainDesignLabels } from '$lib/data/presentation';
+  import NetworkMap from '$lib/components/NetworkMap.svelte';
+  import TrainIcon from '$lib/components/TrainIcon.svelte';
+  import { decorateTrainsetForDate, resolvedTrainsets } from '$lib/data/resolve';
+  import { pendingOn, trackedContractsLabel, untrackedFleet } from '$lib/data/coverage';
+  import { lines } from '$lib/data/lines';
+  import { buildStories } from '$lib/data/stories';
+  import StoryCarousel from '$lib/components/StoryCarousel.svelte';
+  import ContractsCard from '$lib/components/ContractsCard.svelte';
+  import { contractSummaries } from '$lib/data/contracts';
 
-  const today = clampIsoDate(todayIsoDate(), timelineBounds.start, timelineBounds.end);
-  const dateSliderMax = daysBetween(timelineBounds.start, timelineBounds.end);
-  const playbackStepDays = 1;
-  const playbackIntervalMs = 35;
-  const initiallyHiddenChartTrainsetIds = new Set(
-    resolvedTrainsets
-      .filter((trainset) => trainset.timelineSegments.length === 0)
-      .map((trainset) => trainset.id)
-  );
-
-  let selectedDate = $state(today);
-  let selectedStages = $state(new Set<StageId>(stageDefinitions.map((stage) => stage.id)));
-  let selectedManufacturers = $state(new Set<string>(manufacturerOptions));
-  let selectedLines = $state(new Set<LineId>(lineOptions));
-  let selectedTrainsetId = $state<string | null>(null);
-  let filtersCollapsed = $state(false);
-  let hiddenChartTrainsetIds = $state(new Set(initiallyHiddenChartTrainsetIds));
-  let isPlaybackActive = $state(false);
-  let playbackEndDate = $state<string | null>(null);
-  let playbackTimer: ReturnType<typeof setInterval> | null = null;
-
-  function toggleValue<T>(set: Set<T>, value: T): Set<T> {
-    const next = new Set(set);
-    if (next.has(value)) {
-      next.delete(value);
-    } else {
-      next.add(value);
-    }
-
-    return next;
-  }
-
-  function resetDate() {
-    stopPlayback();
-    selectedDate = today;
-  }
-
-  function setDateFromSlider(event: Event) {
-    stopPlayback();
-    const value = Number((event.currentTarget as HTMLInputElement).value);
-    selectedDate = addDays(timelineBounds.start, value);
-  }
-
-  function setDateFromInput(event: Event) {
-    stopPlayback();
-    const value = (event.currentTarget as HTMLInputElement).value;
-    if (value) {
-      selectedDate = clampIsoDate(value, timelineBounds.start, timelineBounds.end);
-    }
-  }
-
-  function selectTrainset(id: string) {
-    selectedTrainsetId = id;
-  }
-
-  function clearSelection() {
-    selectedTrainsetId = null;
-  }
-
-  function toggleTrainsetChartVisibility(id: string) {
-    const next = new Set(hiddenChartTrainsetIds);
-    if (next.has(id)) {
-      next.delete(id);
-    } else {
-      next.add(id);
-    }
-
-    hiddenChartTrainsetIds = next;
-  }
-
-  function showAllChartTrainsets() {
-    hiddenChartTrainsetIds = new Set();
-  }
-
-  function stopPlayback() {
-    if (playbackTimer) {
-      clearInterval(playbackTimer);
-      playbackTimer = null;
-    }
-
-    playbackEndDate = null;
-    isPlaybackActive = false;
-  }
-
-  function advancePlayback() {
-    const targetDate = playbackEndDate ?? timelineBounds.end;
-    const nextDate = clampIsoDate(
-      addDays(selectedDate, playbackStepDays),
-      timelineBounds.start,
-      targetDate
-    );
-
-    selectedDate = nextDate;
-
-    if (compareIsoDate(nextDate, targetDate) >= 0) {
-      stopPlayback();
-    }
-  }
-
-  function startPlayback() {
-    stopPlayback();
-    playbackEndDate = timelineBounds.end;
-    selectedDate = clampIsoDate(
-      selectedDate === today ? chartDataTimelineBounds.start : selectedDate,
-      timelineBounds.start,
-      timelineBounds.end
-    );
-    isPlaybackActive = true;
-    playbackTimer = setInterval(advancePlayback, playbackIntervalMs);
-  }
-
-  function togglePlayback() {
-    if (isPlaybackActive) {
-      stopPlayback();
-    } else {
-      startPlayback();
-    }
-  }
-
-  function setDateFromChart(date: string) {
-    stopPlayback();
-    selectedDate = clampIsoDate(date, timelineBounds.start, timelineBounds.end);
-  }
-
-  function countBy<T>(items: T[]): Map<T, number> {
-    return items.reduce((counts, item) => counts.set(item, (counts.get(item) ?? 0) + 1), new Map<T, number>());
-  }
-
-  let datedTrainsets = $derived(
-    resolvedTrainsets.map((trainset) => decorateTrainsetForDate(trainset, selectedDate))
-  );
-  let stageCounts = $derived(countBy(datedTrainsets.map((trainset) => trainset.currentStage.id)));
-  let manufacturerCounts = $derived(countBy(datedTrainsets.map((trainset) => trainset.manufacturer)));
-  let lineCounts = $derived(countBy(datedTrainsets.flatMap((trainset) => trainset.lineKeys)));
-  let dateSliderValue = $derived(daysBetween(timelineBounds.start, selectedDate));
-  let filteredTrainsets = $derived(datedTrainsets.filter(
-    (trainset) =>
-      selectedStages.has(trainset.currentStage.id) &&
-      selectedManufacturers.has(trainset.manufacturer) &&
-      trainset.lineKeys.some((line) => selectedLines.has(line))
-  ));
-  let visibleCardTrainsets = $derived(
-    filteredTrainsets.filter((trainset) => !hiddenChartTrainsetIds.has(trainset.id))
-  );
-  let hiddenCardTrainsets = $derived(
-    filteredTrainsets.filter((trainset) => hiddenChartTrainsetIds.has(trainset.id))
-  );
-  let chartBaseTrainsets = $derived(
-    filteredTrainsets.filter((trainset) => !hiddenChartTrainsetIds.has(trainset.id))
-  );
-  let chartDataTimelineBounds = $derived(getTrainsetTimelineBounds(chartBaseTrainsets, timelineBounds));
-  let chartTimelineBounds = $derived({
-    start: minIsoDate(chartDataTimelineBounds.start, selectedDate, playbackEndDate ?? selectedDate),
-    end: minIsoDate(
-      maxIsoDate(chartDataTimelineBounds.end, selectedDate, playbackEndDate ?? selectedDate),
-      timelineBounds.end
-    )
-  });
-  let chartSelectedDate = $derived(clampIsoDate(selectedDate, chartTimelineBounds.start, chartTimelineBounds.end));
-  let chartTrainsets = $derived(
-    chartBaseTrainsets.map((trainset) => ({
-      ...trainset,
-      timelineSegments: buildTimelineSegments(
-        trainset.milestones,
-        chartTimelineBounds.start,
-        chartTimelineBounds.end
-      )
-    }))
-  );
-  let selectedDateReadout = $derived(`${formatDate(selectedDate)}${selectedDate === today ? ' (Today)' : ''}`);
-  let selectedTrainset = $derived(
-    selectedTrainsetId
-      ? (filteredTrainsets.find((trainset) => trainset.id === selectedTrainsetId) ?? null)
-      : null
-  );
-
-  onDestroy(stopPlayback);
+  const today = todayIsoDate();
+  const contracts = contractSummaries(today);
+  const lastDataUpdate = __TRAINSETS_UPDATED_AT__ ? formatDate(todayIsoDate(new Date(__TRAINSETS_UPDATED_AT__))) : null;
+  const fleet = resolvedTrainsets.map((t) => decorateTrainsetForDate(t, today));
+  const count = (id: string) => fleet.filter((t) => t.currentStage.id === id).length;
+  const stats = [
+    { label: 'In service', value: count('service') + untrackedFleet.trainsets, color: 'var(--service)', note: `${count('service')} newly inducted + ${untrackedFleet.trainsets}` },
+    { label: 'Undergoing testing', value: count('testing'), color: 'var(--testing)' },
+    { label: 'Currently in transit', value: count('dispatch'), color: 'var(--dispatch-ink)' },
+    { label: 'Pending delivery', value: pendingOn(today), color: 'var(--muted)' }
+  ];
+  const board = lineOrder
+    .map((line) => {
+      const trains = fleet.filter((t) => t.displayLine === line);
+      // Only the designs of the tracked trains in this row; older fleets have their own row.
+      const designs = [...new Set(trains.map((t) => rollingStockDesign[t.rollingStockId]).filter(Boolean))];
+      return { line, trains, designs };
+    })
+    .filter((row) => row.trains.length);
+  const stories = buildStories(today);
 </script>
 
 <svelte:head>
   <title>Namma Metro Trainset Tracker</title>
-  <meta
-    name="description"
-    content="Track Namma Metro trainset dispatch, depot arrival, testing and passenger-service milestones."
-  />
+  <meta name="description" content="Source-backed record of Namma Metro trainsets, line milestones and the network they serve." />
 </svelte:head>
 
-<main class="tracker-page">
-  <header class="project-header">
-    <div>
-      <p>Metro Central pilot</p>
-      <h1>Namma Metro Trainset Tracker</h1>
+<main>
+  <section class="hero" aria-labelledby="home-title">
+    <div class="intro">
+      <div class="title-grid">
+        <h1 id="home-title"><span>Namma Metro</span> <span>Trainset Tracker</span></h1>
+        <div class="hero-map"><NetworkMap caption={false} weight={3} /></div>
+        <p class="lede">Tracking Namma Metro's trains, from delivery to passenger service.</p>
+        <!-- Parked side by side, like trains on stabling lines. -->
+        <ul class="hero-trains" aria-label="Train designs on Namma Metro">
+          {#each ['beml-og', 'beml-new', 'crrc-trsl'] as const as design}
+            <li><TrainIcon {design} variant="solid" size={48} label={trainDesignLabels[design]} /></li>
+          {/each}
+        </ul>
+      </div>
+      <div class="actions">
+        <a class="action-link" href="/fleet">See the fleet <ArrowRight size={18} /></a>
+        <a class="secondary-link" href="/timeline/yellow">Yellow Line timeline</a>
+      </div>
+      <p class="as-of tnum">{lastDataUpdate ? `Last data update on ${lastDataUpdate}` : 'Last data update unavailable'} · {resolvedTrainsets.length} trainsets · {trackedContractsLabel} contracts</p>
     </div>
-    <a class="schema-chip" href="https://github.com/PratyushBalaji/trainset-tracker/blob/main/trainsets.json" target="_blank" rel="noreferrer">JSON schema {timelineBounds.start.slice(0, 4)}-{timelineBounds.end.slice(0, 4)}</a>
-  </header>
 
-  <section class:filters-collapsed={filtersCollapsed} class="workspace" aria-label="Trainset tracker controls and cards">
-    <aside class:collapsed={filtersCollapsed} class="filters" aria-label="Filters">
-      <div class="filter-heading">
-        <div>
-          <Filter size={17} />
-          <span>Filters</span>
-        </div>
-
-        <button
-          class="collapse-button"
-          type="button"
-          aria-label={filtersCollapsed ? 'Expand filters' : 'Collapse filters'}
-          title={filtersCollapsed ? 'Expand filters' : 'Collapse filters'}
-          onclick={() => (filtersCollapsed = !filtersCollapsed)}
-        >
-          {#if filtersCollapsed}
-            <PanelLeftOpen size={16} />
-          {:else}
-            <PanelLeftClose size={16} />
-          {/if}
-        </button>
-      </div>
-
-      {#if !filtersCollapsed}
-        <div class="filter-content">
-          <div class="filter-group date-group">
-            <label class="date-label" for="selected-date-slider">
-              <CalendarDays size={16} />
-              Date cursor
-            </label>
-
-            <div class="date-slider-row">
-              <button
-                class:playing={isPlaybackActive}
-                class="playback-button"
-                type="button"
-                aria-label={isPlaybackActive ? 'Pause playback' : 'Play timeline'}
-                title={isPlaybackActive ? 'Pause playback' : 'Play timeline'}
-                onclick={togglePlayback}
-              >
-                {#if isPlaybackActive}
-                  <Pause size={15} fill="currentColor" />
-                {:else}
-                  <Play size={15} fill="currentColor" />
-                {/if}
-              </button>
-
-              <div class="date-slider-stack">
-                <div class="date-scale" aria-hidden="true">
-                  <span>{timelineBounds.start}</span>
-                  <span>{timelineBounds.end}</span>
-                </div>
-
-                <input
-                  id="selected-date-slider"
-                  class="date-slider"
-                  type="range"
-                  min="0"
-                  max={dateSliderMax}
-                  value={dateSliderValue}
-                  aria-label="Selected date"
-                  oninput={setDateFromSlider}
-                />
-              </div>
-            </div>
-
-            <div class="date-controls">
-              <input
-                id="selected-date"
-                type="date"
-                value={selectedDate}
-                min={timelineBounds.start}
-                max={timelineBounds.end}
-                onchange={setDateFromInput}
-              />
-              <button class="reset-button" type="button" onclick={resetDate}>
-                <RotateCcw size={15} />
-                Today
-              </button>
-            </div>
-
-            <p class="date-readout">{selectedDateReadout}</p>
+    <a class="today-panel" href="/fleet" aria-label="Fleet today. Open the fleet page">
+      <div class="panel-head"><h2>Fleet today</h2><span class="tnum">{formatDate(today)}</span></div>
+      <dl class="stats">
+        {#each stats as stat}
+          <div><dt>{stat.label}{#if stat.note}<small class="tnum">{stat.note}</small>{/if}</dt><dd class="tnum" style={`color: ${stat.color}`}>{stat.value}</dd></div>
+        {/each}
+      </dl>
+      <div class="board">
+        {#each board as row (row.line)}
+          <div class="board-row">
+            <span class="board-line"><span class="dot" style={`--dot: ${lineColors[row.line]}`}></span>{(lineLabels[row.line] ?? row.line).replace(' Line', '')}<span class="row-icons">{#each row.designs as design}<TrainIcon {design} size={16} />{/each}</span></span>
+            <span class="pills">{#each row.trains as t (t.id)}<span class="pill {t.currentStage.id}" title={`${t.trainsetNumber} · ${t.currentStage.label}`}></span>{/each}</span>
+            <span class="board-count tnum">{row.trains.length}</span>
           </div>
-
-          <details class="filter-group filter-accordion">
-            <summary>
-              <ChevronDown size={15} />
-              <span>Stage<small>{selectedStages.size === stageDefinitions.length ? 'All selected' : `${selectedStages.size} of ${stageDefinitions.length} selected`}</small></span>
-            </summary>
-            <div class="filter-options">
-            {#each stageDefinitions as stage}
-              <label class:muted={(stageCounts.get(stage.id) ?? 0) === 0}>
-                <input
-                  type="checkbox"
-                  checked={selectedStages.has(stage.id)}
-                  onchange={() => (selectedStages = toggleValue(selectedStages, stage.id))}
-                />
-                <span>{stage.filterLabel}</span>
-                <em>{stageCounts.get(stage.id) ?? 0}</em>
-              </label>
-            {/each}
-            </div>
-          </details>
-
-          <details class="filter-group filter-accordion">
-            <summary>
-              <ChevronDown size={15} />
-              <span>Manufacturer<small>{selectedManufacturers.size === manufacturerOptions.length ? 'All selected' : `${selectedManufacturers.size} of ${manufacturerOptions.length} selected`}</small></span>
-            </summary>
-            <div class="filter-options">
-            {#each manufacturerOptions as manufacturer}
-              <label>
-                <input
-                  type="checkbox"
-                  checked={selectedManufacturers.has(manufacturer)}
-                  onchange={() =>
-                    (selectedManufacturers = toggleValue(selectedManufacturers, manufacturer))}
-                />
-                <span>{manufacturer}</span>
-                <em>{manufacturerCounts.get(manufacturer) ?? 0}</em>
-              </label>
-            {/each}
-            </div>
-          </details>
-
-          <details class="filter-group filter-accordion">
-            <summary>
-              <ChevronDown size={15} />
-              <span>Metro line<small>{selectedLines.size === lineOptions.length ? 'All selected' : `${selectedLines.size} of ${lineOptions.length} selected`}</small></span>
-            </summary>
-            <div class="filter-options">
-            {#each lineOptions as line}
-              <label>
-                <input
-                  type="checkbox"
-                  checked={selectedLines.has(line)}
-                  onchange={() => (selectedLines = toggleValue(selectedLines, line))}
-                />
-                <span>{lineLabels[line] ?? line}</span>
-                <em>{lineCounts.get(line) ?? 0}</em>
-              </label>
-            {/each}
-            </div>
-          </details>
+        {/each}
+        <div class="board-row untracked">
+          <span class="board-line"><span class="dot" style={`--dot: ${lineColors.purple}`}></span><span class="dot" style={`--dot: ${lineColors.green}`}></span>Older<span class="row-icons"><TrainIcon design="beml-og" size={16} /></span></span>
+          <span class="older-bar">In service, not tracked individually</span>
+          <span class="board-count tnum">{untrackedFleet.trainsets}</span>
         </div>
-      {/if}
-    </aside>
-
-    <section class="cards-area" aria-label="Trainsets">
-      <div class="cards-summary">
-        <div>
-          <p>{filteredTrainsets.length} of {datedTrainsets.length} trainsets</p>
-          <h2>Fleet status at {selectedDateReadout}</h2>
-        </div>
-
       </div>
-
-      <div class:with-detail={Boolean(selectedTrainset)} class="cards-and-detail">
-        <div class="cards-stack">
-          {#if hiddenCardTrainsets.length > 0}
-            <details class="hidden-card-section">
-              <summary class="hidden-card-heading">
-                <ChevronDown size={15} class="hidden-expand-icon" />
-                <Minus size={15} class="hidden-collapse-icon" />
-                <h3>Hidden from chart</h3>
-                <span class="hidden-expand-label">Show {hiddenCardTrainsets.length} hidden</span>
-                <span class="hidden-collapse-label">{hiddenCardTrainsets.length} hidden</span>
-              </summary>
-              <div class="hidden-actions">
-                <button class="show-hidden-button" type="button" onclick={showAllChartTrainsets}>
-                  <Eye size={15} /> Restore all to chart
-                </button>
-              </div>
-              <div class="cards-grid hidden-cards-grid">
-                {#each hiddenCardTrainsets as trainset}
-                  <TrainsetCard
-                    {trainset}
-                    hiddenFromChart={true}
-                    compact={Boolean(selectedTrainset)}
-                    selected={selectedTrainset?.id === trainset.id}
-                    onSelect={selectTrainset}
-                    onToggleChartVisibility={toggleTrainsetChartVisibility}
-                  />
-                {/each}
-              </div>
-            </details>
-          {/if}
-          <div class="cards-grid">
-            {#if filteredTrainsets.length === 0}
-              <div class="empty-state">No trainsets match the current filters.</div>
-            {:else if visibleCardTrainsets.length === 0}
-              <div class="empty-state">All matching trainsets are hidden from the chart.</div>
-            {:else}
-              {#each visibleCardTrainsets as trainset}
-                <TrainsetCard
-                  {trainset}
-                  hiddenFromChart={false}
-                  compact={Boolean(selectedTrainset)}
-                  selected={selectedTrainset?.id === trainset.id}
-                  onSelect={selectTrainset}
-                  onToggleChartVisibility={toggleTrainsetChartVisibility}
-                />
-              {/each}
-            {/if}
-          </div>
-
-        </div>
-
-        {#if selectedTrainset}
-          <TrainsetDetail trainset={selectedTrainset as DatedTrainset} onClear={clearSelection} />
-        {/if}
-      </div>
-    </section>
+      <p class="panel-foot">The older {untrackedFleet.contracts} trains on the Purple and Green lines are not tracked due to insufficient data during their procurement → induction lifecycle.</p>
+      <ul class="legend" aria-hidden="true">
+        <li><span class="pill service"></span>In service</li>
+        <li><span class="pill testing"></span>Testing</li>
+        <li><span class="pill dispatch"></span>In transit</li>
+      </ul>
+    </a>
   </section>
 
-  <GanttChart
-    trainsets={chartTrainsets}
-    selectedDate={chartSelectedDate}
-    bounds={chartTimelineBounds}
-    maxDate={timelineBounds.end}
-    selectedId={selectedTrainset?.id ?? null}
-    onSelect={selectTrainset}
-    onHideFromChart={toggleTrainsetChartVisibility}
-    onDateChange={setDateFromChart}
-  />
+  {#if stories.length}
+    <section class="story-wrap"><StoryCarousel {stories} /></section>
+  {/if}
+
+  <section class="explore" aria-label="Explore">
+    <a href="/fleet"><span class="num">01</span><strong>Fleet</strong><span>Every trainset, its status on any date, and the sources behind it.</span></a>
+    <a href="/lifecycle"><span class="num">02</span><strong>Lifecycle</strong><span>The dispatch, testing, and service lifecycle for every tracked train, visualised.</span></a>
+    <a href="/routemap"><span class="num">03</span><strong>Route Map</strong><span>My own rendition of the official metro map, with future lines and landmarks.</span></a>
+  </section>
+
+  <section class="contracts-wrap"><ContractsCard {contracts} /></section>
+
+  <section class="about">
+    <div>
+      <h2>About</h2>
+      <p>We all know BMRCL and their contractors have a terrible track record when it comes to meeting deadlines. Heck, the Yellow Line was inaugurated almost 2 years after civil works completion, all due to a lack of <strong>trains</strong>.</p>
+      <p>Major cities like London, Paris, and Tokyo run 2-minute frequencies while I still have to wait 10 minutes during peak hour if I miss a train at Whitefield!</p>
+      <p>Namma Metro needs more trains, and the public needs to know when they'll get here, so this repository strives to track and plot every trainset received, tested, and inducted into service to keep BMRCL accountable.</p>
+      <p>Press releases should not overshadow broken promises.</p>
+      <p>All information comes from news outlets, reporters, and on-ground sources as BMRCL does not release this information publicly.</p>
+    </div>
+    <div>
+      <h2>Acknowledgements</h2>
+      <p>Thank you to journalists like Christin Mathew Philip (<a href="https://x.com/ChristinMP_" target="_blank" rel="noreferrer">@ChristinMP_</a>) and Muthi-ur-Rahman Siddiqui (<a href="https://x.com/ever_pessimist" target="_blank" rel="noreferrer">@ever_pessimist</a>), enthusiasts like BLR Metro Tracker (<a href="https://x.com/blrmetrotracker" target="_blank" rel="noreferrer">@blrmetrotracker</a>), and all the news outlets and insiders who share this information with us Bengalureans.</p>
+      <p>Their reporting and groundwork allow us to stay informed and enable hobbyists like myself to make projects like this tracker possible.</p>
+    </div>
+  </section>
 </main>
 
 <style>
-  .tracker-page {
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto auto auto;
-    align-content: start;
-  }
-
-  .project-header {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 16px clamp(14px, 3vw, 32px) 12px;
-  }
-
-  .project-header p,
-  .project-header h1,
-  .cards-summary p,
-  .cards-summary h2 {
-    margin: 0;
-  }
-
-  .project-header p,
-  .cards-summary p {
-    color: #687267;
-    font-size: 0.76rem;
-    font-weight: 800;
-    text-transform: uppercase;
-  }
-
-  .project-header h1 {
-    margin-top: 4px;
-    font-size: clamp(1.45rem, 2.6vw, 2.45rem);
-    line-height: 1;
-  }
-
-  .schema-chip {
-    text-decoration: none;
-    flex: 0 0 auto;
-    padding: 7px 9px;
-    border: 1px solid #d8ded4;
-    border-radius: 999px;
-    background: #fffdfa;
-    color: #536055;
-    font-size: 0.78rem;
-    font-weight: 720;
-  }
-
-  .schema-chip:hover,
-  .schema-chip:focus-visible {
-    color: #0b5fe8;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .workspace {
-    height: clamp(320px, 60vh, 640px);
-    display: grid;
-    grid-template-columns: minmax(222px, 268px) minmax(0, 1fr);
-    gap: 16px;
-    min-height: 0;
-    overflow: hidden;
-    padding: 0 clamp(14px, 3vw, 32px) 14px;
-    transition: grid-template-columns 160ms ease;
-  }
-
-  .workspace.filters-collapsed {
-    grid-template-columns: 48px minmax(0, 1fr);
-  }
-
-  .filters {
-    display: grid;
-    align-self: start;
-    gap: 12px;
-    max-height: 100%;
-    min-height: 0;
-    overflow: auto;
-    padding: 11px;
-    border: 1px solid #d8ded4;
-    border-radius: 8px;
-    background: #fffdfa;
-  }
-
-  .filters.collapsed {
-    overflow: hidden;
-    padding: 8px 6px;
-  }
-
-  .filter-content {
-    display: grid;
-    gap: 14px;
-  }
-
-  .filter-heading,
-  .date-label,
-  .reset-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .filter-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    color: #17211d;
-    font-weight: 820;
-  }
-
-  .filter-heading div {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-width: 0;
-  }
-
-  .filters.collapsed .filter-heading {
-    justify-content: center;
-  }
-
-  .filters.collapsed .filter-heading div {
-    display: none;
-  }
-
-  .collapse-button {
-    display: inline-grid;
-    flex: 0 0 auto;
-    width: 30px;
-    height: 30px;
-    place-items: center;
-    border: 1px solid #d8ded4;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #445048;
-    cursor: pointer;
-  }
-
-  .collapse-button:hover,
-  .collapse-button:focus-visible {
-    border-color: #26342e;
-    outline: none;
-  }
-
-  .filter-group {
-    display: grid;
-    gap: 7px;
-  }
-
-  .filter-accordion {
-    border-top: 1px solid #e3e7df;
-    padding-top: 8px;
-  }
-
-  .filter-accordion summary {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 36px;
-    cursor: pointer;
-    color: #26342e;
-    font-size: 0.8rem;
-    font-weight: 760;
-    list-style: none;
-  }
-
-  summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .filter-accordion summary :global(svg) {
-    flex-shrink: 0;
-    transform: rotate(-90deg);
-  }
-
-  .filter-accordion[open] summary :global(svg) {
-    transform: rotate(0);
-  }
-
-  .filter-accordion small {
-    display: block;
-    margin-top: 2px;
-    color: #687267;
-    font-size: 0.68rem;
-    font-weight: 400;
-  }
-
-  .filter-options {
-    display: grid;
-    gap: 7px;
-    padding-top: 8px;
-  }
-
-  summary:focus-visible {
-    outline: 2px solid #26342e;
-    outline-offset: 2px;
-  }
-
-  .date-label {
-    color: #536055;
-    font-size: 0.82rem;
-    font-weight: 760;
-  }
-
-  .date-slider {
-    min-width: 0;
-    width: 100%;
-    accent-color: #26342e;
-  }
-
-  .date-slider-row {
-    display: grid;
-    grid-template-columns: 32px minmax(0, 1fr);
-    align-items: end;
-    gap: 8px;
-  }
-
-  .date-slider-stack {
-    display: grid;
-    gap: 4px;
-    min-width: 0;
-  }
-
-  .playback-button {
-    display: inline-grid;
-    width: 32px;
-    height: 32px;
-    place-items: center;
-    border: 1px solid #cfd8ca;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #26342e;
-    cursor: pointer;
-  }
-
-  .playback-button.playing {
-    border-color: #26342e;
-    background: #26342e;
-    color: #ffffff;
-  }
-
-  .playback-button:hover,
-  .playback-button:focus-visible {
-    border-color: #26342e;
-    outline: none;
-  }
-
-  .date-scale {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    color: #7d877b;
-    font-size: 0.66rem;
-  }
-
-  .date-controls {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 7px;
-  }
-
-  input[type='date'] {
-    width: 100%;
-    min-height: 34px;
-    padding: 6px 8px;
-    border: 1px solid #cfd8ca;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #17211d;
-  }
-
-  .reset-button {
-    justify-content: center;
-    min-height: 34px;
-    padding: 0 10px;
-    border: 1px solid #cfd8ca;
-    border-radius: 8px;
-    background: #f8f4ea;
-    color: #26342e;
-    font-weight: 760;
-    cursor: pointer;
-  }
-
-  .reset-button:hover,
-  .reset-button:focus-visible {
-    border-color: #26342e;
-    outline: none;
-  }
-
-  .date-readout {
-    margin: 0;
-    color: #687267;
-    font-size: 0.78rem;
-  }
-
-  .filter-group label:not(.date-label) {
-    display: grid;
-    grid-template-columns: 18px 1fr auto;
-    align-items: center;
-    gap: 8px;
-    min-height: 24px;
-    color: #26342e;
-    font-size: 0.8rem;
-  }
-
-  .filter-group label.muted {
-    color: #929990;
-  }
-
-  input[type='checkbox'] {
-    width: 16px;
-    height: 16px;
-    accent-color: #13824f;
-  }
-
-  .filter-group em {
-    min-width: 24px;
-    padding: 2px 6px;
-    border-radius: 999px;
-    background: #eef2eb;
-    color: #687267;
-    font-size: 0.7rem;
-    font-style: normal;
-    font-weight: 780;
-    text-align: center;
-  }
-
-  .cards-area {
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr);
-    gap: 10px;
-    min-height: 0;
-    min-width: 0;
-    overflow: hidden;
-  }
-
-  .cards-summary {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 16px;
-  }
-
-  .cards-summary h2 {
-    margin-top: 4px;
-    font-size: clamp(1rem, 1.7vw, 1.35rem);
-  }
-
-  .show-hidden-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    min-height: 34px;
-    padding: 0 10px;
-    border: 1px solid #cfd8ca;
-    border-radius: 8px;
-    background: #fffdfa;
-    color: #26342e;
-    font-size: 0.78rem;
-    font-weight: 760;
-    cursor: pointer;
-  }
-
-  .show-hidden-button:hover,
-  .show-hidden-button:focus-visible {
-    border-color: #26342e;
-    outline: none;
-  }
-
-  .cards-and-detail {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
-    align-items: start;
-    min-height: 0;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .cards-and-detail.with-detail {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
-  }
-
-  .with-detail .cards-grid {
-    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
-    gap: 6px;
-  }
-
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(188px, 1fr));
-    align-content: start;
-    gap: 10px;
-    min-width: 0;
-  }
-
-  .cards-stack {
-    display: grid;
-    align-content: start;
-    gap: 12px;
-    max-height: 100%;
-    min-height: 0;
-    min-width: 0;
-    overflow: auto;
-    padding-right: 2px;
-  }
-
-  .hidden-card-section {
-    padding-bottom: 10px;
-    border-bottom: 1px solid #d8ded4;
-  }
-
-  .hidden-card-heading {
-    cursor: pointer;
-    display: grid;
-    grid-template-columns: 15px minmax(0, 1fr) auto;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    color: #687267;
-    font-size: 0.74rem;
-    font-weight: 820;
-    text-transform: uppercase;
-    min-height: 32px;
-    list-style: none;
-  }
-
-  .hidden-card-heading h3 {
-    margin: 0;
-    font-size: inherit;
-  }
-
-  .hidden-card-heading .hidden-collapse-label,
-  .hidden-card-heading :global(.hidden-collapse-icon),
-  .hidden-card-section[open] .hidden-expand-label,
-  .hidden-card-section[open] :global(.hidden-expand-icon) {
-    display: none;
-  }
-
-  .hidden-card-section[open] .hidden-collapse-label,
-  .hidden-card-section[open] :global(.hidden-collapse-icon) {
-    display: inline;
-  }
-
-  .hidden-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 8px;
-  }
-
-  .hidden-cards-grid {
-    margin-top: 8px;
-  }
-
-  .hidden-card-heading span {
-    color: #26342e;
-    text-transform: none;
-    font-size: 0.76rem;
-  }
-
-  .empty-state {
-    display: grid;
-    grid-column: 1 / -1;
-    min-height: 180px;
-    place-items: center;
-    border: 1px dashed #bdc7bb;
-    border-radius: 8px;
-    color: #687267;
-  }
-
-  @media (max-width: 1100px) {
-    .cards-and-detail.with-detail {
-      grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
-    }
-  }
-
-  @media (max-width: 820px) {
-    .tracker-page {
-      display: block;
-      height: auto;
-      overflow: visible;
-    }
-
-    .project-header {
-      align-items: start;
-      flex-direction: column;
-    }
-
-    .workspace {
-      height: auto;
-      grid-template-columns: 1fr;
-      overflow: visible;
-    }
-
-    .cards-and-detail.with-detail {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .with-detail .cards-stack {
-      max-height: 220px;
-    }
-
-    .workspace.filters-collapsed {
-      grid-template-columns: 1fr;
-    }
-
-    .filters {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      max-height: none;
-    }
-
-    .filter-heading {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media (max-width: 560px) {
-    .filters {
-      grid-template-columns: 1fr;
-    }
-
-    .project-header,
-    .workspace {
-      padding-right: 14px;
-      padding-left: 14px;
-    }
+  .hero { max-width: 1240px; margin: 0 auto; padding: 64px 32px 48px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 56px; align-items: center; }
+  .intro { display: flex; flex-direction: column; gap: 20px; }
+  /* | title | map |  then  | description | trains | */
+  .title-grid { display: grid; grid-template-columns: auto var(--map-w); column-gap: 32px; row-gap: 18px; align-items: end; width: fit-content; --map-w: clamp(110px, 11vw, 160px); }
+  .hero-map { width: var(--map-w); }
+  .hero-map :global(figure) { margin: 0; }
+  .hero-trains { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; align-self: center; color: var(--ink); }
+  .hero-trains li { aspect-ratio: 1; }
+  .hero-trains :global(.train-icon) { width: 100% !important; height: 100% !important; }
+  h1 > span { display: block; white-space: nowrap; }
+  h1 { margin: 0; font-family: var(--font-display); font-size: clamp(40px, 4.2vw, 60px); line-height: 1; letter-spacing: -0.035em; font-weight: 800; }
+  .lede { margin: 0; align-self: center; font-size: 18px; line-height: 1.55; color: var(--ink-3); max-width: 460px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .as-of { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+
+  .today-panel { display: flex; flex-direction: column; gap: 18px; padding: 24px 26px 20px; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); text-decoration: none; transition: border-color 120ms ease; }
+  .today-panel:hover { border-color: var(--faint); }
+  .panel-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .panel-head h2 { margin: 0; font-size: 15px; }
+  .panel-head span { font-size: 12px; color: var(--muted); }
+  .stats { margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .stats dt { order: 2; font-size: 12px; color: var(--ink-3); margin-top: 6px; }
+  .stats dt small { display: block; margin-top: 2px; font-size: 11px; color: var(--muted); }
+  .stats div { display: flex; flex-direction: column; }
+  .stats dd { order: 1; margin: 0; font-family: var(--font-display); font-size: 38px; font-weight: 800; line-height: 1; }
+  .board { display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 1px solid var(--border-soft); }
+  .row-icons { display: inline-flex; gap: 2px; margin-left: auto; color: var(--ink-3); }
+  .board-row { display: grid; grid-template-columns: 116px minmax(0, 1fr) 28px; gap: 10px; align-items: center; }
+  .board-line { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
+  .untracked .board-line { color: var(--muted); }
+  .untracked .board-line .dot + .dot { margin-left: -9px; }
+  .board-count { font-size: 12px; color: var(--muted); text-align: right; }
+  /* 8×16 with 4px gaps: whole device pixels at 100/125/150/175/200% scaling, so every mark renders the same size. */
+  .pills { display: flex; flex-wrap: wrap; gap: 4px; }
+  .pill { display: inline-block; flex: none; width: 8px; height: 16px; border-radius: 2px; background: #dfe4db; }
+  .pill.service { background: var(--service); }
+  .pill.testing { background: var(--testing); }
+  .pill.dispatch { background: var(--dispatch); }
+  /* One block for the untracked fleet: counted as a group, not drawn train by train. */
+  .older-bar { display: flex; align-items: center; height: 16px; padding: 0 8px; border-radius: 3px; background: color-mix(in srgb, var(--service) 14%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--service) 55%, transparent); font-size: 10.5px; color: var(--service-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .panel-foot { margin: 0; font-size: 12px; line-height: 1.5; color: var(--muted); }
+  .legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 11px; color: var(--muted); }
+  .legend li { display: flex; align-items: center; gap: 6px; }
+  .legend .pill { width: 8px; height: 12px; }
+  .board-row { align-items: start; }
+  .board-line, .board-count { line-height: 16px; }
+
+  .story-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px 56px; }
+
+  .contracts-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px 64px; }
+  .explore { max-width: 1240px; margin: 0 auto; padding: 0 32px 64px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .explore a { display: flex; flex-direction: column; gap: 8px; padding: 24px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); text-decoration: none; }
+  .explore a:hover { border-color: var(--faint); }
+  .explore .num { font-size: 12px; color: var(--muted); }
+  .explore strong { font-size: 20px; }
+  .explore span:last-child { font-size: 14px; line-height: 1.5; color: var(--ink-3); }
+
+  .about { border-top: 1px solid var(--border); background: var(--surface); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 64px; padding: 56px max(32px, calc((100% - 1176px) / 2)) 64px; }
+  .about h2 { margin: 0 0 14px; font-family: var(--font-display); font-size: 30px; letter-spacing: -0.02em; }
+  .about p { margin: 0; font-size: 16px; line-height: 1.75; color: var(--ink-3); }
+  .about p + p { margin-top: 16px; }
+
+  @media (max-width: 960px) {
+    h1 { font-size: clamp(40px, 8vw, 64px); }
+    .title-grid { --map-w: clamp(96px, 24vw, 170px); column-gap: 20px; }
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 40px 20px 32px; }
+    .story-wrap, .explore { padding-left: 16px; padding-right: 16px; }
+    .explore { grid-template-columns: 1fr; }
+    .contracts-wrap { padding: 0 16px 48px; }
+    .about { grid-template-columns: 1fr; gap: 32px; padding: 40px 20px 48px; }
+  }
+  @media (max-width: 520px) {
+    h1 > span { white-space: normal; }
+    .today-panel { padding: 20px 18px 18px; }
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 16px; }
+    .board-row { grid-template-columns: 96px minmax(0, 1fr) 24px; }
+    .actions a { flex: 1; }
   }
 </style>

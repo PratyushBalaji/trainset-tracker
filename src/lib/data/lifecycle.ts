@@ -5,7 +5,7 @@ import type {
   StageId,
   TimelineSegment
 } from './types';
-import { addDays, compareIsoDate, maxIsoDate, minIsoDate } from './date';
+import { addDays, compareIsoDate, minIsoDate } from './date';
 
 export const stageDefinitions: LifecycleStageDefinition[] = [
   {
@@ -16,9 +16,9 @@ export const stageDefinitions: LifecycleStageDefinition[] = [
   },
   {
     id: 'manufacturing',
-    label: 'Manufacturing',
-    filterLabel: 'Manufacturing',
-    description: 'The trainset has a recorded delivery path, but has not yet left the factory by the selected date.'
+    label: 'Pre-delivery (inferred)',
+    filterLabel: 'Pre-delivery (inferred)',
+    description: 'No delivery-path milestone is recorded on or before this date; this is not evidence of manufacturing.'
   },
   {
     id: 'dispatch',
@@ -40,7 +40,7 @@ export const stageDefinitions: LifecycleStageDefinition[] = [
   }
 ];
 
-export const timelineStageDefinitions = stageDefinitions.filter((stage) => stage.id !== 'no_data');
+export const timelineStageDefinitions = stageDefinitions.filter((stage) => ['dispatch', 'testing', 'service'].includes(stage.id));
 
 export const milestoneLabels: Record<string, string> = {
   factory_dispatch: 'Factory dispatch',
@@ -148,7 +148,6 @@ export function getCurrentStage(
 
 export function buildTimelineSegments(
   milestones: ResolvedMilestone[],
-  chartStart: string,
   chartEnd: string
 ): TimelineSegment[] {
   const factoryDispatch = getMilestone(milestones, 'factory_dispatch');
@@ -158,18 +157,6 @@ export function buildTimelineSegments(
   const revenueInduction = getMilestone(milestones, 'revenue_induction');
 
   const segments: TimelineSegment[] = [];
-
-  if (factoryDispatch) {
-    segments.push({
-      id: 'manufacturing-window',
-      stageId: 'manufacturing',
-      label: 'Pre-dispatch window',
-      start: maxIsoDate(chartStart, addDays(factoryDispatch.date, -70)),
-      end: factoryDispatch.date,
-      sourceMilestones: [],
-      derived: true
-    });
-  }
 
   if (factoryDispatch) {
     const dispatchEnd = depotArrival?.date ?? addDays(factoryDispatch.date, 16);
