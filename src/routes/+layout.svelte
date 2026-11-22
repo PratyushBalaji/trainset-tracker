@@ -5,8 +5,10 @@
   import { page } from '$app/state';
   import { onMount } from 'svelte';
   import { lineColors, lineOrder } from '$lib/data/presentation';
-  import TrainIcon from '$lib/components/TrainIcon.svelte';
+  import brandSvg from '../../static/icons/trains/beml-og-small.svg?raw';
   import '../app.css';
+
+  const brandIcon = brandSvg.replace(/<title>.*?<\/title>/, '').replace('role="img"', 'aria-hidden="true" focusable="false"');
 
   if (browser && !dev) {
     injectAnalytics({ mode: 'production', debug: false });
@@ -34,7 +36,7 @@
 <header class="site-header" class:condensed>
   <a class="site-brand" href="/" aria-label="Namma Metro Trainset Tracker home">
     <span class="brand-mark" aria-hidden="true">
-      <TrainIcon design="beml-og" variant="small" size={28} />
+      <span class="brand-icon" aria-hidden="true" title="BEML original">{@html brandIcon}</span>
       <span class="brand-track">{#each lineOrder as line}<span style={`background: ${lineColors[line]}`}></span>{/each}</span>
     </span>
     <span class="brand-name"><span>Namma Metro</span> <span>Trainset Tracker</span></span>
@@ -57,3 +59,8 @@
   <span>Namma Metro Trainset Tracker</span>
   <span>By <a href="https://github.com/PratyushBalaji" target="_blank" rel="noreferrer">Pratyush Balaji</a></span>
 </footer>
+
+<style>
+  .brand-icon { display: inline-block; flex: none; line-height: 0; width: 28px; height: 28px; }
+  .brand-icon :global(svg) { width: 100%; height: 100%; display: block; }
+</style>

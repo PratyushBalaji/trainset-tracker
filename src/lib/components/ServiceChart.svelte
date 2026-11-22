@@ -4,6 +4,7 @@
   // Both modes share one vertical scale (all tracked trains), so switching shows the gap between them.
   import { formatDate, percentageBetween } from '$lib/data/date';
   import { lineColors, lineLabels, lineOrder } from '$lib/data/presentation';
+  import { buildServiceBands } from '$lib/data/service-chart';
   import type { DateBounds, ResolvedTrainset } from '$lib/data/types';
 
   let { trainsets, bounds, selectedDate }: { trainsets: ResolvedTrainset[]; bounds: DateBounds; selectedDate: string } = $props();
@@ -25,29 +26,7 @@
   let firstDate = $derived(inductions[0]?.date);
   let x = (date: string) => percentageBetween(date, bounds.start, bounds.end) * 10;
 
-  // One stacked band per line, stepping at each induction date.
-  let bands = $derived.by(() => {
-    const dates = [...new Set(inductions.map((i) => i.date))];
-    const scale = H / Math.max(1, trainsets.length);
-    const cumulative = (line: string, date: string) => inductions.filter((i) => i.line === line && i.date <= date).length;
-    return lines.map((line, li) => {
-      const below = (date: string) => lines.slice(0, li).reduce((sum, l) => sum + cumulative(l, date), 0);
-      let top = `M ${x(bounds.start)} ${H}`;
-      let bottom: string[] = [];
-      let prevTop = H, prevBottom = H;
-      for (const date of dates) {
-        const xd = x(date).toFixed(1);
-        const yb = H - below(date) * scale;
-        const yt = yb - cumulative(line, date) * scale;
-        top += ` L ${xd} ${prevTop.toFixed(1)} L ${xd} ${yt.toFixed(1)}`;
-        bottom.unshift(`L ${xd} ${yb.toFixed(1)} L ${xd} ${prevBottom.toFixed(1)}`);
-        prevTop = yt; prevBottom = yb;
-      }
-      const end = x(bounds.end).toFixed(1);
-      const d = `${top} L ${end} ${prevTop.toFixed(1)} L ${end} ${prevBottom.toFixed(1)} ${bottom.join(' ')} Z`;
-      return { line, d };
-    });
-  });
+  let bands = $derived(buildServiceBands(inductions, lines, trainsets.length, bounds));
 </script>
 
 <section class="service-chart" aria-label={`Trains ${m.aria} over time`}>

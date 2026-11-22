@@ -40,10 +40,6 @@ function resolveRollingStock(base: RawRollingStock, overrides?: Partial<RawRolli
   };
 }
 
-function resolveMilestones(trainset: ResolvedTrainset | { milestones: ResolvedMilestone[] }): ResolvedMilestone[] {
-  return trainset.milestones.sort((a, b) => a.date.localeCompare(b.date));
-}
-
 function makeResolvedMilestones(
   rawMilestones: RawDataset['trainsets'][string]['milestones'], id: string
 ): ResolvedMilestone[] {
@@ -133,7 +129,6 @@ export const timelineBounds: DateBounds = {
 
 export const resolvedTrainsets: ResolvedTrainset[] = baseTrainsets.map((trainset) => ({
   ...trainset,
-  milestones: resolveMilestones(trainset),
   timelineSegments: buildTimelineSegments(trainset.milestones, timelineBounds.start, timelineBounds.end)
 }));
 

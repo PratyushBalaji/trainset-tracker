@@ -32,6 +32,5 @@
   dt, p { color: #536055; font-size: 12px; }
   dd { margin: 0; text-align: right; }
   p { margin: 8px 0; line-height: 1.5; }
-  @media(min-width: 821px) { :global(body:has(.undo-message:not(:empty))) .interval-preview.at-top { top: calc(var(--site-header-height) + 90px); } }
   @media(max-width: 820px) { .interval-preview, .interval-preview.at-left, .interval-preview.at-top { top: auto; bottom: 8px; left: 8px; right: 8px; width: auto; max-height: min(230px, 34svh); } .preview-close, .open-details { min-height: 44px; } }
 </style>

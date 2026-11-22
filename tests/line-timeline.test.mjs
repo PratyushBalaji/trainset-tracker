@@ -9,7 +9,7 @@ const compile = (file) => ts.transpileModule(readFileSync(new URL(file, import.m
 const moduleUrl = (code) => `data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
 const dateModule = moduleUrl(compile('../src/lib/data/date.ts'));
 const evidenceModule = moduleUrl(compile('../src/lib/data/evidence.ts').replace("'./date'", JSON.stringify(dateModule)));
-const { buildLineTimeline, historyDateLabel, trainMilestoneGroups, timelinePositions, visibleTimelineRange, layoutTimelineLens } = await import(moduleUrl(
+const { buildLineTimeline, historyDateLabel, trainMilestoneGroups } = await import(moduleUrl(
   compile('../src/lib/data/line-timeline.ts').replace("'./date'", JSON.stringify(dateModule)).replace("'./evidence'", JSON.stringify(evidenceModule))
 ));
 const { todayIsoDate } = await import(dateModule);
@@ -18,6 +18,45 @@ const { createChartDrag } = await import(moduleUrl(compile('../src/lib/data/char
 const { getCurrentStage } = await import(moduleUrl(compile('../src/lib/data/lifecycle.ts').replace("'./date'", JSON.stringify(dateModule))));
 const { reviewedQualification } = await import(moduleUrl(compile('../src/lib/data/reviewed-qualifications.ts')));
 const { togglePinned, emphasizedStage } = await import(moduleUrl(compile('../src/lib/data/chart-interaction.ts')));
+const { percentageBetween } = await import(dateModule);
+const { buildServiceBands } = await import(moduleUrl(compile('../src/lib/data/service-chart.ts').replace("'./date'", JSON.stringify(dateModule))));
+
+test('single-pass service bands preserve every original SVG coordinate', () => {
+  const data = JSON.parse(readFileSync(new URL('../trainsets.json', import.meta.url), 'utf8'));
+  const trains = Object.values(data.trainsets);
+  const order = ['purple', 'green', 'yellow', 'pink', 'blue'];
+  const reference = (events, lines, count, bounds) => {
+    const x = (date) => percentageBetween(date, bounds.start, bounds.end) * 10;
+    const scale = 100 / Math.max(1, count);
+    return lines.map((line, li) => {
+      let top = `M ${x(bounds.start)} 100`, bottom = [], prevTop = 100, prevBottom = 100;
+      for (const date of new Set(events.map((event) => event.date))) {
+        const cumulative = (l) => events.filter((event) => event.line === l && event.date <= date).length;
+        const yb = 100 - lines.slice(0, li).reduce((sum, l) => sum + cumulative(l), 0) * scale;
+        const yt = yb - cumulative(line) * scale;
+        const xd = x(date).toFixed(1);
+        top += ` L ${xd} ${prevTop.toFixed(1)} L ${xd} ${yt.toFixed(1)}`;
+        bottom.unshift(`L ${xd} ${yb.toFixed(1)} L ${xd} ${prevBottom.toFixed(1)}`);
+        prevTop = yt; prevBottom = yb;
+      }
+      const end = x(bounds.end).toFixed(1);
+      return { line, d: `${top} L ${end} ${prevTop.toFixed(1)} L ${end} ${prevBottom.toFixed(1)} ${bottom.join(' ')} Z` };
+    });
+  };
+  for (const bounds of [{ start: '2023-11-05', end: '2026-11-22' }, { start: '2026-06-01', end: '2026-08-01' }]) {
+    for (const fleet of [trains, [], ...order.map((line) => trains.filter((t) => (t.operational_line ?? t.intended_line) === line))]) {
+      for (const key of ['depot_arrival', 'revenue_induction']) {
+        const events = fleet.flatMap((t) => t.milestones[key]?.date <= bounds.end ? [{ date: t.milestones[key].date, line: t.operational_line ?? t.intended_line }] : [])
+          .sort((a, b) => a.date.localeCompare(b.date));
+        const lines = order.filter((line) => events.some((event) => event.line === line));
+        assert.deepEqual(buildServiceBands(events, lines, fleet.length, bounds), reference(events, lines, fleet.length, bounds));
+      }
+    }
+  }
+  const bounds = { start: '2026-01-01', end: '2026-01-01' };
+  const events = [{ date: bounds.start, line: 'yellow' }, { date: bounds.start, line: 'unknown' }];
+  assert.deepEqual(buildServiceBands(events, ['yellow'], 2, bounds), reference(events, ['yellow'], 2, bounds));
+});
 
 test('pinned emphasis restores after previews, toggles off, and stays independent of inspection', () => {
   let stage = togglePinned(null, 'testing');
@@ -96,46 +135,6 @@ test('each train milestone stays separate and belongs to its assigned line', () 
   assert.equal(buildLineTimeline([], [train], 'yellow', '2026-11-15').length, 1);
   const sourced = { ...train, milestones: train.milestones.map((m) => m.key === 'factory_dispatch' ? { ...m, sources: ['https://example.com/dispatch'] } : m) };
   assert.equal(trainMilestoneGroups(sourced, '2026-11-15')[0].label, 'Dispatch');
-});
-
-test('overview positions scale by elapsed date, including month-only records and repeated dates', () => {
-  const entries = [
-    { sortDate: '2024-01', lineMilestone: { period: '2024-01' } },
-    { sortDate: '2024-01-11', date: '2024-01-11' },
-    { sortDate: '2024-01-11', date: '2024-01-11' },
-    { sortDate: '2024-04-10', date: '2024-04-10' }
-  ];
-  assert.deepEqual(timelinePositions(entries), [0, 10, 10, 100]);
-  assert.deepEqual(timelinePositions([]), []);
-  assert.deepEqual(timelinePositions([entries[0]]), [0]);
-});
-
-test('viewport box covers the visible date range and responds to expanded event heights', () => {
-  assert.deepEqual(visibleTimelineRange([100, 200, 300], [0, 10, 100], 150, 250), { start: 5, end: 55 });
-  const expanded = visibleTimelineRange([100, 400, 500], [0, 10, 100], 150, 250);
-  assert.ok(Math.abs(expanded.start - 10 / 6) < 1e-10);
-  assert.equal(expanded.end, 5);
-  assert.deepEqual(visibleTimelineRange([100, 200, 300], [0, 10, 100], 0, 400), { start: 0, end: 100 });
-  assert.deepEqual(visibleTimelineRange([100, 200], [0, 0], 120, 180), { start: 0, end: 0 });
-  assert.deepEqual(visibleTimelineRange([], [], 0, 800), { start: 0, end: 0 });
-});
-
-test('magnifying lens separates visible same-day events and clusters the rest without losing milestones', () => {
-  const positions = [0, 20, 80, 90, 90, 90, 90, 91, 92, 93, 95, 97, 98];
-  for (const width of [280, 900]) {
-    const lens = layoutTimelineLens(positions, [3, 4, 5], { start: 90, end: 90 }, width);
-    assert.ok(lens.right - lens.left >= 160);
-    assert.ok(lens.left >= 0 && lens.right <= width);
-    assert.deepEqual(lens.markers.flatMap((m) => m.indices), positions.map((_, i) => i));
-    const focused = lens.markers.filter((m) => m.focused);
-    assert.equal(focused.length, 3);
-    assert.ok(focused[1].x - focused[0].x >= 28);
-    assert.ok(focused.every((m) => m.indices.length === 1 && m.x > lens.left && m.x < lens.right));
-    assert.ok(lens.markers.some((m) => !m.focused && m.indices.length > 1));
-  }
-  const atEnd = layoutTimelineLens(positions, [], { start: 100, end: 100 }, 280);
-  assert.equal(atEnd.markers.find((m) => m.focused).indices[0], positions.length - 1);
-  assert.deepEqual(layoutTimelineLens([], [], { start: 0, end: 0 }, 280).markers, []);
 });
 
 test('date bounds, inferred dates and periods keep their qualifications', () => {

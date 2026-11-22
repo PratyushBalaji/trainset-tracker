@@ -422,11 +422,7 @@
   }
 
   .timeline-heading h2 {
-    margin: 0;
-  }
-
-  .timeline-heading h2 {
-    margin-top: 4px;
+    margin: 4px 0 0;
     font-size: clamp(1rem, 1.6vw, 1.3rem);
   }
 
@@ -571,7 +567,6 @@
     border-radius: 999px;
     background: #26342e;
     color: #ffffff;
-    font-size: 0.66rem;
     translate: -50% 0;
     white-space: nowrap;
     pointer-events: auto;
@@ -797,10 +792,7 @@
   }
 
   .stage-dispatch,
-  .stage-service {
-    background: var(--stage-color);
-  }
-
+  .stage-service,
   .stage-testing {
     background: var(--stage-color);
   }

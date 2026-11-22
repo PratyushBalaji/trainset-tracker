@@ -74,8 +74,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .action-link:hover { background: #0d1512; }
 .secondary-link { display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 48px; padding: 0 20px; border: 1px solid #c9d0c5; border-radius: var(--radius); background: var(--surface); font-weight: 600; text-decoration: none; font-size: 15px; }
 .secondary-link:hover { border-color: var(--ink-3); }
-.icon-control { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--border); background: var(--surface); border-radius: var(--radius); }
-.icon-control:hover { border-color: var(--muted); }
 .chip { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); font-size: 13px; color: var(--ink-2); white-space: nowrap; }
 .chip:hover { border-color: var(--muted); }
 .chip[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: var(--surface); }

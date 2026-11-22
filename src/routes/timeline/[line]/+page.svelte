@@ -38,16 +38,25 @@
   }
 
   onMount(() => {
+    const header = document.querySelector('.site-header');
+    let measuredEntries: typeof entries | undefined;
+    let elements: (HTMLElement | null)[] = [];
     const update = () => {
+      if (measuredEntries !== entries) {
+        measuredEntries = entries;
+        elements = entries.map((entry) => document.getElementById(entry.id));
+      }
       atTop = window.scrollY < 180;
       const marker = document.getElementById('current-date')?.getBoundingClientRect();
       atCurrent = !!marker && marker.top >= 0 && marker.top < window.innerHeight;
-      const guide = dock.getBoundingClientRect().bottom + 8;
-      pinned = dock.getBoundingClientRect().top <= (document.querySelector('.site-header')?.getBoundingClientRect().height ?? 76) + 1;
-      visibleIds = entries.filter((entry) => {
-        const rect = document.getElementById(entry.id)?.getBoundingClientRect();
+      const dockRect = dock.getBoundingClientRect();
+      const guide = dockRect.bottom + 8;
+      pinned = dockRect.top <= (header?.getBoundingClientRect().height ?? 76) + 1;
+      const nextVisible = elements.filter((element) => {
+        const rect = element?.getBoundingClientRect();
         return rect && rect.bottom > guide && rect.top < window.innerHeight;
-      }).map((entry) => entry.id);
+      }).map((element) => element!.id);
+      if (nextVisible.length !== visibleIds.length || nextVisible.some((id, i) => id !== visibleIds[i])) visibleIds = nextVisible;
     };
     update();
     window.addEventListener('scroll', update, { passive: true });

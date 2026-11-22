@@ -25,9 +25,11 @@
 
   let dated = $derived(tracker.dated);
   let visible = $derived(dated.filter((t) => !tracker.hidden.has(t.id)));
-  let dataBounds = $derived(getTrainsetTimelineBounds(tracker.fleet.filter((t) => !tracker.hidden.has(t.id)), timelineBounds));
+  let plottedFleet = $derived(tracker.fleet.filter((t) => !tracker.hidden.has(t.id)));
+  let dataBounds = $derived(getTrainsetTimelineBounds(plottedFleet, timelineBounds));
   let bounds = $derived(dragBounds ?? { start: dataBounds.start, end: minIsoDate(dataBounds.end, timelineBounds.end) });
-  let chartTrainsets = $derived(visible.map((t) => ({ ...t, timelineSegments: buildTimelineSegments(t.milestones, bounds.start, bounds.end) })));
+  let segments = $derived(new Map(plottedFleet.map((t) => [t.id, buildTimelineSegments(t.milestones, bounds.start, bounds.end)])));
+  let chartTrainsets = $derived(visible.map((t) => ({ ...t, timelineSegments: segments.get(t.id)! })));
   let hiddenTrains = $derived(dated.filter((t) => tracker.hidden.has(t.id)));
   let selected = $derived(selectedId ? (dated.find((t) => t.id === selectedId) ?? null) : null);
   let lastHidden = $derived(dated.find((t) => t.id === tracker.lastHiddenId));
