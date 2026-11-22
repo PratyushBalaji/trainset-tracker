@@ -1,0 +1,22 @@
+name: CI
+
+# Runs the data and UI checks on every push and pull request, so a data edit that breaks a
+# reviewed reading (e.g. a Home story slide or a timeline scorecard) is caught before deploying.
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Tests (data rules, timeline, Home stories)
+        run: npm test
+      - name: Type check
+        run: npm run check
