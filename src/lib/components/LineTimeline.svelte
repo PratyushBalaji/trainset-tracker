@@ -95,13 +95,14 @@
 </ol>
 
 <style>
-  .history { list-style: none; margin: 0 0 0 8px; padding: 0 0 0 28px; border-left: 2px solid var(--line-color); }
+  /* --rail-x: distance from an entry's left edge back to the centre of the 2px line; every marker is centred on it. */
+  .history { --rail-x: -29px; --ring: var(--bg); list-style: none; margin: 0 0 0 8px; padding: 0 0 0 28px; border-left: 2px solid var(--line-color); }
   li.entry { position: relative; padding: 0 0 26px; scroll-margin-top: calc(var(--site-header-height) + var(--timeline-dock-height, 80px) + 24px); }
-  li.entry::before { content: ''; position: absolute; left: -35px; top: 3px; width: 8px; height: 8px; border: 2px solid var(--event-color); border-radius: 50%; background: #fffdfa; }
-  li.line::before { width: 12px; height: 12px; left: -37px; top: 2px; background: #17211d; border-color: #f4f6f1; outline: 1px solid #17211d; }
+  li.entry::before { content: ''; position: absolute; left: var(--rail-x); top: 9px; width: 10px; height: 10px; box-sizing: border-box; transform: translate(-50%, -50%); border: 2px solid var(--event-color); border-radius: 50%; background: var(--surface); box-shadow: 0 0 0 3px var(--ring); }
+  li.line::before { width: 12px; height: 12px; border: 0; background: var(--ink); }
   li.train { padding-bottom: 14px; }
   li.train:has(.train-marker)::before { display: none; }
-  .train-marker { position: absolute; left: -41px; top: -2px; padding: 1px 0; background: var(--bg); color: var(--event-color); line-height: 0; }
+  .train-marker { position: absolute; left: var(--rail-x); top: 9px; transform: translate(-50%, -50%); padding: 2px 0; background: var(--ring); color: var(--event-color); line-height: 0; }
 
   .event-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 12px; color: #687267; margin-bottom: 4px; font-variant-numeric: tabular-nums; }
   .event-tag { padding: 2px 6px; border-radius: 4px; background: #e9ede6; color: #445048; font-weight: 650; font-size: 10px; letter-spacing: 0.02em; text-transform: uppercase; }
@@ -110,7 +111,7 @@
   .train .event-meta { margin-bottom: 1px; font-size: 11px; }
 
   /* Deadline changes read as broken promises. */
-  li.promise::before { background: #fffdfa; border-color: #b4452f; outline-color: #b4452f; border-width: 2px; }
+  li.promise::before { width: 12px; height: 12px; border: 2px solid #b4452f; background: var(--surface); }
   .promise-tag { background: #f6e3dc; color: #8f3522; }
   .target-change { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 8px 0 0; font-size: 15px; font-variant-numeric: tabular-nums; }
   .target-change s { color: #8a928a; text-decoration-thickness: 1.5px; }
@@ -124,7 +125,9 @@
   .section-label { min-width: 104px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
 
   li.opening { padding: 18px 20px 20px; margin: 8px 0 30px -12px; border-radius: 8px; background: color-mix(in srgb, var(--line-color) 16%, #fffdfa); border: 1px solid color-mix(in srgb, var(--line-color) 55%, transparent); }
-  li.opening::before { left: -23px; top: 20px; }
+  /* The opening card is pulled 12px left and has a 1px border, so its marker sits 11px further right within it. */
+  li.opening { --rail-x: -18px; --ring: color-mix(in srgb, var(--line-color) 16%, #fffdfa); }
+  li.opening::before { top: 27px; box-shadow: 0 0 0 3px var(--bg); }
   li.opening h2 { font-size: 24px; }
   .opening-note { margin: 8px 0 0; font-size: 14px; line-height: 1.55; color: #26342e; }
 
@@ -151,11 +154,11 @@
   .train-link { display: inline-block; font-size: 11px; color: #536055; margin-top: 10px; text-underline-offset: 3px; }
   .train-link:hover { color: #0b5fe8; }
   li.today { padding-bottom: 6px; }
-  li.today::before { background: #17211d; }
+  li.today::before { background: var(--ink); border-color: var(--ink); }
   @media(max-width: 600px) {
     .history { padding-left: 22px; }
-    li.entry::before { left: -29px; } li.line::before { left: -31px; } .train-marker { left: -35px; }
-    li.opening { margin-left: -8px; padding: 14px 14px 16px; } li.opening::before { left: -21px; }
+    .history { --rail-x: -23px; }
+    li.opening { margin-left: -8px; padding: 14px 14px 16px; --rail-x: -16px; } li.opening::before { top: 23px; }
     h2 { font-size: 17px; } li.opening h2 { font-size: 20px; }
     .target-change { font-size: 14px; }
     .gap { margin-left: -24px; padding-left: 22px; }
