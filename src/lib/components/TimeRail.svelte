@@ -132,6 +132,8 @@
     <ul class="legend" aria-hidden="true">
       <li><span class="swatch missed"></span>Target missed</li>
       <li><span class="swatch met"></span>Target met</li>
+      <!-- Each arc runs from the report that set or moved a target to the date it promised. -->
+      <li><svg class="arc-swatch" width="10" height="12" viewBox="0 0 10 12"><path d="M1 1 C 9 1, 9 11, 1 11" /></svg>Target shifted</li>
     </ul>
   {/if}
 </div>
@@ -173,5 +175,7 @@
   .swatch { width: 8px; height: 8px; border-radius: 50%; border: 1.6px solid; }
   .swatch.missed { border-color: #b4452f; }
   .swatch.met { border-color: #15884d; background: #15884d; }
+  .arc-swatch { flex: none; overflow: visible; }
+  .arc-swatch path { fill: none; stroke: #8a928a; stroke-width: 1.4; }
   @media (prefers-reduced-motion: reduce) { .window { transition: none; } }
 </style>
