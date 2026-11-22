@@ -293,3 +293,14 @@ test('pink delay story scores elevated and underground sections separately', () 
   assert.equal(yellow.sections.length, 1);
   assert.equal(yellow.missed, 7);
 });
+
+test('opening targets have unique section/number keys for keyed rendering', () => {
+  // The Timeline rail and feed key targets by `${section}-${number}`; a duplicate key crashes the page.
+  const lines = JSON.parse(readFileSync(new URL('../lines.json', import.meta.url), 'utf8')).lines;
+  for (const [id, line] of Object.entries(lines)) {
+    const story = buildDelayStory(id, line.milestones, '2026-11-22');
+    if (!story) continue;
+    const keys = story.targets.map((t) => `${t.section}-${t.number}`);
+    assert.equal(new Set(keys).size, keys.length, `${id} has duplicate target keys`);
+  }
+});

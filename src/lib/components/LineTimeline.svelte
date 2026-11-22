@@ -46,7 +46,7 @@
       </div>
       {#if entry.kind === 'train'}<h3>{entry.title}</h3>{:else}<h2>{entry.title}</h2>{/if}
 
-      {#each targets as t (t.section)}
+      {#each targets as t (`${t.section}-${t.number}`)}
         <p class="target-change">
           {#if multiSection}<span class="section-label">{t.sectionLabel} {t.number}/{t.of}</span>{/if}
           {#if t.previousLabel}<s>{t.previousLabel}</s><span aria-hidden="true">→</span>{/if}

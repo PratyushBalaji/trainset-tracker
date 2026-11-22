@@ -106,10 +106,10 @@
 
     <line class="axis" x1={axis} x2={axis} y1={pad} y2={height - pad} />
 
-    {#each arcs as arc (arc.target.section + arc.target.milestoneId)}
+    {#each arcs as arc (`${arc.target.section}-${arc.target.number}`)}
       <path class="arc {arc.target.outcome}" d={arc.d} />
     {/each}
-    {#each onRail as target (target.section + target.milestoneId)}
+    {#each onRail as target (`${target.section}-${target.number}`)}
       <circle class="target {target.outcome}" cx={axis} cy={y(target.target)} r={compact ? 2.5 : 3.5}><title>Target {target.number}: {target.label} — {target.outcome}</title></circle>
     {/each}
 
