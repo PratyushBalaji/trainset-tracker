@@ -77,8 +77,9 @@
               {#each v.marks as m}<span class="mark" style={`left: ${x(m.date, v.start, v.end)}%; background: ${m.color}`}></span>{/each}
               <span class="today" class:near-end={x(v.today, v.start, v.end) > 85} style={`left: ${x(v.today, v.start, v.end)}%`}><span>Today</span></span>
             </div>
-            <div class="flags">
-              {#each v.flags as f}<span class="flag {f.tone}" style={`left: ${x(f.date, v.start, v.end)}%`}>{f.label}</span>{/each}
+            <!-- One row per flag, centred on its date, so nearby dates never collide. -->
+            <div class="flags" style={`height: ${v.flags.length * 26}px`}>
+              {#each v.flags as f, i}<span class="flag {f.tone}" style={`left: ${x(f.date, v.start, v.end)}%; top: ${i * 26}px`}>{f.label}</span>{/each}
             </div>
             <div class="axis tnum">
               {#each Array.from({ length: Number(v.end.slice(0, 4)) - Number(v.start.slice(0, 4)) }, (_, i) => Number(v.start.slice(0, 4)) + i + 1) as year}
@@ -149,8 +150,8 @@
   .today { position: absolute; top: -6px; bottom: -6px; border-left: 2px dotted #ffffff99; }
   .today span { position: absolute; top: -18px; left: 4px; font-size: 10px; color: #c9d0c5; }
   .today.near-end span { left: auto; right: 4px; }
-  .flags { position: relative; height: 22px; }
-  .flag { position: absolute; transform: translateX(-50%); white-space: nowrap; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 999px; }
+  .flags { position: relative; }
+  .flag { position: absolute; white-space: nowrap; font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 999px; transform: translateX(-50%); }
   .flag.missed { background: #f09a8533; color: #f6b3a3; }
   .flag.current { background: #2f7fbd40; color: #b9d8f2; }
   .axis { position: relative; height: 16px; font-size: 11px; color: #8a928a; }

@@ -40,6 +40,9 @@ const deliveryReadings: Record<string, { matches: string; due?: (awarded: string
   'bmrcl-5rs-dm': { matches: 'Original base-order delivery schedule: June 2025–May 2027; comprehensive maintenance for up to 15 years', window: { from: '2025-06-01', to: '2027-05-31' } }
 };
 
+// Lines whose carousel list ends with the inauguration and opening instead of each met date.
+const compactEnding = new Set(['pink']);
+
 // Sentence wording for the first reviewed span of a line.
 const spanPhrases: Record<string, string> = {
   'Civil work done → passengers': 'civil works completion and the first revenue service'
@@ -56,13 +59,20 @@ function deadlineStory(lineId: string, today: string): Story | null {
   const later = story.sections.slice(1).find((s) => !s.opening && s.current);
   const name = lineShortLabels[lineId] ?? lineId;
   const civil = story.spans[0];
-  const rows = first.targets.map((t) => ({
-    label: t.label,
-    note: t.outcome === 'missed' ? `+${t.monthsLate} mo` : t.outcome === 'not-taken' ? 'retracted' : t.outcome,
-    tone: (t.outcome === 'missed' ? 'missed' : t.outcome === 'not-taken' ? 'muted' : 'met') as StoryTone,
-    struck: t.outcome === 'missed'
-  }));
-  rows.push({ label: `Opened ${formatDate(first.opening.date)}`, note: '', tone: 'highlight', struck: false });
+  // Lines in compactEnding drop the last-minute dates that were met (inauguration and opening
+  // announcements) and show the inauguration itself before the opening.
+  const compact = compactEnding.has(lineId);
+  const inauguration = compact ? lines[lineId]?.milestones.find((m) => m.id === 'inauguration' && m.date && m.date <= today) : undefined;
+  const rows = first.targets
+    .filter((t) => !(compact && t.outcome === 'met'))
+    .map((t) => ({
+      label: t.label,
+      note: t.outcome === 'missed' ? `+${t.monthsLate} mo` : t.outcome === 'not-taken' ? 'retracted' : t.outcome,
+      tone: (t.outcome === 'missed' ? 'missed' : t.outcome === 'not-taken' ? 'muted' : 'met') as StoryTone,
+      struck: t.outcome === 'missed'
+    }));
+  if (inauguration?.date) rows.push({ label: `${formatDate(inauguration.date)} (inauguration)`, note: '', tone: 'met', struck: false });
+  rows.push({ label: compact ? `Opened to passengers ${formatDate(first.opening.date)}` : `Opened ${formatDate(first.opening.date)}`, note: '', tone: 'highlight', struck: false });
   if (later?.current) rows.push({ label: `${later.label}: ${later.current.label}`, note: `moved ${later.targets.length - 1}×`, tone: 'current', struck: false });
   return {
     id: `${lineId}-deadlines`,
