@@ -3,6 +3,43 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 
+test('Blue research preserves approvals, date precision and limited trial extents', () => {
+  const { blue } = JSON.parse(readFileSync(new URL('../lines.json', import.meta.url), 'utf8')).lines;
+  const byId = new Map(blue.milestones.map((m) => [m.id, m]));
+  assert.equal(blue.research_status, 'preliminary');
+  assert.equal(byId.size, blue.milestones.length);
+  assert.equal(byId.get('union-cabinet-approval').date, '2021-04-20');
+  assert.equal(byId.get('formal-union-sanction').date, '2021-06-07');
+  assert.equal(byId.get('initial-orr-state-approval').date, '2017-03-15');
+  assert.equal(byId.get('revised-orr-state-order').date, '2019-01-24');
+  assert.equal(byId.get('initial-orr-dpr').period, '2016-10');
+  assert.equal(byId.get('airport-test-piling').period, '2022-01');
+  assert.equal(byId.get('airport-test-piling').date, undefined);
+  assert.equal(byId.get('first-orr-u-girder').date, '2022-06-18');
+  assert.equal(byId.get('first-orr-u-girder').end_date, '2022-06-19');
+  assert.equal(byId.get('orr-track-laying-underway').date_basis, 'reported_by');
+  assert.equal(byId.get('orr-civil-awards').date, '2021-05-25');
+  assert.equal(byId.get('orr-civil-awards').presentation.disputed, true);
+  assert.equal(byId.get('adb-orr-contract-record').date, '2021-09-30');
+  assert.equal(byId.get('first-preliminary-movement').date, '2026-11-07');
+  assert.match(byId.get('first-preliminary-movement').scope, /Benniganahalli/);
+  assert.equal(byId.get('orr-trial-to-doddanekundi').date, '2026-11-10');
+  assert.match(byId.get('orr-trial-to-doddanekundi').scope, /Doddanekundi/);
+  assert.equal(byId.get('cbtc-in-principle-approval').date_basis, 'reported_on');
+  assert.ok(!blue.milestones.some((m) => m.category === 'Opening' || m.category === 'Inspection'));
+  for (const m of blue.milestones) {
+    assert.ok(m.sources.length > 0);
+    assert.ok(m.scope);
+    assert.ok(m.date || m.period);
+    assert.ok(!/TS\d{3}/.test(m.title));
+    for (const field of ['date', 'end_date']) if (m[field]) {
+      assert.equal(new Date(m[field]).toISOString().slice(0, 10), m[field]);
+      assert.ok(m[field] <= '2026-11-22');
+    }
+    if (m.period) assert.match(m.period, /^\d{4}-(0[1-9]|1[0-2])$/);
+  }
+});
+
 const compile = (file) => ts.transpileModule(readFileSync(new URL(file, import.meta.url), 'utf8'), {
   compilerOptions: { module: ts.ModuleKind.ESNext }
 }).outputText;
@@ -303,4 +340,24 @@ test('opening targets have unique section/number keys for keyed rendering', () =
     const keys = story.targets.map((t) => `${t.section}-${t.number}`);
     assert.equal(new Set(keys).size, keys.length, `${id} has duplicate target keys`);
   }
+});
+
+test('Blue forecasts retain section scopes without fabricating openings or scorecard dates', () => {
+  const { blue } = JSON.parse(readFileSync(new URL('../lines.json', import.meta.url), 'utf8')).lines;
+  const byId = new Map(blue.milestones.map((m) => [m.id, m]));
+  const advanced = byId.get('airport-december2024-target');
+  assert.equal(advanced.previous_target, 'September 2025 Airport');
+  assert.equal(advanced.revised_target, 'December 2024 Airport');
+  assert.equal(byId.get('combined-2023-24-forecast').revised_target, '2023-24');
+  assert.match(byId.get('airport-split-nov28-forecast').revised_target, /Hebbal - KR Puram December 2026/);
+  assert.match(byId.get('airport-split-nov29-forecast').revised_target, /full Airport Line September 2026/);
+  assert.match(byId.get('august2026-airport-phasing').scope, /Nagawara - Hebbal/);
+  assert.match(byId.get('october-airport-section-review').revised_target, /early 2028/);
+  assert.match(byId.get('conflicting-mid2027-airport-forecast').revised_target, /mid-2027/);
+  const reaffirmed = byId.get('may2027-orr-target-reaffirmed');
+  assert.equal(reaffirmed.previous_target, reaffirmed.revised_target);
+  assert.equal(buildDelayStory('blue', blue.milestones, '2026-11-22'), null);
+  const entries = buildLineTimeline(blue.milestones, [], 'blue', '2026-11-22');
+  assert.equal(entries.filter((e) => e.kind === 'line').length, blue.milestones.length);
+  assert.ok(entries.every((e, i) => i === 0 || entries[i - 1].sortDate <= e.sortDate));
 });

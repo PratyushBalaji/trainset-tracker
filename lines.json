@@ -2124,6 +2124,397 @@
         }
       ]
     },
-    "blue": { "name": "Blue Line", "research_status": "not_started", "milestones": [] }
+    "blue": {
+      "name": "Blue Line",
+      "scope": "Phase 2A: Central Silk Board - KR Puram; Phase 2B: KR Puram - Hebbal - Airport",
+      "research_status": "preliminary",
+      "milestones": [
+        {
+          "id": "initial-orr-dpr", "title": "Initial ORR DPR prepared", "category": "Approval",
+          "period": "2016-10", "date_basis": "period", "scope": "Earlier Central Silk Board - KR Puram proposal",
+          "description": "BMRCL's in-house team prepared the initial ORR detailed project report.",
+          "comments": "Only the preparation month is established; this is not the submission date.",
+          "sources": ["https://data.opencity.in/dataset/6c0cbd03-4bef-440f-94e8-a4fb04918181/resource/4f13129f-b6af-438a-b503-a0f024acfbf7/download/ad8762a3-8e9e-42cb-bcda-5e8942c4cd99.pdf"]
+        },
+        {
+          "id": "orr-dpr-submitted", "title": "ORR DPR submitted to Karnataka", "category": "Approval",
+          "date": "2016-10-28", "scope": "Earlier Central Silk Board - KR Puram proposal",
+          "description": "The ORR DPR was submitted to the state government.",
+          "comments": "The supplied research prefers the contemporary explicit date over a later WRI account saying November. That discrepancy remains unresolved.",
+          "presentation": { "disputed": true },
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/metro-link-to-orr-bmrc-unveils-dpr-invites-suggestions/amp_articleshow/55378346.cms", "https://wri-india.org/sites/default/files/Upload_BLRDD_Practice_Note_13July2023.pdf"]
+        },
+        {
+          "id": "initial-orr-state-approval", "title": "Initial ORR proposal formally approved by state", "category": "Approval",
+          "date": "2017-03-15", "scope": "Earlier ORR proposal",
+          "description": "Government order UDD 78 PRJ 2016 approved the initial ORR proposal at INR 4,202 crore.",
+          "comments": "The supplied research verified search-indexed DPR text; direct PDF access was blocked. March 1 cabinet references are distinct from this formal order.",
+          "sources": ["https://data.opencity.in/dataset/e2bb661f-0593-4045-bd90-e0b905c4a96d/resource/51692a71-fbb9-4007-a3d0-df37af365304/download/phase-2a-dpr.pdf"]
+        },
+        {
+          "id": "earlier-airport-dpr", "title": "Earlier airport DPR reported retrospectively", "category": "Approval",
+          "period": "2017-09", "date_basis": "period", "scope": "Earlier airport alignment, not the final Phase 2B proposal",
+          "description": "A retrospective account places an earlier airport DPR in September 2017.",
+          "comments": "Lower-strength reproduced reporting. This predates the 2019 alignment change and must not be treated as submission of the final KR Puram - Hebbal - Airport DPR.",
+          "sources": ["https://indialive.net/bengalurus-blue-line-of-namma-metro-scheduled-for-completion-by-dec-2027/"]
+        },
+        {
+          "id": "airport-alignment-cabinet-approval", "title": "Changed airport alignment approved by state cabinet", "category": "Approval",
+          "date": "2019-01-10", "scope": "Phase 2B revised airport route",
+          "description": "Karnataka's cabinet approved a changed airport alignment.",
+          "comments": "Cabinet approval is separate from the later formal government order.",
+          "sources": ["https://housing.com/news/bengaluru-metro-rail-proposal-approved-change-alignment-kr-puram-kempegowda-international-airport-kia-metro/"]
+        },
+        {
+          "id": "airport-state-order", "title": "Revised airport project receives formal state approval", "category": "Approval",
+          "date": "2019-01-19", "scope": "Phase 2B",
+          "description": "Karnataka approved the revised airport project through order UDD 385 PRJ 2018.",
+          "sources": ["https://kla.kar.nic.in/council/Replies/unstarred/06032025/usq302%2806032025%29.pdf", "https://www.newindianexpress.com/cities/bengaluru/2021/May/11/cmyediyurappafixes-deadlines-for-bengalurumetros-orr-line-and-airport-line-2301145.html"]
+        },
+        {
+          "id": "revised-orr-state-order", "title": "Revised ORR project approved by Karnataka", "category": "Approval",
+          "date": "2019-01-24", "scope": "Phase 2A",
+          "description": "Government order UDD 384 PRJ 2018 approved the revised ORR proposal, distinct from the 2017 approval.",
+          "sources": ["https://kla.kar.nic.in/council/Replies/unstarred/06032025/usq302%2806032025%29.pdf"]
+        },
+        {
+          "id": "combined-proposal-forwarded", "title": "Combined proposal forwarded to Union government", "category": "Approval",
+          "period": "2019-11", "date_basis": "period", "scope": "Phase 2A and Phase 2B",
+          "description": "Karnataka forwarded the combined proposal under the Metro Rail Policy's equal-equity model.",
+          "comments": "The September 2020 Rajya Sabha answer establishes the month, not an exact submission day.",
+          "sources": ["https://cms.rajyasabha.nic.in/UploadedFiles/Debates/OfficialDebatesDatewise/Floor/252/F16.09.2020.pdf"]
+        },
+        {
+          "id": "orr-tenders-reissued", "title": "ORR civil tenders reissued", "category": "Construction",
+          "date": "2019-12-20", "scope": "Phase 2A civil packages",
+          "description": "Fresh tenders were issued for the two ORR civil packages after the earlier procurement round was cancelled.",
+          "comments": "Tendering is not contract award or physical construction commencement.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-bmrcl-floats-tenders-for-silk-board-kr-puram-orr-commuters-hope-for-early-relief/articleshow/72908567.cms", "https://www.adb.org/projects/53326-001/main"]
+        },
+        {
+          "id": "combined-2023-24-forecast", "title": "2023-24 combined-project target reported", "category": "Deadline",
+          "date": "2019-12-20", "date_basis": "reported_on", "scope": "Combined ORR - Airport proposal",
+          "revised_target": "2023-24",
+          "description": "Reporting carried a 2023-24 target for the combined proposal.",
+          "comments": "Preserve the reported period without assuming a financial year, an exact opening date or three section-specific deadlines. The period has passed without a confirmed opening as of the research cutoff.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-bmrcl-floats-tenders-for-silk-board-kr-puram-orr-commuters-hope-for-early-relief/articleshow/72908567.cms"]
+        },
+        {
+          "id": "airport-infrastructure-mous", "title": "Airport infrastructure funding MoUs signed", "category": "Approval",
+          "date": "2020-09-08", "scope": "Airport premises and Bettahalasuru",
+          "description": "Agreements covered BIAL-funded infrastructure within airport premises and Embassy participation at Bettahalasuru.",
+          "comments": "Funding arrangements do not establish construction commencement.",
+          "sources": ["https://kla.kar.nic.in/council/house/Paperlaid/146/33.pdf"]
+        },
+        {
+          "id": "orr-financial-bids", "title": "ORR civil financial bids opened", "category": "Construction",
+          "date": "2020-10-13", "scope": "Phase 2A",
+          "description": "Afcons and Shankaranarayana Constructions emerged as lowest bidders for their respective ORR packages.",
+          "comments": "Lowest-bidder status is not a signed contract award.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-bmrcl-sets-ball-rolling-for-orr-metro-afcons-shankaranarayana-lowest-bidders/articleshow/78643598.cms"]
+        },
+        {
+          "id": "initial-2021-orr-target-reported", "title": "Earlier 2021 ORR operational target recalled", "category": "Deadline",
+          "date": "2020-10-14", "date_basis": "reported_on", "scope": "Earlier ORR proposal",
+          "revised_target": "2021 operational target in the 2016 DPR",
+          "description": "Contemporary reporting recalled a 2021 operational target associated with the 2016 DPR. Procurement cancellation, IL&FS difficulties and revised policy requirements affected progress.",
+          "comments": "The original announcement date is not established. WRI separately recalls a 2020 completion target; these are conflicting historical claims, not a verified revision sequence.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-bmrcl-sets-ball-rolling-for-orr-metro-afcons-shankaranarayana-lowest-bidders/articleshow/78643598.cms"]
+        },
+        {
+          "id": "union-cabinet-approval", "title": "Union Cabinet approves Phase 2A and Phase 2B", "category": "Approval",
+          "date": "2021-04-20", "scope": "Combined 58.19 km project",
+          "description": "The Union Cabinet approved the combined project at INR 14,788.101 crore: approximately 19.75 km of Phase 2A and 38.44 km of Phase 2B.",
+          "comments": "Use April 20 for Cabinet approval, not April 28 as repeated in some coverage. Earlier DPR and package lengths have different measurement boundaries.",
+          "sources": ["https://www.pib.gov.in/PressReleasePage.aspx?PRID=1712859"]
+        },
+        {
+          "id": "planning-committee-approval", "title": "Metropolitan Planning Committee clears both projects", "category": "Approval",
+          "date": "2021-05-10", "scope": "Phase 2A and Phase 2B",
+          "description": "The committee approved both projects at a meeting chaired by the chief minister.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2021/May/11/cmyediyurappafixes-deadlines-for-bengalurumetros-orr-line-and-airport-line-2301145.html"]
+        },
+        {
+          "id": "cm-june-september2025-targets", "title": "June and September 2025 deadlines set", "category": "Deadline",
+          "date": "2021-05-10", "scope": "ORR and the entire Airport Line respectively",
+          "revised_target": "June 2025 ORR; September 2025 Airport",
+          "description": "At the chief minister's meeting, the ORR deadline was set for June 2025 and the Airport Line deadline for September 2025, as quoted by BMRCL's MD.",
+          "comments": "Both dates passed without an opening. The whole-airport deadline is not retrospectively assigned to the later airport subsections.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2021/May/11/cmyediyurappafixes-deadlines-for-bengalurumetros-orr-line-and-airport-line-2301145.html"]
+        },
+        {
+          "id": "orr-civil-awards", "title": "ORR civil packages awarded", "category": "Construction",
+          "date": "2021-05-25", "scope": "Phase 2A: Afcons and SNC packages",
+          "description": "BMRCL's annual report records awards to Afcons at approximately INR 785.23 crore and SNC at approximately INR 623.55 crore.",
+          "comments": "Trade reporting gives May 24 for work orders, one day earlier. The later ADB contract-record date is retained separately rather than substituted.",
+          "presentation": { "disputed": true },
+          "sources": ["https://kla.kar.nic.in/council/house/Paperlaid/146/33.pdf", "https://www.urbantransportnews.com/news/bangalore-metro-awarded-two-civil-contracts-worth-rs-1409-crores-for-phase-2a"]
+        },
+        {
+          "id": "formal-union-sanction", "title": "Formal Union sanction issued", "category": "Approval",
+          "date": "2021-06-07", "scope": "Phase 2A and Phase 2B",
+          "description": "Formal Union sanction followed the April Cabinet decision.",
+          "sources": ["https://kla.kar.nic.in/council/house/Paperlaid/146/33.pdf"]
+        },
+        {
+          "id": "orr-test-piling", "title": "ORR test piling begins at KR Puram", "category": "Construction",
+          "date": "2021-07-18", "scope": "SNC's ORR package",
+          "description": "SNC began test piling at KR Puram on the Sunday identified in the July 19 report.",
+          "comments": "Test piling does not establish full production piling across Phase 2A.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/civic/snc-sets-the-ball-rolling-for-orr-metro-corridor-work/amp_articleshow/84538871.cms"]
+        },
+        {
+          "id": "adb-orr-contract-record", "title": "ADB records ORR civil contract date", "category": "Construction",
+          "date": "2021-09-30", "scope": "Phase 2A lender procurement record",
+          "description": "ADB's procurement table lists September 30 for the Afcons and SNC contracts.",
+          "comments": "The administrative meaning requires reconciliation with BMRCL's May award dates. This is a lender-record date, not a second physical construction start.",
+          "sources": ["https://www.adb.org/projects/53326-001/main"]
+        },
+        {
+          "id": "ncc-airport-awards", "title": "NCC receives airport civil award letters", "category": "Construction",
+          "date": "2021-11-17", "scope": "Phase 2B's three principal NCC packages",
+          "description": "NCC received letters for three main airport civil packages totalling approximately INR 2,200 crore. The November 18 report identifies Wednesday as the handover day.",
+          "comments": "Airport station works had separate arrangements.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2021/nov/18/namma-metros-airport-line-work-to-start-in-three-months-2384937.html"]
+        },
+        {
+          "id": "airport-december2024-target", "title": "Airport forecast advances to December 2024", "category": "Deadline",
+          "date": "2021-11-17", "scope": "Entire Phase 2B Airport Line",
+          "previous_target": "September 2025 Airport", "revised_target": "December 2024 Airport",
+          "description": "BMRCL's MD said the airport stretch would meet December 2024 following the NCC awards.",
+          "comments": "This was an earlier, more ambitious forecast, not an extension. It was subsequently missed; do not force a monotonically increasing target history.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2021/nov/18/namma-metros-airport-line-work-to-start-in-three-months-2384937.html"]
+        },
+        {
+          "id": "airport-test-piling", "title": "Airport test piling underway in late January", "category": "Construction",
+          "period": "2022-01", "date_basis": "period", "scope": "NCC's three Phase 2B packages",
+          "description": "The February 2 report says test piling began over the preceding fortnight across the three airport packages.",
+          "comments": "Late-January precision only. Production piling was still planned; broader February construction-start accounts should not replace this qualified test-piling record.",
+          "sources": ["https://themetrorailguy.com/2022/02/02/ncc-begins-bangalore-metro-airport-lines-test-piling-work/"]
+        },
+        {
+          "id": "first-orr-u-girder", "title": "First ORR U-girder erected overnight", "category": "Construction",
+          "date": "2022-06-18", "end_date": "2022-06-19", "scope": "SNC package at Mahadevapura",
+          "description": "SNC erected its first ORR U-girder during the night of June 18/19.",
+          "comments": "The interval preserves the overnight qualification; neither midnight boundary is asserted as the exact erection time.",
+          "sources": ["https://themetrorailguy.com/2022/06/21/snc-launches-bangalore-metro-orr-lines-1st-u-girder/"]
+        },
+        {
+          "id": "orrca-coordination-targets", "title": "ORR construction and commissioning schedules recorded", "category": "Deadline",
+          "date": "2023-01-10", "scope": "Phase 2A construction and commissioning, not passenger-opening announcement",
+          "revised_target": "Civil works June 2024; finishes, track, systems and testing/commissioning June 2025",
+          "description": "Coordination-meeting proceedings separated civil completion from finishes, track, systems and testing/commissioning.",
+          "comments": "Both schedules were overtaken. Neither is counted as a separate passenger-opening promise.",
+          "sources": ["https://www.orrca.org.in/wp-content/uploads/2023/01/Proceedings-of-ORRCA-coordination-meeting-dt-10.01.23.pdf"]
+        },
+        {
+          "id": "airport-package3-first-u-girder", "title": "Airport Package 3 first U-girder launched", "category": "Construction",
+          "period": "2023-04", "date_basis": "period", "scope": "NCC Phase 2B Package 3",
+          "description": "A retrospective package account places the first Package 3 U-girder launch in April.",
+          "comments": "An exact day is not established in the supplied research.",
+          "sources": ["https://themetrorailguy.com/2023/09/10/ncc-launches-bangalore-metro-airport-line-package-1s-1st-u-girder/"]
+        },
+        {
+          "id": "airport-package2-first-u-girder", "title": "Airport Package 2 first U-girder launched", "category": "Construction",
+          "period": "2023-05", "date_basis": "period", "scope": "NCC Phase 2B Package 2",
+          "description": "A retrospective package account places the first Package 2 U-girder launch in May.",
+          "comments": "An exact day is not established in the supplied research.",
+          "sources": ["https://themetrorailguy.com/2023/09/10/ncc-launches-bangalore-metro-airport-line-package-1s-1st-u-girder/"]
+        },
+        {
+          "id": "june2026-qualified-forecast", "title": "June 2026 forecast carries a three-month qualification", "category": "Deadline",
+          "date": "2023-06-06", "scope": "Airport Line; ORR around the same time",
+          "revised_target": "June 2026, plus or minus three months",
+          "description": "The minister forecast airport connectivity in June 2026, plus or minus three months, with ORR expected around the same time.",
+          "comments": "Even the September 2026 outer window passed. Preserve the qualification; do not present June as an exact deadline or assign a whole-airport forecast separately to the later subsections.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/metro-bengaluru-airport-june-2026-d-k-shivakumar8649143/lite/"]
+        },
+        {
+          "id": "september2026-both-corridors-target", "title": "Both corridors forecast for September 2026", "category": "Deadline",
+          "date": "2023-09-15", "scope": "Phase 2A and the entire Phase 2B",
+          "revised_target": "September 2026, both corridors",
+          "description": "BMRCL's chief PRO said both corridors would be in place by September 2026, in a statement reported the following day.",
+          "comments": "The forecast was missed. No distinct explanation for this particular target is established.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2023/Sep/16/metros-orr-airport-line-to-be-ready-by-sept-2026-will-benefit-it-industry-hugely-bmrcl-2615489.html"]
+        },
+        {
+          "id": "orr-june2026-reaffirmed", "title": "June 2026 ORR target reaffirmed during BMRCL visit", "category": "Deadline",
+          "date": "2024-05-15", "scope": "Phase 2A",
+          "previous_target": "June 2026 ORR", "revised_target": "June 2026 ORR",
+          "description": "An ORRCA newsletter recorded the June 2026 target during a BMRCL visit.",
+          "comments": "A reaffirmation, not an additional extension or separate missed opening target.",
+          "sources": ["https://www.orrca.org.in/wp-content/uploads/2024/07/ORRCA-Newsletter-H1-2024.pdf"]
+        },
+        {
+          "id": "electrification-contract-announced", "title": "Siemens-RVNL electrification order announced", "category": "Construction",
+          "date": "2024-07-10", "date_basis": "reported_on", "scope": "Electrification order including Blue Line works",
+          "description": "The Siemens-RVNL consortium announced an approximately INR 766-crore electrification order including Blue Line works.",
+          "comments": "This is the announcement date, not a verified signing, energisation or completion date.",
+          "sources": ["https://press.siemens.com/in/en/pressrelease/siemens-consortium-partners-bengaluru-metro-rail-corporation-limited-rail"]
+        },
+        {
+          "id": "snc-final-u-girder-cast", "title": "SNC casts final ORR Package 2 U-girder", "category": "Construction",
+          "date": "2024-07-29", "scope": "Phase 2A Package 2",
+          "description": "SNC completed casting its final Package 2 U-girder, as reported the following day.",
+          "comments": "Casting completion is not erection, viaduct completion or completion of the entire ORR civil works.",
+          "sources": ["https://themetrorailguy.com/2024/07/30/snc-casts-bangalore-metro-orr-line-package-2s-final-u-girder/"]
+        },
+        {
+          "id": "orr-track-laying-underway", "title": "ORR track laying reported underway", "category": "Construction",
+          "date": "2024-08-16", "date_basis": "reported_by", "scope": "Limited initial Phase 2A section",
+          "description": "Track laying had begun the previous week on a limited ORR section.",
+          "comments": "The reporting date is an upper bound, not the exact commencement date. It does not establish completed track laying.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/track-laying-works-on-orr-line-commence-in-bengaluru/amp_articleshow/112553684.cms"]
+        },
+        {
+          "id": "airport-split-nov28-forecast", "title": "Airport opening forecast splits into two sections", "category": "Deadline",
+          "date": "2024-11-28", "date_basis": "reported_on", "scope": "Hebbal - Airport and Hebbal - KR Puram; ORR separately",
+          "revised_target": "Hebbal - Airport June-September 2026; Hebbal - KR Puram December 2026; ORR June 2026",
+          "description": "An interview report proposed phased airport opening, citing uneven progress, utility obstructions and delayed station-finishing procurement.",
+          "comments": "The first window was missed; the December forecast was later replaced. This conflicts with the next day's full-airport September forecast. ORR's June target is a reaffirmation.",
+          "sources": ["https://www.moneycontrol.com/news/business/bengaluru-metro-airport-line-to-open-in-two-phases-by-2026-12878510.html"]
+        },
+        {
+          "id": "airport-split-nov29-forecast", "title": "Conflicting airport phasing forecast reported", "category": "Deadline",
+          "date": "2024-11-29", "date_basis": "reported_on", "scope": "Hebbal - Airport; full Airport Line; ORR separately",
+          "revised_target": "Hebbal - Airport June 2026; full Airport Line September 2026; ORR June 2026",
+          "description": "Reporting gave June 2026 for Hebbal - Airport and September for the full airport corridor, citing traffic restrictions between flyovers.",
+          "comments": "Both airport dates passed. The full-airport forecast conflicts with the preceding day's December 2026 Hebbal - KR Puram forecast; retain both attributed accounts rather than silently reconciling them.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2024/Nov/29/bmrcl-revises-deadline-of-airport-line-to-september-2026-2"]
+        },
+        {
+          "id": "december2027-full-line-forecast", "title": "December 2027 full Blue Line forecast reproduced", "category": "Deadline",
+          "date": "2025-09-09", "date_basis": "reported_on", "scope": "Entire Blue Line",
+          "revised_target": "December 2027, entire Blue Line",
+          "description": "A reproduced report forecast full-line completion by December 2027 and attributed airport construction delay partly to a nine-month suspension after the 2023 accident.",
+          "comments": "Lower-strength reproduction; the original Hindu page was unavailable to the supplied research. This future forecast was later revised, not already missed at the research cutoff.",
+          "sources": ["https://indialive.net/bengalurus-blue-line-of-namma-metro-scheduled-for-completion-by-dec-2027/"]
+        },
+        {
+          "id": "december2026-orr-target", "title": "ORR forecast moves to December 2026", "category": "Deadline",
+          "date": "2025-12-24", "scope": "Phase 2A",
+          "previous_target": "June 2026 ORR", "revised_target": "December 2026 ORR",
+          "description": "The minister publicly forecast ORR readiness by December 2026.",
+          "comments": "Subsequently superseded while still future. The article does not establish a single specific cause for this revision.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-s-orr-metro-to-be-ready-by-dec-2026-hebbal-airport-stretch-by-june-2027-dk-shivakumar-13741975.html"]
+        },
+        {
+          "id": "june-december2027-airport-forecast", "title": "June and December 2027 airport forecasts reported", "category": "Deadline",
+          "date": "2025-12-24", "date_basis": "reported_on", "scope": "Hebbal - Airport and Hebbal - KR Puram",
+          "revised_target": "June 2027 Hebbal - Airport; December 2027 Hebbal - KR Puram",
+          "description": "The report repeated a phased airport plan with June and December 2027 opening forecasts.",
+          "comments": "December 24 is the evidence date, not necessarily the plan's first announcement. Both targets were subsequently revised while still future.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-s-orr-metro-to-be-ready-by-dec-2026-hebbal-airport-stretch-by-june-2027-dk-shivakumar-13741975.html"]
+        },
+        {
+          "id": "october-trial-target", "title": "October ORR trials proposed", "category": "Deadline",
+          "date": "2026-06-19", "scope": "ORR trial start; airport opening forecasts reaffirmed",
+          "revised_target": "October 2026 ORR trials; June/December 2027 airport opening targets retained",
+          "description": "Trials were proposed towards Marathahalli and, if possible, HSR Layout while Silk Board and Marathahalli station works remained pending.",
+          "comments": "The confirmed movements in this research occurred in November. This is a trial-start target, not a passenger-opening deadline, and does not establish trials over the entire ORR corridor.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-s-outer-ring-road-metro-trial-runs-to-start-in-october-says-minister-krishna-byre-gowda-13954061.html"]
+        },
+        {
+          "id": "october-trials-2027-service-reaffirmed", "title": "October trials and broad 2027 service forecast reiterated", "category": "Deadline",
+          "date": "2026-07-25", "scope": "Phase 2A testing and passenger operation",
+          "revised_target": "October 2026 trials; commercial operation in 2027",
+          "description": "The minister reiterated October testing and a broad 2027 commercial-operation forecast, reported the following day.",
+          "comments": "A reaffirmed testing target and a year-only service forecast, not a precise new passenger-opening month.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2026/Jul/26/minister-krishna-byre-gowda-asks-bmrcl-to-conduct-metro-blue-line-trial-run-in-october-operations-in-27"]
+        },
+        {
+          "id": "cbtc-in-principle-approval", "title": "Railway Board in-principle CBTC approval announced", "category": "Certification",
+          "date": "2026-08-08", "date_basis": "reported_on", "scope": "Pink Line and entire Blue Line including Phase 2B",
+          "description": "A reproduced BMRCL announcement said the Railway Board had given in-principle CBTC approval.",
+          "comments": "Not final corridor authorisation, a Blue Line ISA certificate or proof of completed signalling integration. The announcement date does not establish the approval issue date.",
+          "sources": ["https://metrorailnews.in/railway-board-gives-in-principle-cbtc-nod-for-bengaluru-metro-pink-blue-lines/"]
+        },
+        {
+          "id": "june-july2027-airport-forecast", "title": "Hebbal - Airport forecast widens to June-July 2027", "category": "Deadline",
+          "date": "2026-08-20", "scope": "Hebbal - Airport",
+          "previous_target": "June 2027 Hebbal - Airport", "revised_target": "June-July 2027 Hebbal - Airport",
+          "description": "The MD's interview widened the airport forecast, describing Kempapura - Hebbal complications and integration with other projects.",
+          "comments": "Subsequently superseded while future, not an already missed deadline.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-loves-metro-but-hates-bmrcl-md-says-realistic-deadlines-can-change-perception-14010340.html"]
+        },
+        {
+          "id": "august2026-airport-phasing", "title": "Airport forecasts move later; full line targeted for March 2028", "category": "Deadline",
+          "date": "2026-08-22", "scope": "Hebbal - Airport; Nagawara - Hebbal; entire Blue Line",
+          "revised_target": "Hebbal - Airport September/October 2027; Nagawara - Hebbal December 2027-March 2028; full Blue Line March 2028",
+          "description": "The statement reported the following day cited traffic-constrained construction and four-track infrastructure for Orange Line integration.",
+          "comments": "The Nagawara - Hebbal sub-stretch window and full-line March target are not identical to a separately announced KR Puram - Hebbal opening date. Future revisions are not yet missed.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-metro-airport-line-to-be-fully-operational-only-by-march-2028-14013060.html"]
+        },
+        {
+          "id": "staged-orr-trial-targets", "title": "ORR trials proposed in two stages", "category": "Deadline",
+          "date": "2026-08-22", "scope": "KR Puram - Ibbalur and Ibbalur - Silk Board testing",
+          "revised_target": "KR Puram - Ibbalur October 2026; Ibbalur - Silk Board December 2026/January 2027",
+          "description": "The proposed testing schedule split the ORR corridor into two stages.",
+          "comments": "The first objective was not met at its stated extent by the confirmed November movements. The second window was still future at the research cutoff. Neither is a passenger-opening promise.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-metro-airport-line-to-be-fully-operational-only-by-march-2028-14013060.html"]
+        },
+        {
+          "id": "may2027-orr-opening-target", "title": "May 2027 ORR opening and November trials forecast", "category": "Deadline",
+          "date": "2026-10-15", "date_basis": "reported_on", "scope": "Phase 2A",
+          "revised_target": "May 2027 ORR opening; November 2026 trials",
+          "description": "Reporting forecast May passenger opening and November trials while track, station and system works remained.",
+          "comments": "The November trial forecast was achieved on a limited section only. May 2027 is conditional, not an approved opening date.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-metro-s-pink-line-underground-orr-sections-likely-to-see-trial-runs-from-november-14052988.html"]
+        },
+        {
+          "id": "october-construction-review", "title": "Review finds civil and track works still incomplete", "category": "Construction",
+          "date": "2026-10-22", "scope": "Phase 2A and Phase 2B",
+          "description": "The detailed review reported unfinished ORR viaduct and track works, with the airport corridor substantially less advanced.",
+          "comments": "Reported October 23. No whole-line civil, track or electrification completion date is established.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-metro-blue-line-trials-kr-puram-silk-board-10933185/lite/"]
+        },
+        {
+          "id": "end-october-trials-mid2027-commissioning", "title": "End-October trials instructed; mid-2027 commissioning forecast", "category": "Deadline",
+          "date": "2026-10-22", "scope": "Phase 2A testing and commissioning",
+          "revised_target": "End-October 2026 trials; mid-2027 commissioning",
+          "description": "The review instructed trial commencement by the end of October and forecast commissioning in mid-2027.",
+          "comments": "The confirmed first movement on November 7 did not meet the end-October instruction. Mid-2027 is broader than May, not necessarily a further extension or a distinct passenger-opening deadline.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-metro-blue-line-trials-kr-puram-silk-board-10933185/lite/"]
+        },
+        {
+          "id": "october-airport-section-review", "title": "Detailed review forecasts end-2027 and early-2028 airport openings", "category": "Deadline",
+          "date": "2026-10-22", "scope": "Hebbal - Airport and Hebbal - KR Puram",
+          "revised_target": "Hebbal - Airport end-2027; Hebbal - KR Puram early 2028",
+          "description": "The detailed progress review forecast airport operation by end-2027 and the remaining Hebbal - KR Puram section in early 2028.",
+          "comments": "Reported October 23. This conflicts with same-day broader coverage forecasting airport connectivity by mid-2027. Retain both attributed claims; there is no agreed date to substitute silently. Early 2028 is not an exact month.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-metro-blue-line-trials-kr-puram-silk-board-10933185/lite/", "https://www.newindianexpress.com/states/karnataka/2026/Oct/23/bengaluru-pink-line-operational-nod-likely-in-4-5-days"]
+        },
+        {
+          "id": "conflicting-mid2027-airport-forecast", "title": "Broader mid-2027 airport forecast conflicts with detailed review", "category": "Deadline",
+          "date": "2026-10-23", "date_basis": "reported_on", "scope": "Airport connectivity; subsection boundaries not established",
+          "revised_target": "Airport connectivity by mid-2027",
+          "description": "Separate coverage forecast airport connectivity broadly by mid-2027, in conflict with the detailed section-specific end-2027 and early-2028 schedule reported the same day.",
+          "comments": "Do not silently replace the detailed forecast or attribute this broader claim to a particular airport subsection. Both reports remain visible; neither establishes an approved opening.",
+          "sources": ["https://www.newindianexpress.com/states/karnataka/2026/Oct/23/bengaluru-pink-line-operational-nod-likely-in-4-5-days"]
+        },
+        {
+          "id": "first-preliminary-movement", "title": "First confirmed preliminary movement reaches Benniganahalli", "category": "Testing",
+          "date": "2026-11-07", "scope": "Baiyappanahalli depot - Benniganahalli",
+          "description": "The train operated from Baiyappanahalli depot up to Benniganahalli, as retrospectively described in the November 10 report.",
+          "comments": "Does not establish completed trials to Ibbalur, HSR Layout or Silk Board, or completion of integrated signalling and statutory testing. No individual trainset identity is assigned from this line-level record.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-metro-blue-line-train-reaches-outer-ring-road-as-trial-runs-begin-14076338.html"]
+        },
+        {
+          "id": "orr-trial-to-doddanekundi", "title": "Preliminary trial movement extends onto ORR", "category": "Testing",
+          "date": "2026-11-10", "scope": "Up line: Baiyappanahalli depot - Doddanekundi",
+          "description": "The longer trial movement checked electrical systems, rolling stock and infrastructure readiness on the route to Doddanekundi.",
+          "comments": "Preliminary testing is not completed integrated signalling, RDSO testing, CMRS clearance or proof that trials covered the entire ORR corridor.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-metro-blue-line-train-reaches-outer-ring-road-as-trial-runs-begin-14076338.html"]
+        },
+        {
+          "id": "may2027-orr-target-reaffirmed", "title": "May 2027 ORR opening target reaffirmed", "category": "Deadline",
+          "date": "2026-11-10", "date_basis": "reported_on", "scope": "Phase 2A",
+          "previous_target": "May 2027 ORR opening", "revised_target": "May 2027 ORR opening",
+          "description": "The latest concrete opening-month forecast in the supplied research remained May 2027, subject to completing testing and statutory clearances.",
+          "comments": "A reaffirmation, not another extension, a missed target or an approved opening date.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-metro-blue-line-train-reaches-outer-ring-road-as-trial-runs-begin-14076338.html"]
+        }
+      ]
+    }
   }
 }
