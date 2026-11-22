@@ -10,7 +10,7 @@
 
   let height = $state(600);
   const width = $derived(compact ? 44 : 168);
-  const axis = $derived(compact ? 14 : 62);
+  const axis = $derived(compact ? 28 : 62);
   const pad = 14;
   const dateOf = (entry: HistoryEntry) => entry.date ?? `${entry.sortDate}-01`;
   const dated = $derived(entries.map((entry) => ({ entry, date: dateOf(entry) })));
@@ -92,7 +92,7 @@
   <svg {width} {height} viewBox={`0 0 ${width} ${height}`} role="img" aria-label={`Date-scaled history from ${formatDate(start)} to ${formatDate(end)}${story ? `, ${story.missed} opening targets missed` : ''}. Click to jump.`} onclick={jumpFromPointer}>
     {#if focusStart}
       {@const by = y(focusStart)}
-      <rect class="compressed-band" x={compact ? 2 : axis - 44} width={compact ? width - 4 : width - axis + 40} y={pad - 4} height={Math.max(0, by - pad + 4)} rx="3" />
+      <rect class="compressed-band" x={compact ? axis - 8 : axis - 44} width={compact ? width - axis + 6 : width - axis + 40} y={pad - 4} height={Math.max(0, by - pad + 4)} rx="3" />
       <path class="break" d={`M ${axis - 7} ${by - 4} l 4 -3 l 6 6 l 4 -3`} />
       <path class="break" d={`M ${axis - 7} ${by} l 4 -3 l 6 6 l 4 -3`} />
       {#if !compact}<text class="compressed-label" x={width - 4} y={by - 6} text-anchor="end">compressed</text>{/if}
@@ -100,10 +100,10 @@
     {#each halfYears as hy}<line class="half-tick" x1={axis - 4} x2={axis} y1={hy} y2={hy} />{/each}
     {#each yearMarks as mark (mark.year)}
       <line class="year-tick" x1={axis - (compact ? 4 : 8)} x2={axis} y1={mark.ty} y2={mark.ty} />
-      {#if mark.label}<text class="year" class:magnified={mark.magnified} x={compact ? axis + 5 : axis - 20} y={mark.ty + 3.5} text-anchor={compact ? 'start' : 'end'}>{compact ? `'${String(mark.year).slice(2)}` : mark.year}</text>{/if}
+      {#if mark.label}<text class="year" class:magnified={mark.magnified} x={axis - (compact ? 10 : 20)} y={mark.ty + 3.5} text-anchor="end">{compact ? `'${String(mark.year).slice(2)}` : mark.year}</text>{/if}
     {/each}
 
-    {#if windowBox}<rect class="window" x={compact ? 2 : axis - 18} width={compact ? width - 4 : width - axis + 16} y={windowBox.top - 3} height={Math.max(0, windowBox.height + 6)} rx="3" />{/if}
+    {#if windowBox}<rect class="window" x={compact ? axis - 8 : axis - 18} width={compact ? width - axis + 6 : width - axis + 16} y={windowBox.top - 3} height={Math.max(0, windowBox.height + 6)} rx="3" />{/if}
 
     <line class="axis" x1={axis} x2={axis} y1={pad} y2={height - pad} />
 
@@ -125,10 +125,10 @@
     <!-- One line per opening (lines that open in stages get several); only the latest is labelled. -->
     {#each openings as opening, i (opening.milestoneId)}
       {@const oy = y(opening.date)}
-      <line class="opening" class:earlier={i < openings.length - 1} x1={compact ? 2 : axis - 22} x2={width - 4} y1={oy} y2={oy} />
+      <line class="opening" class:earlier={i < openings.length - 1} x1={compact ? axis - 8 : axis - 22} x2={width - 4} y1={oy} y2={oy} />
       {#if !compact && i === openings.length - 1}<text class="opening-label" x={width - 4} y={oy - 5} text-anchor="end">{openings.length > 1 ? 'Latest opening' : 'Opened'}</text>{/if}
     {/each}
-    <line class="today" x1={compact ? 2 : axis - 22} x2={width - 4} y1={y(end)} y2={y(end)} />
+    <line class="today" x1={compact ? axis - 8 : axis - 22} x2={width - 4} y1={y(end)} y2={y(end)} />
   </svg>
   {#if !compact && story}
     <ul class="legend" aria-hidden="true">
