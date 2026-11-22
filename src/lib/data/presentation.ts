@@ -19,14 +19,17 @@ export const lineOrder = ['purple', 'green', 'yellow', 'pink', 'blue'];
 
 export const lineShortLabels: Record<string, string> = { yellow: 'Yellow', green: 'Green', purple: 'Purple', pink: 'Pink', blue: 'Blue' };
 
+/** Initialisms for compact labels such as Fleet group headers. */
+export const manufacturerCodes: Record<string, string> = { 'CRRC Nanjing Puzhen': 'CRRC', 'Titagarh Rail Systems': 'TRSL', BEML: 'BEML' };
+
 export const manufacturerShortLabels: Record<string, string> = { 'CRRC Nanjing Puzhen': 'CRRC', 'Titagarh Rail Systems': 'Titagarh', BEML: 'BEML' };
 
 export type TrainDesign = 'beml-og' | 'crrc-trsl' | 'beml-new';
 
 export const trainDesignLabels: Record<TrainDesign, string> = {
-  'beml-og': 'BEML original',
-  'crrc-trsl': 'CRRC / Titagarh',
-  'beml-new': 'BEML new'
+  'beml-og': 'BEML / BRMM (2RS-DM)',
+  'crrc-trsl': 'CRRC / TRSL (4RS-DM)',
+  'beml-new': 'BEML (5RS-DM)'
 };
 
 /** Icon for each tracked rolling stock family. */

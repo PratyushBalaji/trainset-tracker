@@ -32,7 +32,7 @@ class TrackerState {
   get filtersActive() { return this.manufacturers.size !== manufacturerOptions.length || this.lines.size !== lineOptions.length; }
 
   get fleet() {
-    return orderedTrainsets.filter((t) => this.manufacturers.has(t.manufacturer) && t.lineKeys.some((line) => this.lines.has(line)));
+    return orderedTrainsets.filter((t) => this.manufacturers.has(t.manufacturer) && this.lines.has(t.displayLine));
   }
   get dated() { return this.fleet.map((t) => decorateTrainsetForDate(t, this.selectedDate)); }
 

@@ -6,11 +6,12 @@
   import CoverageNote from '$lib/components/CoverageNote.svelte';
   import TrainsetCard from '$lib/components/TrainsetCard.svelte';
   import TrainsetDetail from '$lib/components/TrainsetDetail.svelte';
-  import { lineColors, lineLabels, lineOrder } from '$lib/data/presentation';
-  import { getTrainsetTimelineBounds, timelineBounds } from '$lib/data/resolve';
+  import { lineColors, lineLabels, lineOrder, manufacturerCodes } from '$lib/data/presentation';
+  import { dataset, getTrainsetTimelineBounds, timelineBounds } from '$lib/data/resolve';
   import { tracker } from '$lib/tracker-state.svelte';
   import type { DatedTrainset } from '$lib/data/types';
 
+  const contractCode = (id: string) => id.replace('bmrcl-', '').toUpperCase();
   let selectedId = $state<string | null>(null);
   let mobile = $state(false);
   let origin: HTMLElement | null = null;
@@ -35,13 +36,28 @@
     .map((line) => {
       const trains = dated.filter((t) => t.displayLine === line);
       const stage = (id: string) => trains.filter((t) => t.currentStage.id === id).length;
-      const families = [...new Set(trains.map((t) => `${t.contractId.replace('bmrcl-', '').toUpperCase()} ${t.rollingStock.signalling}`))];
+      // One segment per contract on this line, e.g. "4RS-DM CBTC · CRRC / TRSL | 5RS-DM CBTC · BEML · 6 on order".
+      const byContract = new Map<string, typeof trains>();
+      for (const t of trains) byContract.set(t.contractId, [...(byContract.get(t.contractId) ?? []), t]);
+      const segments = [...byContract.entries()].map(([id, ts]) => {
+        const family = [...new Set(ts.map((t) => `${contractCode(id)} ${t.rollingStock.signalling}`))].join(', ');
+        const makers = [...new Set(ts.map((t) => manufacturerCodes[t.manufacturer] ?? t.manufacturer))].join(' / ');
+        return `${family} · ${makers}`;
+      });
+      // Orders placed for this line whose trains haven't arrived yet (a top-up naming the line).
+      for (const [id, c] of Object.entries(dataset.contracts as Record<string, { awardee: string; rolling_stock: string[]; variations?: { intended_line?: string; additional_trainsets?: number }[] }>)) {
+        if (byContract.has(id)) continue;
+        const ordered = (c.variations ?? []).filter((v) => v.intended_line === line).reduce((sum, v) => sum + (v.additional_trainsets ?? 0), 0);
+        if (!ordered) continue;
+        const signalling = dataset.rolling_stock[c.rolling_stock[0]]?.signalling ?? '';
+        segments.push(`${contractCode(id)} ${signalling} · ${manufacturerCodes[c.awardee] ?? c.awardee}`);
+      }
+      const families = segments;
       const summary = [stage('service') && `${stage('service')} in service`, stage('testing') && `${stage('testing')} testing`, stage('dispatch') && `${stage('dispatch')} in transit`].filter(Boolean).join(' · ') || 'Not yet delivered';
-      return { line, trains, families: families.join(' · '), summary };
+      return { line, trains, families: families.join(' | '), summary };
     })
     .filter((group) => group.trains.length));
   let selected = $derived(selectedId ? (dated.find((t) => t.id === selectedId) ?? null) : null);
-  let lastHidden = $derived(dated.find((t) => t.id === tracker.lastHiddenId));
 
   async function select(id: string, element?: HTMLElement) {
     origin = element ?? null;
@@ -69,7 +85,7 @@
 <main class="fleet-page">
   <FleetToolbar title="Fleet" {playFrom}>
     {#snippet summary()}
-      <span class="tnum"><strong class="svc">{counts.service ?? 0}</strong> in service · <strong class="tst">{counts.testing ?? 0}</strong> testing{#if counts.dispatch} · <strong class="dsp">{counts.dispatch}</strong> in transit{/if} · {dated.length} tracked · {tracker.dateLabel}</span>
+      <span class="tnum"><strong class="svc">{counts.service ?? 0}</strong> in service · <strong class="tst">{counts.testing ?? 0}</strong> undergoing testing{#if counts.dispatch} · <strong class="dsp">{counts.dispatch}</strong> in transit{/if} · {tracker.dateLabel}</span>
     {/snippet}
   </FleetToolbar>
 
@@ -85,7 +101,7 @@
           </header>
           <div class="grid">
             {#each group.trains as trainset (trainset.id)}
-              <TrainsetCard {trainset} selected={selectedId === trainset.id} hiddenFromChart={tracker.hidden.has(trainset.id)} onSelect={(id, el) => select(id, el)} onToggleChartVisibility={(id) => tracker.toggleHidden(id)} />
+              <TrainsetCard {trainset} selected={selectedId === trainset.id} onSelect={(id, el) => select(id, el)} />
             {/each}
           </div>
         </section>
@@ -102,7 +118,6 @@
     {/if}
   </div>
 
-  <div class="undo" role="status" aria-live="polite">{#if lastHidden}{lastHidden.trainsetNumber} · {lastHidden.lineSummary} hidden from the lifecycle chart <button type="button" onclick={() => tracker.toggleHidden(lastHidden!.id)}>Undo</button>{/if}</div>
 </main>
 
 <style>
@@ -121,9 +136,6 @@
   .detail-wrap :global(.detail-panel) { width: 100%; }
   .empty { padding: 40px; text-align: center; border: 1px dashed var(--border); border-radius: var(--radius-lg); color: var(--muted); }
   .empty button { margin-left: 8px; }
-  .undo:empty { display: none; }
-  .undo { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 40; display: flex; align-items: center; gap: 12px; padding: 10px 12px 10px 16px; border-radius: 10px; background: var(--ink); color: var(--surface); font-size: 13px; box-shadow: 0 8px 24px #17211d30; }
-  .undo button { height: 32px; padding: 0 12px; border-radius: 6px; border: 0; background: var(--surface); color: var(--ink); font-weight: 600; }
   @media (max-width: 860px) {
     .fleet-body { padding: 18px 16px 48px; }
     .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }

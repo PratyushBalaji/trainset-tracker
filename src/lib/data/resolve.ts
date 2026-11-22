@@ -136,7 +136,9 @@ export const manufacturerOptions = Array.from(
   new Set(resolvedTrainsets.map((trainset) => trainset.manufacturer))
 ).sort();
 
-export const lineOptions = Array.from(new Set(resolvedTrainsets.flatMap((trainset) => trainset.lineKeys))).sort();
+// Filter by the line a train runs on (operational, else intended). A train intended for one line but
+// running on another (e.g. 4RS-DM TS016: intended Purple, runs on Green) is listed only where it runs.
+export const lineOptions = Array.from(new Set(resolvedTrainsets.map((trainset) => trainset.displayLine))).sort();
 
 export { stageColors, stageDefinitions, timelineStageDefinitions };
 
