@@ -5,3 +5,15 @@ build
 .env
 .env.*
 !.env.example
+
+# Local assistant settings, attachments and instructions
+.claude/
+.codex/
+.codex-attachments/
+.codex-remote-attachments/
+AGENTS.md
+CLAUDE.md
+
+# Local research and visual QA records
+/research/
+/interaction-qa/
