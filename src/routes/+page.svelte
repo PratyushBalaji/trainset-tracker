@@ -48,7 +48,7 @@
         <p class="lede">Tracking Namma Metro's trains, from delivery to passenger service.</p>
         <!-- Parked side by side, like trains on stabling lines. -->
         <ul class="hero-trains" aria-label="Train designs on Namma Metro">
-          {#each ['beml-og', 'crrc-trsl', 'beml-new'] as const as design}
+          {#each ['beml-og', 'beml-new', 'crrc-trsl'] as const as design}
             <li><TrainIcon {design} variant="solid" size={48} label={trainDesignLabels[design]} /></li>
           {/each}
         </ul>

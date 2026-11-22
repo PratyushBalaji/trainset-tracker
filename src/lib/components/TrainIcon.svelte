@@ -22,7 +22,7 @@
   class="train-icon"
   style={`width: ${size}px; height: ${size}px;${color ? ` color: ${color};` : ''}`}
   role={label ? 'img' : undefined}
-  aria-label={label ? `${label} (${trainDesignLabels[design]})` : undefined}
+  aria-label={label ? (label === trainDesignLabels[design] ? label : `${label} (${trainDesignLabels[design]})`) : undefined}
   aria-hidden={label ? undefined : 'true'}
   title={trainDesignLabels[design]}
 >{@html svg}</span>
