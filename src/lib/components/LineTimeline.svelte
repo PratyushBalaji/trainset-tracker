@@ -11,10 +11,17 @@
 
   let { entries, color, story = null, gaps = {} }: { entries: HistoryEntry[]; color: string; story?: DelayStory | null; gaps?: Record<string, number> } = $props();
 
-  const targetFor = $derived(new Map((story?.targets ?? []).filter((t) => t.announced).map((t) => [t.milestoneId, t])));
+  // A report can set targets for more than one section (Pink: elevated and underground).
+  const targetsFor = $derived.by(() => {
+    const map = new Map<string, OpeningTarget[]>();
+    for (const t of story?.targets ?? []) if (t.announced) map.set(t.milestoneId, [...(map.get(t.milestoneId) ?? []), t]);
+    return map;
+  });
+  const multiSection = $derived((story?.sections.length ?? 0) > 1);
   const outcomeText = (t: OpeningTarget) =>
-    t.outcome === 'missed' ? `Missed by ${t.monthsLate} month${t.monthsLate === 1 ? '' : 's'}`
-    : t.outcome === 'met' ? 'Met' : t.outcome === 'held' ? 'Held' : t.outcome === 'not-taken' ? 'Option not taken' : 'Pending';
+    t.outcome === 'missed' ? (t.monthsLate !== undefined ? `Missed by ${t.monthsLate} month${t.monthsLate === 1 ? '' : 's'}` : 'Passed, not open yet')
+    : t.outcome === 'met' ? 'Met' : t.outcome === 'held' ? 'Held' : t.outcome === 'not-taken' ? 'Option not taken'
+    : t.outcome === 'superseded' ? 'Pushed back' : 'Current target';
   const gapHeight = (days: number) => Math.round(Math.min(320, Math.max(44, (days / 30.44) * 6)));
   const phaseOf = (entry: HistoryEntry) => {
     const key = entry.groups?.[0]?.milestone.key;
@@ -24,7 +31,8 @@
 
 <ol class="history" style={`--line-color: ${color}`} aria-label="Chronological line history">
   {#each entries as entry (entry.id)}
-    {@const target = entry.lineMilestone ? targetFor.get(entry.lineMilestone.id) : undefined}
+    {@const targets = entry.lineMilestone ? (targetsFor.get(entry.lineMilestone.id) ?? []) : []}
+    {@const target = targets[0]}
     {@const isOpening = !!story?.opening && entry.lineMilestone?.id === story.opening.milestoneId}
     {@const refs = entry.lineMilestone?.sources.length ?? entry.groups?.reduce((sum, group) => sum + group.milestone.sources.length, 0) ?? 0}
     <li id={entry.id} tabindex="-1" class="entry {entry.kind}" class:promise={!!target} class:opening={isOpening}
@@ -33,20 +41,21 @@
       <div class="event-meta">
         {#if entry.lineMilestone}<span>{historyDateLabel(entry.lineMilestone)}</span>
         {:else}<time datetime={entry.date}>{entry.groups?.[0] ? milestoneDateLabel(entry.groups[0].milestone) : formatDate(entry.date)}</time>{/if}
-        {#if target}<span class="event-tag promise-tag">Target {target.number} of {story?.targets.length}</span>
+        {#if target}<span class="event-tag promise-tag">{multiSection ? 'Opening target' : `Target ${target.number} of ${target.of}`}</span>
         {:else if entry.kind !== 'train'}<span class="event-tag">{entry.tag}</span>{/if}
       </div>
       {#if entry.kind === 'train'}<h3>{entry.title}</h3>{:else}<h2>{entry.title}</h2>{/if}
 
-      {#if target}
+      {#each targets as t (t.section)}
         <p class="target-change">
-          {#if target.previousLabel}<s>{target.previousLabel}</s><span aria-hidden="true">→</span>{/if}
-          <strong>{target.label}</strong>
-          <span class="outcome {target.outcome}">{outcomeText(target)}</span>
+          {#if multiSection}<span class="section-label">{t.sectionLabel} {t.number}/{t.of}</span>{/if}
+          {#if t.previousLabel}<s>{t.previousLabel}</s><span aria-hidden="true">→</span>{/if}
+          <strong>{t.label}</strong>
+          <span class="outcome {t.outcome}">{outcomeText(t)}</span>
         </p>
-      {/if}
+      {/each}
       {#if isOpening && story?.earliest && story.opening}
-        <p class="opening-note"><strong>{monthsBetween(story.earliest.target, story.opening.date)} months</strong> after the earliest recorded target ({story.earliest.label}), with {story.missed} targets missed along the way.</p>
+        <p class="opening-note"><strong>{monthsBetween(story.earliest.target, story.opening.date)} months</strong> after the earliest recorded {multiSection ? `${story.sections[0].label.toLowerCase()} ` : ''}target ({story.earliest.label}), with {story.missed} {multiSection ? `${story.sections[0].label.toLowerCase()} ` : ''}targets missed along the way.</p>
       {/if}
 
       {#if entry.kind !== 'today'}
@@ -110,7 +119,9 @@
   .outcome.missed { color: #8f3522; background: #f6e3dc; }
   .outcome.not-taken { color: #6d5a52; background: #efe9e5; }
   .outcome.met, .outcome.held { color: #0f6b3b; background: #dcefe3; }
-  .outcome.pending { color: #445048; background: #e9ede6; }
+  .outcome.pending { color: #1f6299; background: #e5eef6; }
+  .outcome.superseded { color: #6d5a52; background: #efe9e5; }
+  .section-label { min-width: 104px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
 
   li.opening { padding: 18px 20px 20px; margin: 8px 0 30px -12px; border-radius: 8px; background: color-mix(in srgb, var(--line-color) 16%, #fffdfa); border: 1px solid color-mix(in srgb, var(--line-color) 55%, transparent); }
   li.opening::before { left: -23px; top: 20px; }

@@ -67,7 +67,9 @@
     return bottom - top < min ? { top: mid - min / 2, height: min } : { top, height: bottom - top };
   });
 
-  const arcs = $derived((story?.targets ?? []).filter((t) => t.announced).map((target) => {
+  // Targets dated after the rail's end (still-future underground dates) would pile up at the bottom edge, so they are left off.
+  const onRail = $derived((story?.targets ?? []).filter((t) => t.target <= end));
+  const arcs = $derived(onRail.filter((t) => t.announced).map((target) => {
     const y1 = y(target.announced!);
     const y2 = y(target.target);
     const reach = Math.min(width - axis - 6, (compact ? 6 : 12) + Math.abs(y2 - y1) * (compact ? 0.35 : 0.55));
@@ -104,10 +106,10 @@
 
     <line class="axis" x1={axis} x2={axis} y1={pad} y2={height - pad} />
 
-    {#each arcs as arc (arc.target.milestoneId)}
+    {#each arcs as arc (arc.target.section + arc.target.milestoneId)}
       <path class="arc {arc.target.outcome}" d={arc.d} />
     {/each}
-    {#each story?.targets ?? [] as target (target.milestoneId + target.number)}
+    {#each onRail as target (target.section + target.milestoneId)}
       <circle class="target {target.outcome}" cx={axis} cy={y(target.target)} r={compact ? 2.5 : 3.5}><title>Target {target.number}: {target.label} — {target.outcome}</title></circle>
     {/each}
 
@@ -154,7 +156,11 @@
   .target { fill: #fffdfa; stroke-width: 1.6; }
   .target.missed, .target.not-taken { stroke: #b4452f; }
   .target.met, .target.held { stroke: #15884d; fill: #15884d; }
-  .target.pending { stroke: #687267; }
+  .target.pending { stroke: #2f7fbd; }
+  /* Underground-style targets not yet due: replaced by a later report, or still current. */
+  .arc.superseded, .arc.pending { stroke: #8a928a; stroke-dasharray: 3 3; opacity: 0.8; }
+  .arc.pending { stroke: #2f7fbd; }
+  .target.superseded { stroke: #8a928a; }
   .train-tick { stroke-width: 2; opacity: 0.85; }
   .line-dot { fill: #17211d; stroke: #fffdfa; stroke-width: 1; }
   .line-dot.visible { r: 4.5; }

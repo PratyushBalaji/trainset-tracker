@@ -12,7 +12,7 @@ Parts of this project, especially the Svelte UI and supporting documentation, ar
 
 Run `npm install`, then `npm run dev`. The SvelteKit routes are Home (`/`), Fleet (`/fleet`), Lifecycle (`/lifecycle`), Timeline (`/timeline/yellow`) and Route Map (`/routemap`). The old `/tracker` URL redirects to `/fleet`, keeping `?trainset=` deep links. Validate with `npm test`, `npm run check` and `npm run build`.
 
-Line history lives separately in [`lines.json`](./lines.json), leaving the trainset format unchanged. Entries distinguish exact dates, month-only periods, inspection intervals, reported dates and disputed derived dates. Yellow Line research is preliminary; other lines currently show their recorded trainset events only.
+Line history lives separately in [`lines.json`](./lines.json), leaving the trainset format unchanged. Entries distinguish exact dates, month-only periods, inspection intervals, reported dates and disputed derived dates. Yellow and Pink Line research is preliminary; other lines currently show their recorded trainset events only. Undated Pink Line claims and phase-specific scoring limitations are retained in [`research/pink-line-milestones.md`](./research/pink-line-milestones.md).
 
 Timeline presentation is built by the pure `buildLineTimeline` function, then rendered by `LineTimeline.svelte`. Chart and card components accept resolved data as props rather than importing the dataset, allowing reuse in a future Metro Central application.
 

@@ -208,3 +208,88 @@ test('timeline gaps only mark long silences', () => {
   ]);
   assert.deepEqual(Object.keys(gaps), ['a']);
 });
+
+test('Pink line research preserves event dates, bounds, intervals and separate openings', () => {
+  const { pink } = JSON.parse(readFileSync(new URL('../lines.json', import.meta.url), 'utf8')).lines;
+  const byId = new Map(pink.milestones.map((milestone) => [milestone.id, milestone]));
+  assert.equal(pink.research_status, 'preliminary');
+  assert.equal(byId.get('inauguration').date, '2026-11-13');
+  assert.equal(byId.get('passenger-opening').date, '2026-11-14');
+  for (const [id, start, end] of [
+    ['rdso-oscillation-trials', '2026-04-28', '2026-05-09'],
+    ['rolling-stock-safety-inspection', '2026-08-12', '2026-08-14'],
+    ['cmrs-inspection', '2026-10-06', '2026-10-08']
+  ]) {
+    assert.equal(byId.get(id).date, start);
+    assert.equal(byId.get(id).end_date, end);
+  }
+  for (const id of ['underground-track-reported-complete', 'isa-certification-reported', 'cmrs-observations-reported']) {
+    assert.equal(byId.get(id).date_basis, 'reported_by');
+    assert.match(historyDateLabel(byId.get(id)), /^Reported by /);
+  }
+  assert.equal(byId.get('interim-speed-certificate').period, '2026-08');
+  assert.equal(byId.get('interim-speed-certificate').date, undefined);
+  assert.equal(byId.get('gr-replacement-agreement').period, '2021-08');
+  assert.equal(byId.get('simplex-termination').presentation.disputed, true);
+  assert.match(byId.get('underground-trial-access-request').description, /sought permission/);
+  assert.ok(!pink.milestones.some((milestone) => /TS\d{3}/.test(milestone.title)));
+  for (const milestone of pink.milestones) {
+    for (const field of ['date', 'end_date']) {
+      if (milestone[field]) assert.equal(new Date(milestone[field]).toISOString().slice(0, 10), milestone[field]);
+    }
+  }
+});
+
+test('Pink forecasts remain scoped reports, not future events or elevated-opening scorecard targets', () => {
+  const pink = JSON.parse(readFileSync(new URL('../lines.json', import.meta.url), 'utf8')).lines.pink;
+  const byId = new Map(pink.milestones.map((milestone) => [milestone.id, milestone]));
+  const march = byId.get('march2025-corridor-target');
+  const december = byId.get('december2024-corridor-forecast');
+  assert.ok(march.date < december.date);
+  assert.equal(march.previous_target, undefined);
+  assert.equal(december.previous_target, undefined);
+  assert.match(byId.get('early-elevated-construction-deadlines').scope, /not passenger opening/);
+  assert.match(byId.get('after-october15-opening-window').comments, /lower-bound window, not a precise deadline/);
+  assert.match(byId.get('tentative-november15-inauguration').comments, /not a missed passenger-service deadline/);
+  const target = byId.get('may2027-underground-target');
+  const reaffirmed = byId.get('may2027-underground-target-reaffirmed');
+  assert.equal(target.date, '2026-10-15');
+  assert.equal(target.revised_target, 'May 2027');
+  assert.equal(reaffirmed.previous_target, reaffirmed.revised_target);
+  assert.equal(target.scope, 'Underground section');
+  // Whole-line and underground forecasts are not scored against the elevated opening.
+  const pinkStory = buildDelayStory('pink', pink.milestones, '2026-11-22');
+  const elevatedIds = pinkStory.sections.find((x) => x.id === 'elevated').targets.map((t) => t.milestoneId);
+  for (const id of ['march2025-corridor-target', 'december2024-corridor-forecast', 'may2027-underground-target']) assert.equal(elevatedIds.includes(id), false, id);
+  const entries = buildLineTimeline(pink.milestones, [], 'pink', '2026-11-22');
+  assert.equal(entries.filter((entry) => entry.kind === 'line').length, pink.milestones.length);
+  assert.ok(entries.every((entry) => !entry.date || entry.date <= '2026-11-22'));
+  assert.ok(entries.every((entry, i) => i === 0 || entries[i - 1].sortDate <= entry.sortDate));
+});
+
+test('pink delay story scores elevated and underground sections separately', () => {
+  const lines = JSON.parse(readFileSync(new URL('../lines.json', import.meta.url), 'utf8'));
+  const story = buildDelayStory('pink', lines.lines.pink.milestones, '2026-11-22');
+  const [elevated, underground] = story.sections;
+  assert.equal(elevated.id, 'elevated');
+  assert.equal(elevated.opening.date, '2026-11-14');
+  assert.equal(elevated.targets.length, 12);
+  assert.equal(elevated.missed, 8);
+  assert.equal(elevated.earliest.label, 'Dec 2025');
+  assert.equal(elevated.targets.find((t) => t.milestoneId === 'august15-internal-target').monthsLate, 3);
+  assert.equal(elevated.targets.find((t) => t.milestoneId === 'after-october15-opening-window').outcome, 'held');
+  assert.equal(elevated.targets.find((t) => t.milestoneId === 'november13-inauguration-reported').outcome, 'met');
+  // Underground has not opened: passed dates are missed, replaced future dates are pushed back.
+  assert.equal(underground.opening, undefined);
+  assert.equal(underground.missed, 2);
+  assert.equal(underground.current.label, 'May 2027');
+  assert.equal(underground.targets.find((t) => t.milestoneId === 'ministerial-august15-and-march2027-forecast').outcome, 'superseded');
+  // Restating reports are not counted again.
+  for (const id of ['aiib-december2025-monitoring', 'may2027-underground-target-reaffirmed']) {
+    assert.equal(story.targets.some((t) => t.milestoneId === id), false, id);
+  }
+  // Single-section lines are unchanged.
+  const yellow = buildDelayStory('yellow', lines.lines.yellow.milestones, '2026-11-22');
+  assert.equal(yellow.sections.length, 1);
+  assert.equal(yellow.missed, 7);
+});

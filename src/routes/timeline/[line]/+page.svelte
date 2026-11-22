@@ -104,14 +104,27 @@
         </div>
       </div>
 
-      {#if story?.opening && story.earliest}
-        <dl class="scorecard">
-          <div class="stat alarm"><dt>Opening targets missed</dt><dd><strong>{story.missed}</strong><span>of {story.targets.length} recorded</span></dd></div>
-          <div class="stat"><dt>Late against first recorded target</dt><dd><strong>{monthsBetween(story.earliest.target, story.opening.date)} mo</strong><span>{story.earliest.label} target → opened {formatDate(story.opening.date)}</span></dd></div>
-          {#each story.spans as span}
-            <div class="stat"><dt>{span.label}</dt><dd><strong>{span.months} mo</strong><span>{formatDate(span.from)} → {formatDate(span.to)}</span></dd></div>
-          {/each}
-        </dl>
+      {#if story}
+        {#each story.sections as section, i (section.id)}
+          {#if section.targets.length}
+            {#if story.sections.length > 1}<p class="scorecard-title"><strong>{section.label}</strong> · {section.opening ? `opened ${formatDate(section.opening.date)}` : 'not open yet'}</p>{/if}
+            <dl class="scorecard" class:stacked={story.sections.length > 1 && i < story.sections.length - 1} style={`--cols: ${section.opening ? 2 + (i === 0 ? story.spans.length : 0) : 3}`}>
+              {#if section.opening && section.earliest}
+                <div class="stat alarm"><dt>Opening targets missed</dt><dd><strong>{section.missed}</strong><span>of {section.targets.length} recorded</span></dd></div>
+                <div class="stat"><dt>Late against first recorded target</dt><dd><strong>{monthsBetween(section.earliest.target, section.opening.date)} mo</strong><span>{section.earliest.label} target → opened {formatDate(section.opening.date)}</span></dd></div>
+                {#if i === 0}
+                  {#each story.spans as span}
+                    <div class="stat"><dt>{span.label}</dt><dd><strong>{span.months} mo</strong><span>{formatDate(span.from)} → {formatDate(span.to)}</span></dd></div>
+                  {/each}
+                {/if}
+              {:else}
+                <div class="stat alarm"><dt>Target dates already passed</dt><dd><strong>{section.missed}</strong><span>of {section.targets.length} recorded</span></dd></div>
+                {#if section.current}<div class="stat"><dt>Current target</dt><dd><strong>{section.current.label}</strong><span>{section.current.announced ? `reported ${formatDate(section.current.announced)}` : ''}</span></dd></div>{/if}
+                <div class="stat"><dt>Times the target moved</dt><dd><strong>{Math.max(0, section.targets.length - 1)}</strong><span>since {section.earliest?.label} was first recorded</span></dd></div>
+              {/if}
+            </dl>
+          {/if}
+        {/each}
       {/if}
 
       {#if data.lineId === 'purple'}<p class="coverage-note">Purple Line history is not published yet. Its legacy contracts are outside the current trainset dataset; historical milestones will be added later.</p>
@@ -155,7 +168,10 @@
   .timeline-jumps button { display: flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid #d8ded4; border-radius: 6px; background: #fffdfa; font-size: 12px; }
   .timeline-jumps button:hover { border-color: #687267; }
 
-  .scorecard { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin: 0 0 36px; border: 1px solid #d8ded4; border-radius: 8px; overflow: hidden; background: #d8ded4; }
+  .scorecard-title { margin: 0 0 8px; font-size: 13px; color: var(--muted); }
+  .scorecard-title strong { color: var(--ink); }
+  .scorecard.stacked { margin-bottom: 18px; }
+  .scorecard { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); gap: 1px; margin: 0 0 36px; border: 1px solid #d8ded4; border-radius: 8px; overflow: hidden; background: #d8ded4; }
   .stat { padding: 14px 16px 15px; background: #fffdfa; }
   .stat dt { font-size: 11px; color: #687267; margin-bottom: 6px; }
   .stat dd { margin: 0; display: flex; flex-direction: column; gap: 3px; }
@@ -170,7 +186,8 @@
   .rail-mobile { display: none; }
 
   @media(max-width: 860px) { .line-trains { grid-column: 1 / -1; margin-top: 4px; } .line-trains li { flex-direction: row; width: auto; } }
-  @media(max-width: 1180px) { .scorecard { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  /* Two per row on narrower screens; an odd last box spans the row so no empty cell shows. */
+  @media(max-width: 1180px) { .scorecard { grid-template-columns: repeat(2, minmax(0, 1fr)); } .scorecard .stat:last-child:nth-child(odd) { grid-column: 1 / -1; } }
   @media(max-width: 1080px) {
     .timeline-layout.with-rail { grid-template-columns: 150px minmax(0, 1fr) 150px; gap: 28px; }
   }

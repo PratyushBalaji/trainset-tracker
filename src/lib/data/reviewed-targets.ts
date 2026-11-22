@@ -12,8 +12,10 @@ export interface ReviewedTarget {
   target: string;
   label: string;
   kind: TargetKind;
-  /** Milestone that fulfils this target, when it is not the line's passenger opening. */
+  /** Milestone that fulfils this target, when it is not the section's passenger opening. */
   measuredBy?: string;
+  /** Section id from the story's `sections`; omitted for single-section lines. */
+  section?: string;
 }
 
 export interface ReviewedSpan {
@@ -22,8 +24,17 @@ export interface ReviewedSpan {
   toMilestoneId: string;
 }
 
+export interface ReviewedSection {
+  id: string;
+  label: string;
+  /** Passenger opening of this section; null while it has not opened. */
+  openingMilestoneId: string | null;
+}
+
 export interface ReviewedLineStory {
   openingMilestoneId: string;
+  /** Lines that open in parts (Pink: elevated, underground) score each part separately. */
+  sections?: ReviewedSection[];
   targets: ReviewedTarget[];
   spans: ReviewedSpan[];
 }
@@ -48,6 +59,47 @@ export const reviewedLineStories: Record<string, ReviewedLineStory> = {
     spans: [
       { label: 'Civil work done → passengers', fromMilestoneId: 'civil-track-reported', toMilestoneId: 'passenger-opening' },
       { label: 'First mainline run → passengers', fromMilestoneId: 'first-mainline-movement', toMilestoneId: 'passenger-opening' }
+    ]
+  },
+  // Pink opens in two parts, scored separately. Elevated targets are measured against the elevated
+  // passenger opening (14 Nov 2026). Underground targets stay open until that section opens: passed
+  // dates count as missed; later dates already replaced by a newer report count as pushed back.
+  // Whole-line targets (Mar 2025, Dec 2024) covered both parts, so they are left unscored in the feed.
+  // Reports that only restate a current target (ministry confirmation's revised dates, AIIB monitoring,
+  // 20 Jun and 23 Aug elevated restatements, 20 Nov underground reaffirmation) are not counted again.
+  pink: {
+    openingMilestoneId: 'passenger-opening',
+    sections: [
+      { id: 'elevated', label: 'Elevated', openingMilestoneId: 'passenger-opening' },
+      { id: 'underground', label: 'Underground', openingMilestoneId: null }
+    ],
+    targets: [
+      { section: 'elevated', milestoneId: 'december-phased-forecast', field: 'revised_target', matches: 'December 2025 elevated; December 2026 underground', target: '2025-12-31', label: 'Dec 2025', kind: 'month' },
+      // Known only as the earlier target in the 10 Aug 2025 ministry report; placed before the March 2026 move it preceded.
+      { section: 'elevated', milestoneId: 'ministry-phased-schedule', field: 'previous_target', matches: 'September 2025 elevated; June 2026 underground', target: '2025-09-30', label: 'Sep 2025', kind: 'month' },
+      { section: 'elevated', milestoneId: 'march-september2026-schedule-reported', field: 'revised_target', matches: 'March 2026 elevated; September 2026 underground', target: '2026-03-31', label: 'Mar 2026', kind: 'month' },
+      { section: 'elevated', milestoneId: 'may2026-elevated-forecast', field: 'revised_target', matches: 'May 2026 elevated; December 2026 underground', target: '2026-05-31', label: 'May 2026', kind: 'month' },
+      { section: 'elevated', milestoneId: 'june2026-elevated-forecast', field: 'revised_target', matches: 'End-May or June 2026', target: '2026-06-30', label: 'End-May / Jun 2026', kind: 'month' },
+      { section: 'elevated', milestoneId: 'august15-internal-target', field: 'revised_target', matches: 'August 15, 2026', target: '2026-08-15', label: '15 Aug 2026', kind: 'by' },
+      { section: 'elevated', milestoneId: 'late-september-elevated-forecast', field: 'revised_target', matches: 'Last week of September 2026, conditional', target: '2026-09-30', label: 'Last week of Sep 2026', kind: 'by' },
+      { section: 'elevated', milestoneId: 'mid-october-elevated-forecast', field: 'revised_target', matches: 'Mid-October 2026', target: '2026-10-15', label: 'Mid-Oct 2026', kind: 'by' },
+      { section: 'elevated', milestoneId: 'after-october15-opening-window', field: 'revised_target', matches: 'After October 15, 2026', target: '2026-10-15', label: 'After 15 Oct 2026', kind: 'not-before' },
+      { section: 'elevated', milestoneId: 'tentative-november15-inauguration', field: 'revised_target', matches: 'Tentative November 15, 2026 inauguration', target: '2026-11-15', label: '15 Nov 2026 (inauguration)', kind: 'by', measuredBy: 'inauguration' },
+      { section: 'elevated', milestoneId: 'november13-inauguration-reported', field: 'revised_target', matches: 'November 13, 2026 inauguration', target: '2026-11-13', label: '13 Nov 2026 (inauguration)', kind: 'by', measuredBy: 'inauguration' },
+      { section: 'elevated', milestoneId: 'passenger-opening-announced', field: 'revised_target', matches: 'November 14, 2026 at 6 am', target: '2026-11-14', label: '14 Nov 2026 (passengers)', kind: 'by' },
+
+      { section: 'underground', milestoneId: 'december-phased-forecast', field: 'revised_target', matches: 'December 2025 elevated; December 2026 underground', target: '2026-12-31', label: 'Dec 2026', kind: 'month' },
+      // Earlier underground target named in the 10 Aug 2025 ministry report.
+      { section: 'underground', milestoneId: 'ministry-phased-schedule', field: 'previous_target', matches: 'September 2025 elevated; June 2026 underground', target: '2026-06-30', label: 'Jun 2026', kind: 'month' },
+      { section: 'underground', milestoneId: 'march-september2026-schedule-reported', field: 'revised_target', matches: 'March 2026 elevated; September 2026 underground', target: '2026-09-30', label: 'Sep 2026', kind: 'month' },
+      { section: 'underground', milestoneId: 'may2026-elevated-forecast', field: 'revised_target', matches: 'May 2026 elevated; December 2026 underground', target: '2026-12-31', label: 'Dec 2026', kind: 'month' },
+      { section: 'underground', milestoneId: 'ministerial-august15-and-march2027-forecast', field: 'revised_target', matches: 'August 15, 2026 elevated; March 2027 underground', target: '2027-03-31', label: 'Mar 2027', kind: 'month' },
+      { section: 'underground', milestoneId: 'september-and-mid2027-forecast', field: 'revised_target', matches: 'September 2026 elevated; mid-2027 underground', target: '2027-06-30', label: 'Mid-2027', kind: 'month' },
+      { section: 'underground', milestoneId: 'may2027-underground-target', field: 'revised_target', matches: 'May 2027', target: '2027-05-31', label: 'May 2027', kind: 'month' }
+    ],
+    spans: [
+      { label: 'Final elevated segment → passengers', fromMilestoneId: 'elevated-final-segment', toMilestoneId: 'passenger-opening' },
+      { label: 'First mainline run → passengers', fromMilestoneId: 'first-elevated-mainline-movement', toMilestoneId: 'passenger-opening' }
     ]
   }
 };
