@@ -10,6 +10,7 @@ const targetsModule = moduleUrl(compile('../src/lib/data/reviewed-targets.ts'));
 const { buildDelayStory } = await import(moduleUrl(
   compile('../src/lib/data/delay-story.ts').replace("'./date'", JSON.stringify(dateModule)).replace("'./reviewed-targets'", JSON.stringify(targetsModule))
 ));
+const { reviewedLineStories } = await import(targetsModule);
 const { hiddenMilestones, visibleMilestones } = await import(moduleUrl(compile('../src/lib/data/timeline-curation.ts')));
 const { lines } = JSON.parse(readFileSync(new URL('../lines.json', import.meta.url), 'utf8'));
 
@@ -20,13 +21,15 @@ test('curated-off timeline entries still exist in lines.json', () => {
   }
 });
 
-test('curation never hides deadlines or the passenger openings targets are scored against', () => {
+test('curation never hides deadlines or the milestones targets are scored against', () => {
   for (const [lineId, ids] of Object.entries(hiddenMilestones)) {
     const byId = new Map(lines[lineId].milestones.map((m) => [m.id, m]));
     const openings = new Set((buildDelayStory(lineId, lines[lineId].milestones, '2026-11-22')?.sections ?? []).map((s) => s.opening?.milestoneId));
+    const measuredBy = new Set((reviewedLineStories[lineId]?.targets ?? []).map((t) => t.measuredBy));
     for (const id of ids) {
       assert.notEqual(byId.get(id).category, 'Deadline', `${lineId}: ${id} is a deadline`);
       assert.ok(!openings.has(id), `${lineId}: ${id} is a scored passenger opening`);
+      assert.ok(!measuredBy.has(id), `${lineId}: ${id} is a milestone a target is measured against`);
     }
   }
   assert.equal(visibleMilestones('green', lines.green.milestones).length, lines.green.milestones.length - hiddenMilestones.green.length);
@@ -48,4 +51,28 @@ test('green targets are scored per opening stage', () => {
   for (const id of ['silk-institute-november1-forecast', 'madavara-unofficial-october-november-window', 'phase1-historical-targets-recalled', 'silk-institute-historical-schedules-recalled']) {
     assert.equal(story.targets.some((t) => t.milestoneId === id && t.announced), false, id);
   }
+});
+
+test('purple targets are scored per opening part, with recalled targets kept off the announcement arcs', () => {
+  const story = buildDelayStory('purple', lines.purple.milestones, '2026-11-22');
+  const byId = Object.fromEntries(story.sections.map((s) => [s.id, s]));
+  assert.deepEqual(story.sections.map((s) => s.id), ['reach1', 'reach2', 'underground', 'kengeri', 'eastern', 'challaghatta']);
+  assert.equal(story.targets.length, 44);
+  assert.deepEqual(story.sections.map((s) => s.missed), [7, 6, 5, 8, 6, 4]);
+  assert.deepEqual(story.sections.map((s) => s.opening.date), ['2011-10-20', '2015-11-18', '2016-04-30', '2021-08-30', '2023-10-09', '2023-10-09']);
+  // Every Kengeri date before June 2021 was recalled on 2021-06-23: scored, never plotted as announced then.
+  const kengeri = byId.kengeri.targets.filter((t) => t.recalledOn);
+  assert.equal(kengeri.filter((t) => t.recalledOn === '2021-06-23').length, 6);
+  assert.ok(story.targets.every((t) => !(t.announced && t.recalledOn)));
+  assert.equal(byId.kengeri.earliest.label, 'Dec 2018');
+  // Whitefield's partial March 2023 opening does not fulfil the whole eastern extension.
+  const dec2022 = byId.eastern.targets.find((t) => t.milestoneId === 'eastern-december2022-official-target');
+  assert.equal(dec2022.monthsLate, 10);
+  // Short misses are counted in days.
+  const oct2 = byId.eastern.targets.find((t) => t.milestoneId === 'final-links-october2-proposal-recalled');
+  assert.deepEqual([oct2.monthsLate, oct2.daysLate], [0, 7]);
+  // Not scored: civil completion and the unconfirmed source forecast.
+  for (const id of ['reach2-december2014-civil-target', 'eastern-march2023-source-forecast']) assert.ok(!story.targets.some((t) => t.milestoneId === id), id);
+  assert.equal(byId.underground.targets[0].outcome, 'not-taken');
+  assert.equal(byId.underground.earliest.label, 'Nov 2015');
 });

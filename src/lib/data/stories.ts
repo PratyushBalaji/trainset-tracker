@@ -67,7 +67,7 @@ function deadlineStory(lineId: string, today: string): Story | null {
     .filter((t) => !(compact && t.outcome === 'met'))
     .map((t) => ({
       label: t.label,
-      note: t.outcome === 'missed' ? `+${t.monthsLate} mo` : t.outcome === 'not-taken' ? 'retracted' : t.outcome,
+      note: t.outcome === 'missed' ? (t.monthsLate === 0 ? `+${t.daysLate} d` : `+${t.monthsLate} mo`) : t.outcome === 'not-taken' ? 'retracted' : t.outcome,
       tone: (t.outcome === 'missed' ? 'missed' : t.outcome === 'not-taken' ? 'muted' : 'met') as StoryTone,
       struck: t.outcome === 'missed'
     }));

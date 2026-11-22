@@ -80,5 +80,6 @@ export function buildLineTimeline(
     })));
   }
   entries.push({ id: 'current-date', sortDate: today, date: today, title: 'Current date (IST)', tag: 'Today', kind: 'today' });
-  return entries.sort((a, b) => a.sortDate.localeCompare(b.sortDate) || a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id));
+  // Same-day line records keep their lines.json order (the research lists them in sequence); the sort is stable.
+  return entries.sort((a, b) => a.sortDate.localeCompare(b.sortDate) || a.kind.localeCompare(b.kind) || (a.kind === 'line' && b.kind === 'line' ? 0 : a.id.localeCompare(b.id)));
 }

@@ -127,8 +127,7 @@
         {/each}
       {/if}
 
-      {#if data.lineId === 'purple'}<p class="coverage-note">Purple Line history is not published yet. Its legacy contracts are outside the current trainset dataset; historical milestones will be added later.</p>
-      {:else if data.line.research_status !== 'preliminary'}<p class="coverage-note">Recorded trainset events only. Line-history research is being added.</p>{/if}
+      {#if data.line.research_status !== 'preliminary'}<p class="coverage-note">Recorded trainset events only. Line-history research is being added.</p>{/if}
       {#if hasHistory}<LineTimeline {entries} {color} {story} {gaps} />{/if}
     </section>
 

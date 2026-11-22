@@ -12,6 +12,8 @@ export interface OpeningTarget {
   sectionLabel: string;
   /** Date the target was reported; absent for a target only known as an earlier one. */
   announced?: string;
+  /** Report date of a retrospective target (original announcement date unknown). */
+  recalledOn?: string;
   target: string;
   label: string;
   previousLabel?: string;
@@ -19,6 +21,8 @@ export interface OpeningTarget {
   outcome: TargetOutcome;
   /** Calendar months between the target month and the actual opening month, when missed. */
   monthsLate?: number;
+  /** Days late, for misses shorter than a month. */
+  daysLate?: number;
   /** Position within its section, and the section's total. */
   number: number;
   of: number;
@@ -96,6 +100,7 @@ export function buildDelayStory(lineId: string, milestones: LineMilestone[], tod
     reviewed.forEach((r, i) => {
       const milestone = byId.get(r.milestoneId)!;
       const previous = r.field === 'revised_target' ? targets.at(-1) : undefined;
+      const reportDate = milestone.date ?? (milestone.period ? `${milestone.period}-01` : undefined);
       const measured = r.measuredBy ? byId.get(r.measuredBy)?.date : opening?.date;
       const fulfilled = measured && measured <= today ? measured : undefined;
       const outcome = outcomeOf(r.kind, r.target, fulfilled, today, i < reviewed.length - 1);
@@ -103,13 +108,15 @@ export function buildDelayStory(lineId: string, milestones: LineMilestone[], tod
         milestoneId: milestone.id,
         section: def.id,
         sectionLabel: def.label,
-        announced: r.field === 'revised_target' ? (milestone.date ?? (milestone.period ? `${milestone.period}-01` : undefined)) : undefined,
+        announced: r.field === 'revised_target' && !r.retrospective ? reportDate : undefined,
+        recalledOn: r.field === 'revised_target' && r.retrospective ? reportDate : undefined,
         target: r.target,
         label: r.label,
         previousLabel: previous?.label,
         kind: r.kind,
         outcome,
         monthsLate: outcome === 'missed' && fulfilled ? monthsBetween(r.target, fulfilled) : undefined,
+        daysLate: outcome === 'missed' && fulfilled ? daysBetween(r.target, fulfilled) : undefined,
         number: targets.length + 1,
         of: reviewed.length
       });
@@ -121,7 +128,8 @@ export function buildDelayStory(lineId: string, milestones: LineMilestone[], tod
       opening,
       targets,
       missed: targets.filter((t) => t.outcome === 'missed').length,
-      earliest: targets[0],
+      // An option (a partial-opening proposal) is not a promise for the whole section.
+      earliest: targets.find((t) => t.kind !== 'option') ?? targets[0],
       current: opening ? undefined : targets.at(-1)
     };
   });

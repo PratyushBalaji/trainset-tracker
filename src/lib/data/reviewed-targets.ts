@@ -16,6 +16,9 @@ export interface ReviewedTarget {
   measuredBy?: string;
   /** Section id from the story's `sections`; omitted for single-section lines. */
   section?: string;
+  /** Recalled in a later report with its original announcement date unknown: scored, but never
+   * plotted as announced on the report date. */
+  retrospective?: boolean;
 }
 
 export interface ReviewedSpan {
@@ -148,6 +151,78 @@ export const reviewedLineStories: Record<string, ReviewedLineStory> = {
       { section: 'stage5', milestoneId: 'madavara-september-october-window', field: 'revised_target', matches: 'End-September / first week October 2024', target: '2024-10-07', label: 'End-Sep / early Oct 2024', kind: 'by' },
       { section: 'stage5', milestoneId: 'madavara-october2024-target', field: 'revised_target', matches: 'Within October 2024', target: '2024-10-31', label: 'Oct 2024', kind: 'month' },
       { section: 'stage5', milestoneId: 'madavara-opening-announced', field: 'revised_target', matches: 'November 7, 2024 at 5 am', target: '2024-11-07', label: '7 Nov 2024 (passengers)', kind: 'by' }
+    ],
+    spans: []
+  },
+  // Purple opened in six parts; each part's targets are scored against its own passenger opening.
+  // "Original western section" is Reach 2 (Mysuru Road - Magadi Road). The eastern extension is scored
+  // against the October 2023 opening that completed it: the March 2023 KR Puram - Whitefield opening did
+  // not fulfil a whole Baiyappanahalli - Whitefield promise. Retrospective targets (recalled in a later
+  // report, original announcement date unknown) are scored but not plotted as announcements.
+  // Not scored: the Reach 2 December 2014 civil-completion target (not passenger service), the
+  // March 2023 eastern source forecast (not a confirmed official revision), and the March 2010 previous
+  // target on the Reach 1 December record (the separate recalled record is used instead).
+  purple: {
+    openingMilestoneId: 'connecting-passenger-opening',
+    sections: [
+      { id: 'reach1', label: 'Reach 1 (east)', noun: 'Reach 1', openingMilestoneId: 'reach1-passenger-opening' },
+      { id: 'reach2', label: 'Reach 2 (west)', noun: 'Reach 2', openingMilestoneId: 'reach2-passenger-opening' },
+      { id: 'underground', label: 'Underground link', noun: 'underground', openingMilestoneId: 'original-corridor-passenger-opening' },
+      { id: 'kengeri', label: 'Kengeri extension', noun: 'Kengeri', openingMilestoneId: 'kengeri-passenger-opening' },
+      { id: 'eastern', label: 'Eastern extension', noun: 'eastern-extension', openingMilestoneId: 'connecting-passenger-opening' },
+      { id: 'challaghatta', label: 'Challaghatta extension', noun: 'Challaghatta', openingMilestoneId: 'challaghatta-passenger-opening' }
+    ],
+    targets: [
+      { section: 'reach1', milestoneId: 'reach1-march2010-target-recalled', field: 'revised_target', matches: 'March 2010, historical opening target', target: '2010-03-31', label: 'Mar 2010', kind: 'month', retrospective: true },
+      { section: 'reach1', milestoneId: 'reach1-december2010-target', field: 'revised_target', matches: 'December 2010', target: '2010-12-31', label: 'Dec 2010', kind: 'month' },
+      { section: 'reach1', milestoneId: 'reach1-march15-target', field: 'revised_target', matches: 'March 15, 2011 commercial opening', target: '2011-03-15', label: '15 Mar 2011', kind: 'by' },
+      { section: 'reach1', milestoneId: 'reach1-ugadi-target', field: 'revised_target', matches: 'April 4, 2011, Ugadi', target: '2011-04-04', label: '4 Apr 2011 (Ugadi)', kind: 'by' },
+      { section: 'reach1', milestoneId: 'reach1-september1-target', field: 'revised_target', matches: 'September 1, 2011', target: '2011-09-01', label: '1 Sep 2011', kind: 'by' },
+      { section: 'reach1', milestoneId: 'reach1-september15-target-recalled', field: 'revised_target', matches: 'September 15, 2011, retrospectively reported', target: '2011-09-15', label: '15 Sep 2011', kind: 'by', retrospective: true },
+      { section: 'reach1', milestoneId: 'reach1-september26-target', field: 'revised_target', matches: 'September 26, 2011', target: '2011-09-26', label: '26 Sep 2011', kind: 'by' },
+      { section: 'reach1', milestoneId: 'reach1-october20-opening-announced', field: 'revised_target', matches: 'October 20, 2011', target: '2011-10-20', label: '20 Oct 2011', kind: 'by' },
+
+      { section: 'reach2', milestoneId: 'western-q3-2012-target', field: 'revised_target', matches: 'Third quarter 2012', target: '2012-09-30', label: 'Q3 2012', kind: 'by' },
+      { section: 'reach2', milestoneId: 'western-september2014-target', field: 'revised_target', matches: 'September 2014', target: '2014-09-30', label: 'Sep 2014', kind: 'month' },
+      { section: 'reach2', milestoneId: 'reach2-february2015-opening-target', field: 'revised_target', matches: 'February 2015', target: '2015-02-28', label: 'Feb 2015', kind: 'month' },
+      { section: 'reach2', milestoneId: 'reach2-june2015-target-reported', field: 'revised_target', matches: 'June 2015; retrospectively described as June-end', target: '2015-06-30', label: 'Jun 2015', kind: 'month' },
+      { section: 'reach2', milestoneId: 'reach2-july2015-target-recalled', field: 'revised_target', matches: 'July-end 2015, retrospectively reported', target: '2015-07-31', label: 'End-Jul 2015', kind: 'by', retrospective: true },
+      { section: 'reach2', milestoneId: 'reach2-september2015-target-recalled', field: 'revised_target', matches: 'September 2015, retrospectively reported', target: '2015-09-30', label: 'Sep 2015', kind: 'month', retrospective: true },
+      { section: 'reach2', milestoneId: 'reach2-opening-announced', field: 'revised_target', matches: 'November 16, 2015 inauguration; commercial runs a day or two later', target: '2015-11-16', label: '16 Nov 2015 (inauguration)', kind: 'by', measuredBy: 'reach2-inauguration' },
+
+      // A proposal for three stations only, so it is an option rather than a promise for the whole link.
+      { section: 'underground', milestoneId: 'partial-underground-may2015-proposal', field: 'revised_target', matches: 'May 2015, proposed partial opening', target: '2015-05-31', label: 'May 2015 (three stations)', kind: 'option' },
+      { section: 'underground', milestoneId: 'underground-november2015-target-recalled', field: 'revised_target', matches: 'November 2015, retrospectively reported', target: '2015-11-30', label: 'Nov 2015', kind: 'month', retrospective: true },
+      { section: 'underground', milestoneId: 'underground-december2015-target-recalled', field: 'revised_target', matches: 'December 2015, retrospectively reported', target: '2015-12-31', label: 'Dec 2015', kind: 'month', retrospective: true },
+      { section: 'underground', milestoneId: 'underground-january2016-target', field: 'revised_target', matches: 'January 2016, with mid-January reported', target: '2016-01-31', label: 'Jan 2016', kind: 'month' },
+      { section: 'underground', milestoneId: 'underground-february2016-target-recalled', field: 'revised_target', matches: 'February 2016, retrospectively reported', target: '2016-02-29', label: 'Feb 2016', kind: 'month', retrospective: true },
+      { section: 'underground', milestoneId: 'underground-march2016-target-recalled', field: 'revised_target', matches: 'March 2016, retrospectively reported', target: '2016-03-31', label: 'Mar 2016', kind: 'month', retrospective: true },
+      { section: 'underground', milestoneId: 'underground-opening-announced', field: 'revised_target', matches: 'April 29, 2016 ceremony; April 30, 2016 passenger opening', target: '2016-04-30', label: '30 Apr 2016 (passengers)', kind: 'by' },
+
+      { section: 'kengeri', milestoneId: 'kengeri-december2018-target-recalled', field: 'revised_target', matches: 'December 2018, retrospectively reported', target: '2018-12-31', label: 'Dec 2018', kind: 'month', retrospective: true },
+      { section: 'kengeri', milestoneId: 'kengeri-march2019-target-recalled', field: 'revised_target', matches: 'March 2019, retrospectively reported', target: '2019-03-31', label: 'Mar 2019', kind: 'month', retrospective: true },
+      { section: 'kengeri', milestoneId: 'kengeri-november2019-target-recalled', field: 'revised_target', matches: 'November 2019, retrospectively reported', target: '2019-11-30', label: 'Nov 2019', kind: 'month', retrospective: true },
+      { section: 'kengeri', milestoneId: 'kengeri-october2020-target-recalled', field: 'revised_target', matches: 'October 2020, retrospectively reported', target: '2020-10-31', label: 'Oct 2020', kind: 'month', retrospective: true },
+      { section: 'kengeri', milestoneId: 'kengeri-february2021-target-recalled', field: 'revised_target', matches: 'February 2021, retrospectively reported', target: '2021-02-28', label: 'Feb 2021', kind: 'month', retrospective: true },
+      { section: 'kengeri', milestoneId: 'kengeri-april2021-target-recalled', field: 'revised_target', matches: 'April 2021, retrospectively reported', target: '2021-04-30', label: 'Apr 2021', kind: 'month', retrospective: true },
+      { section: 'kengeri', milestoneId: 'kengeri-june2021-target-reported', field: 'revised_target', matches: 'June 2021', target: '2021-06-30', label: 'Jun 2021', kind: 'month' },
+      { section: 'kengeri', milestoneId: 'kengeri-august2021-target', field: 'revised_target', matches: 'August 2021', target: '2021-08-31', label: 'Aug 2021', kind: 'month' },
+      { section: 'kengeri', milestoneId: 'kengeri-august20-ceremony-recalled', field: 'revised_target', matches: 'August 20, 2021 proposed inauguration', target: '2021-08-20', label: '20 Aug 2021 (inauguration)', kind: 'by', measuredBy: 'kengeri-inauguration', retrospective: true },
+      { section: 'kengeri', milestoneId: 'kengeri-august29-ceremony-announced', field: 'revised_target', matches: 'August 29, 2021 inauguration', target: '2021-08-29', label: '29 Aug 2021 (inauguration)', kind: 'by', measuredBy: 'kengeri-inauguration' },
+
+      { section: 'eastern', milestoneId: 'eastern-december2020-target-recalled', field: 'revised_target', matches: 'December 2020, retrospectively reported', target: '2020-12-31', label: 'Dec 2020', kind: 'month', retrospective: true },
+      { section: 'eastern', milestoneId: 'eastern-december2022-official-target', field: 'revised_target', matches: 'December 2022, official whole-extension target', target: '2022-12-31', label: 'Dec 2022', kind: 'month' },
+      { section: 'eastern', milestoneId: 'connecting-july2023-target-recalled', field: 'revised_target', matches: 'July 2023, earlier reported target', target: '2023-07-31', label: 'Jul 2023', kind: 'month', retrospective: true },
+      { section: 'eastern', milestoneId: 'connecting-august2023-target', field: 'revised_target', matches: 'August-end 2023', target: '2023-08-31', label: 'End-Aug 2023', kind: 'by' },
+      { section: 'eastern', milestoneId: 'final-links-october2-proposal-recalled', field: 'revised_target', matches: 'October 2, 2023 proposed inauguration', target: '2023-10-02', label: '2 Oct 2023 (proposed launch)', kind: 'by', retrospective: true },
+      { section: 'eastern', milestoneId: 'final-links-october6-proposal-recalled', field: 'revised_target', matches: 'October 6, 2023', target: '2023-10-06', label: '6 Oct 2023 (proposed launch)', kind: 'by', retrospective: true },
+      { section: 'eastern', milestoneId: 'final-links-passenger-opening-announced', field: 'revised_target', matches: 'October 9, 2023 passenger opening', target: '2023-10-09', label: '9 Oct 2023 (passengers)', kind: 'by' },
+
+      { section: 'challaghatta', milestoneId: 'challaghatta-march2022-target-recalled', field: 'revised_target', matches: 'March 2022, retrospectively reported', target: '2022-03-31', label: 'Mar 2022', kind: 'month', retrospective: true },
+      { section: 'challaghatta', milestoneId: 'challaghatta-december2022-target', field: 'revised_target', matches: 'December 2022', target: '2022-12-31', label: 'Dec 2022', kind: 'month' },
+      { section: 'challaghatta', milestoneId: 'final-links-october2-proposal-recalled', field: 'revised_target', matches: 'October 2, 2023 proposed inauguration', target: '2023-10-02', label: '2 Oct 2023 (proposed launch)', kind: 'by', retrospective: true },
+      { section: 'challaghatta', milestoneId: 'final-links-october6-proposal-recalled', field: 'revised_target', matches: 'October 6, 2023', target: '2023-10-06', label: '6 Oct 2023 (proposed launch)', kind: 'by', retrospective: true },
+      { section: 'challaghatta', milestoneId: 'final-links-passenger-opening-announced', field: 'revised_target', matches: 'October 9, 2023 passenger opening', target: '2023-10-09', label: '9 Oct 2023 (passengers)', kind: 'by' }
     ],
     spans: []
   }

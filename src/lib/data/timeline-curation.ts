@@ -21,6 +21,29 @@ export const hiddenMilestones: Record<string, string[]> = {
     'madavara-cmrs-inspection',
     'madavara-ministerial-inspection-ride',
     'remaining-green-rdso-speed-trials'
+  ],
+  purple: [
+    // Paperwork superseded by the approval, sanction or award listed next to it.
+    'phase1-dpr-prepared',
+    'state-approval-conveyed',
+    'original-union-sanction',
+    'phase2-union-sanction',
+    'reach1-agreement',
+    'extension-isa-engagement',
+    // Ceremonies on (or a day before) a passenger opening already listed. Ceremonies a target is
+    // measured against (Reach 2, Kengeri) and the late final-links ceremony stay.
+    'reach1-inauguration',
+    'underground-inauguration',
+    'whitefield-inauguration',
+    // Inspections whose authorisation is listed, and minor test steps.
+    'underground-cmrs-inspection',
+    'kengeri-cmrs-inspection',
+    'whitefield-cmrs-inspection',
+    'connecting-cmrs-inspection',
+    'challaghatta-cmrs-inspection',
+    'underground-both-track-dynamic-testing',
+    'instrumented-oscillation-testing-reported',
+    'whitefield-80kmh-trials'
   ]
 };
 

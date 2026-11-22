@@ -14,12 +14,13 @@
   // A report can set targets for more than one section (Pink: elevated and underground).
   const targetsFor = $derived.by(() => {
     const map = new Map<string, OpeningTarget[]>();
-    for (const t of story?.targets ?? []) if (t.announced) map.set(t.milestoneId, [...(map.get(t.milestoneId) ?? []), t]);
+    // Retrospective targets sit on the report that recalled them, flagged as recalled.
+    for (const t of story?.targets ?? []) if (t.announced || t.recalledOn) map.set(t.milestoneId, [...(map.get(t.milestoneId) ?? []), t]);
     return map;
   });
   const multiSection = $derived((story?.sections.length ?? 0) > 1);
   const outcomeText = (t: OpeningTarget) =>
-    t.outcome === 'missed' ? (t.monthsLate !== undefined ? `Missed by ${t.monthsLate} month${t.monthsLate === 1 ? '' : 's'}` : 'Passed, not open yet')
+    t.outcome === 'missed' ? (t.monthsLate === 0 && t.daysLate !== undefined ? `Missed by ${t.daysLate} day${t.daysLate === 1 ? '' : 's'}` : t.monthsLate !== undefined ? `Missed by ${t.monthsLate} month${t.monthsLate === 1 ? '' : 's'}` : 'Passed, not open yet')
     : t.outcome === 'met' ? 'Met' : t.outcome === 'held' ? 'Held' : t.outcome === 'not-taken' ? 'Option not taken'
     : t.outcome === 'superseded' ? 'Pushed back' : 'Current target';
   const gapHeight = (days: number) => Math.round(Math.min(320, Math.max(44, (days / 30.44) * 6)));
@@ -53,6 +54,7 @@
           {#if t.previousLabel}<s>{t.previousLabel}</s><span aria-hidden="true">→</span>{/if}
           <strong>{t.label}</strong>
           <span class="outcome {t.outcome}">{outcomeText(t)}</span>
+          {#if t.recalledOn}<span class="recalled" title="Recalled in this later report; when the target was first set is unknown">recalled later</span>{/if}
         </p>
       {/each}
       {#if openingSection?.opening && openingSection.earliest}
@@ -116,6 +118,7 @@
   li.promise::before { width: 12px; height: 12px; border: 2px solid #b4452f; background: var(--surface); }
   .promise-tag { background: #f6e3dc; color: #8f3522; }
   .target-change { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 8px 0 0; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .target-change .recalled { font-size: 12px; color: #6b746b; font-style: italic; }
   .target-change s { color: #8a928a; text-decoration-thickness: 1.5px; }
   .target-change > span[aria-hidden] { color: #8a928a; }
   .outcome { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; }

@@ -793,7 +793,723 @@
         }
       ]
     },
-    "purple": { "name": "Purple Line", "research_status": "not_started", "milestones": [] },
+    "purple": {
+      "name": "Purple Line",
+      "scope": "MG Road - Baiyappanahalli; Magadi Road - Mysuru Road; original underground connection; Kengeri and Whitefield extensions; final KR Puram and Challaghatta links",
+      "research_status": "preliminary",
+      "milestones": [
+        {
+          "id": "phase1-dpr-prepared", "title": "Original Phase 1 DPR prepared", "category": "Approval",
+          "period": "2003-03", "date_basis": "period", "scope": "Shared Phase 1, including Baiyappanahalli - Mysuru Road",
+          "description": "The original two-corridor DPR is dated March 2003. Preparation is distinct from submission to Karnataka.",
+          "sources": ["https://data-opencity.sgp1.cdn.digitaloceanspaces.com/Documents/Recent/BMRCL-DPR-2003.pdf"]
+        },
+        {
+          "id": "phase1-dpr-submitted", "title": "Phase 1 DPR submitted to Karnataka", "category": "Approval",
+          "period": "2003-05", "date_basis": "period", "scope": "Shared Phase 1 project",
+          "description": "The CCI order records DMRC's submission of the Phase 1 DPR in May 2003.",
+          "comments": "No exact submission day is established.",
+          "sources": ["https://www.cci.gov.in/images/antitrustorder/en/0320101652348626.pdf"]
+        },
+        {
+          "id": "planning-commission-in-principle-approval", "title": "Planning Commission gives in-principle approval", "category": "Approval",
+          "period": "2004-02", "date_basis": "period", "scope": "Original Metro project",
+          "description": "The official City Development Plan records in-principle approval in February 2004.",
+          "comments": "Exact day is not established.",
+          "sources": ["https://dl.bbmpgov.in/download/pds/finalcdp.pdf"]
+        },
+        {
+          "id": "state-cabinet-approval", "title": "State Cabinet approves Phase 1 preparations", "category": "Approval",
+          "date": "2005-03-03", "scope": "Shared original Phase 1 project",
+          "description": "Karnataka's Cabinet authorised preliminary works, land acquisition and associated preparations.",
+          "sources": ["https://dl.bbmpgov.in/download/pds/finalcdp.pdf"]
+        },
+        {
+          "id": "state-approval-conveyed", "title": "State approval conveyed by government order", "category": "Approval",
+          "date": "2005-03-24", "scope": "Shared original Phase 1 project",
+          "description": "A government order conveyed approval to implement the Metro project, separate from the March 3 Cabinet decision.",
+          "sources": ["https://www.cci.gov.in/images/antitrustorder/en/0320101652348626.pdf", "https://data-opencity.sgp1.cdn.digitaloceanspaces.com/Documents/Drive/Metro-phase2A-DPR-KRP-to-Silkboard.pdf"]
+        },
+        {
+          "id": "original-union-approval", "title": "Union approves original Phase 1", "category": "Approval",
+          "date": "2006-04-25", "scope": "Shared original Phase 1 project",
+          "description": "The AIIB project document records Union approval on April 25, distinct from communication of formal sanction.",
+          "sources": ["https://www.aiib.org/en/projects/approved/2017/_download/india/document/bangalore-metro-document.pdf"]
+        },
+        {
+          "id": "original-union-sanction", "title": "Union sanction communicated", "category": "Approval",
+          "date": "2006-05-11", "scope": "Shared original Phase 1 project",
+          "description": "Parliamentary records and the BMRCL DPR identify May 11 as the formal sanction date.",
+          "sources": ["https://sansad.in/getFile/debatestextmk/18/III/281124PDF.pdf?source=loksabhadocs", "https://data-opencity.sgp1.cdn.digitaloceanspaces.com/Documents/Drive/Metro-phase2A-DPR-KRP-to-Silkboard.pdf"]
+        },
+        {
+          "id": "phase1-foundation-stone", "title": "Phase 1 foundation stone laid", "category": "Construction",
+          "date": "2006-06-24", "scope": "Shared Phase 1 project ceremony",
+          "description": "The project foundation-stone ceremony took place.",
+          "comments": "A ceremonial event, not physical construction commencement.",
+          "sources": ["https://www.karnataka.com/bangalore-metro/about-bangalore-metro/"]
+        },
+        {
+          "id": "reach1-civil-award", "title": "Reach 1 elevated-structure contract awarded", "category": "Construction",
+          "date": "2007-01-20", "scope": "Navayuga: Baiyappanahalli - Cricket Stadium, excluding station portions",
+          "description": "The court record establishes the letter of acceptance for the elevated-structure package.",
+          "sources": ["https://indiankanoon.org/doc/20502713/"]
+        },
+        {
+          "id": "reach1-agreement", "title": "Reach 1 civil agreement signed", "category": "Construction",
+          "date": "2007-02-15", "scope": "Navayuga Reach 1 elevated-structure package",
+          "description": "The contract agreement followed the January letter of acceptance.",
+          "sources": ["https://indiankanoon.org/doc/20502713/"]
+        },
+        {
+          "id": "reach1-construction-start", "title": "Physical civil construction begins on Reach 1", "category": "Construction",
+          "date": "2007-04-15", "scope": "MG Road - Baiyappanahalli",
+          "description": "The Urban Mobility India presentation dates physical civil construction commencement to April 15.",
+          "comments": "Distinct from the June 2006 foundation-stone ceremony.",
+          "sources": ["https://www.urbanmobilityindia.in/Upload/Conference/39573bc9-c7a4-4b6d-a592-7dc8133c52b6.pdf"]
+        },
+        {
+          "id": "reach1-structure-package-complete", "title": "Reach 1 elevated-structure package completed", "category": "Construction",
+          "date": "2010-07-27", "scope": "Navayuga elevated-structure package only",
+          "description": "Completion on this date was admitted in the Navayuga dispute.",
+          "comments": "Not completion of stations, systems or the operational line.",
+          "sources": ["https://indiankanoon.org/doc/20502713/"]
+        },
+        {
+          "id": "reach1-december2010-target", "title": "Reach 1 December 2010 opening forecast reaffirmed", "category": "Deadline",
+          "date": "2010-08-29", "date_basis": "reported_on", "scope": "Reach 1: MG Road - Baiyappanahalli",
+          "previous_target": "March 2010, retrospectively reported", "revised_target": "December 2010",
+          "description": "Contemporary coverage reaffirmed December opening and cited CMH Road protests among construction delays. The target was missed.",
+          "comments": "This report does not establish the first announcement date of either target.",
+          "sources": ["https://www.business-standard.com/article/companies/metro-rail-8217s-date-with-bangalore-in-december-110082900019_1.html"]
+        },
+        {
+          "id": "western-q3-2012-target", "title": "Original western section forecast for third quarter 2012", "category": "Deadline",
+          "date": "2010-08-29", "date_basis": "reported_on", "scope": "Original western section, broad early opening programme",
+          "revised_target": "Third quarter 2012",
+          "description": "The early programme forecast the original western section for the third quarter of 2012. That window was missed.",
+          "comments": "A quarter is retained as target text, not converted into an exact opening date.",
+          "sources": ["https://www.business-standard.com/article/companies/metro-rail-8217s-date-with-bangalore-in-december-110082900019_1.html"]
+        },
+        {
+          "id": "reach1-first-mainline-testing", "title": "First Reach 1 mainline testing established in December", "category": "Testing",
+          "period": "2010-12", "date_basis": "period", "scope": "Baiyappanahalli - CMH Road",
+          "description": "Contemporary reporting establishes mainline testing by December 28; eyewitness posts describe runs on December 27.",
+          "comments": "Month precision is retained because the exact first-ever day remains provisional. December 28 is a reporting bound, not an asserted first-run day.",
+          "sources": ["https://www.ndtv.com/bangalore-news/bangalore-metro-trial-run-shows-progress-finally-443268", "https://praja.in/t/namma-metro-reach-1-tracker"]
+        },
+        {
+          "id": "reach1-march15-target", "title": "March 15 commercial opening forecast", "category": "Deadline",
+          "date": "2011-01-19", "scope": "Reach 1",
+          "revised_target": "March 15, 2011 commercial opening",
+          "description": "The statement reported the following day forecast commercial opening subject to safety certification and government approval. The date was missed.",
+          "sources": ["https://www.daijiworld.com/news/newsDisplay.aspx?newsID=93722"]
+        },
+        {
+          "id": "reach1-march2010-target-recalled", "title": "Earlier March 2010 opening target recalled", "category": "Deadline",
+          "date": "2011-02-16", "date_basis": "reported_on", "scope": "Reach 1",
+          "revised_target": "March 2010, historical opening target",
+          "description": "The report retrospectively recalled a missed March 2010 opening target.",
+          "comments": "The evidence date is not the original announcement date or a new March 2010 promise made in 2011.",
+          "sources": ["https://www.mid-day.com/amp/news/india-news/article/No-Metro-on-Ugadi--112439?button=next"]
+        },
+        {
+          "id": "reach1-ugadi-target", "title": "Ugadi opening forecast reported", "category": "Deadline",
+          "date": "2011-02-16", "date_basis": "reported_on", "scope": "Reach 1",
+          "revised_target": "April 4, 2011, Ugadi",
+          "description": "An April 4 opening target had been reported by this evidence date, but works remained incomplete and the target was missed.",
+          "comments": "Original announcement date not recovered.",
+          "sources": ["https://www.mid-day.com/amp/news/india-news/article/No-Metro-on-Ugadi--112439?button=next"]
+        },
+        {
+          "id": "original-underground-tunnelling-start", "title": "Original Purple underground tunnelling begins", "category": "Construction",
+          "period": "2011-05", "date_basis": "period", "scope": "MG Road - Magadi Road underground section",
+          "description": "Construction history places tunnelling commencement in May 2011.",
+          "comments": "Exact commencement day is not established.",
+          "sources": ["https://themetrorailguy.com/2016/07/12/bangalore-metro-july-2016-tunneling-update/"]
+        },
+        {
+          "id": "reach1-september1-target", "title": "Reach 1 opening forecast moves to September 1", "category": "Deadline",
+          "date": "2011-07-25", "date_basis": "reported_on", "scope": "Reach 1",
+          "previous_target": "April 2011", "revised_target": "September 1, 2011",
+          "description": "The reported September 1 target was missed.",
+          "comments": "The source establishes the forecast by the evidence date, not its first announcement.",
+          "sources": ["https://www.ndtv.com/bangalore-news/bangalore-metro-on-track-for-september-1-launch-462743"]
+        },
+        {
+          "id": "reach1-rdso-speed-clearance", "title": "Reach 1 RDSO speed clearance reported received", "category": "Certification",
+          "date": "2011-08-14", "date_basis": "reported_by", "scope": "Reach 1",
+          "description": "Coverage reported receipt by fax of speed clearance for 75 km/h on straight track and approximately 45 km/h on curves; the formal report was still expected.",
+          "comments": "August 14 is a reporting bound, not a confirmed certificate issue date.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/finally-metro-gets-speed-certificate/articleshow/9597346.cms"]
+        },
+        {
+          "id": "reach1-september15-target-recalled", "title": "September 15 opening target reported missed", "category": "Deadline",
+          "date": "2011-09-16", "date_basis": "reported_on", "scope": "Reach 1",
+          "revised_target": "September 15, 2011, retrospectively reported",
+          "description": "Reporting recalled the missed September 15 target.",
+          "comments": "Original announcement date not established.",
+          "sources": ["https://www.indiatoday.in/india/south/story/bangalore-metro-misses-deadline-141292-2011-09-15"]
+        },
+        {
+          "id": "reach1-september26-target", "title": "September 26 opening target reported", "category": "Deadline",
+          "date": "2011-09-16", "date_basis": "reported_on", "scope": "Reach 1",
+          "revised_target": "September 26, 2011",
+          "description": "The reported September 26 opening date was subsequently missed.",
+          "sources": ["https://www.indiatoday.in/india/south/story/bangalore-metro-misses-deadline-141292-2011-09-15"]
+        },
+        {
+          "id": "reach1-cmrs-authorisation", "title": "CMRS authorises Reach 1", "category": "Certification",
+          "date": "2011-09-23", "scope": "MG Road - Baiyappanahalli",
+          "description": "CMRS authorisation was issued. Contemporary coverage described reduced maximum speeds and an experienced supervisor initially accompanying operators.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/metro-will-take-off-on-oct-20/articleshow/10194580.cms", "https://bellevision.com/index.php?action=newsdiggest_print&type=1543"]
+        },
+        {
+          "id": "reach1-october20-opening-announced", "title": "October 20 Reach 1 opening announced", "category": "Deadline",
+          "date": "2011-10-01", "date_basis": "reported_on", "scope": "MG Road - Baiyappanahalli",
+          "revised_target": "October 20, 2011",
+          "description": "Coverage carried the October 20 opening date by this evidence date. It was achieved.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/metro-will-take-off-on-oct-20/articleshow/10194580.cms"]
+        },
+        {
+          "id": "reach1-inauguration", "title": "MG Road - Baiyappanahalli inaugurated", "category": "Opening",
+          "date": "2011-10-20", "scope": "Reach 1",
+          "description": "The original eastern Purple section was inaugurated.",
+          "sources": ["https://indianexpress.com/article/india/latest-news/first-line-of-bangalore-metro-rail-inaugurated/"]
+        },
+        {
+          "id": "reach1-passenger-opening", "title": "MG Road - Baiyappanahalli passenger service begins", "category": "Opening",
+          "date": "2011-10-20", "scope": "Reach 1",
+          "description": "Public service began on the inauguration day.",
+          "sources": ["https://indianexpress.com/article/india/latest-news/first-line-of-bangalore-metro-rail-inaugurated/"]
+        },
+        {
+          "id": "phase2-cabinet-approval", "title": "Union Cabinet approves Phase 2", "category": "Approval",
+          "date": "2014-01-30", "scope": "Shared Phase 2, including eastern and western Purple extensions",
+          "description": "Cabinet approval included the Purple Line extensions.",
+          "comments": "The five-year completion provision ran from the start of work, not automatically from approval.",
+          "sources": ["https://www.pib.gov.in/newsite/erelcontent.aspx?relid=102853"]
+        },
+        {
+          "id": "phase2-union-sanction", "title": "Formal Union sanction for Phase 2 issued", "category": "Approval",
+          "date": "2014-02-21", "scope": "Shared Phase 2 project",
+          "description": "Formal sanction included the Purple extensions within the wider Phase 2 project.",
+          "sources": ["https://www.mohua.gov.in/pdf/582d9699bdb15AR2015-16ENGLISH.pdf"]
+        },
+        {
+          "id": "purple-tunnel-boring-complete", "title": "East-west tunnel boring completed", "category": "Construction",
+          "date": "2014-03-17", "scope": "Original Purple underground section",
+          "description": "TBM Helen's final breakthrough completed east-west tunnel boring, as reported the following day.",
+          "comments": "Not completion of station fit-out, tracks or operating systems.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/tunnelling-along-metro-corridor-ends/articleshow/32225135.cms"]
+        },
+        {
+          "id": "western-september2014-target", "title": "Original western opening forecast for September 2014", "category": "Deadline",
+          "date": "2014-03-18", "date_basis": "reported_on", "scope": "Original western section",
+          "revised_target": "September 2014",
+          "description": "The September forecast was missed; tracks and station works remained after tunnel boring.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/tunnelling-along-metro-corridor-ends/articleshow/32225135.cms"]
+        },
+        {
+          "id": "reach2-december2014-civil-target", "title": "Reach 2 civil completion forecast for December", "category": "Deadline",
+          "date": "2014-09-15", "scope": "Magadi Road - Mysuru Road civil works, not passenger opening",
+          "revised_target": "December 2014 civil completion",
+          "description": "The statement reported the following day forecast December civil completion. The construction target was missed.",
+          "sources": ["https://timesofindia.indiatimes.com/wait-one-more-year-for-namma-metros-phase-i/articleshow/42613096.cms"]
+        },
+        {
+          "id": "reach2-february2015-opening-target", "title": "Reach 2 passenger operation forecast for February", "category": "Deadline",
+          "date": "2014-09-15", "scope": "Magadi Road - Mysuru Road passenger service",
+          "revised_target": "February 2015",
+          "description": "The same statement forecast February passenger operation, distinct from December civil completion. The opening forecast was missed.",
+          "sources": ["https://timesofindia.indiatimes.com/wait-one-more-year-for-namma-metros-phase-i/articleshow/42613096.cms"]
+        },
+        {
+          "id": "first-underground-movement", "title": "First underground train movement reaches Cubbon Park", "category": "Testing",
+          "date": "2015-03-12", "scope": "MG Road - Cubbon Park initial underground section",
+          "description": "A train moved into the initial electrified section. Onward transfer required battery assistance.",
+          "comments": "The next-day contemporary report supports March 12, correcting the March 13 date in specialist retrospectives. This does not establish that the entire underground corridor was energised.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/namma-metro-breaks-new-ground/articleshow/46546688.cms"]
+        },
+        {
+          "id": "partial-underground-may2015-proposal", "title": "Selected underground stations proposed for May opening", "category": "Deadline",
+          "date": "2015-03-12", "scope": "Cubbon Road, Ambedkar Veedhi and Central College only",
+          "revised_target": "May 2015, proposed partial opening",
+          "description": "The proposed opening of selected stations was missed.",
+          "comments": "Not a whole-underground-corridor opening promise.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/namma-metro-breaks-new-ground/articleshow/46546688.cms"]
+        },
+        {
+          "id": "reach2-june2015-target-reported", "title": "June Reach 2 opening forecast reported", "category": "Deadline",
+          "date": "2015-03-13", "date_basis": "reported_on", "scope": "Magadi Road - Mysuru Road",
+          "revised_target": "June 2015; retrospectively described as June-end",
+          "description": "The next-day account of the March 12 movement carried a June opening forecast, subsequently missed.",
+          "comments": "The supplied research associates the forecast with the March 12 coverage; March 13 is retained as the known report date, not asserted as the original announcement date.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/namma-metro-breaks-new-ground/articleshow/46546688.cms", "https://www.newindianexpress.com/cities/bengaluru/2015/Nov/13/magadi-road-mysuru-road-metro-run-on-monday-842301.html"]
+        },
+        {
+          "id": "reach2-trials", "title": "Reach 2 trials commence", "category": "Testing",
+          "date": "2015-03-27", "scope": "Magadi Road - Mysuru Road",
+          "description": "Contemporary coverage establishes trial commencement on the isolated original western section.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/others/bmrcl-namma-metro-loco-pilot-j-deenadayalu/articleshow/46719755.cms", "https://www.newindianexpress.com/cities/bengaluru/2015/Nov/13/magadi-road-mysuru-road-metro-run-on-monday-842301.html"]
+        },
+        {
+          "id": "western-extension-first-award", "title": "First western extension civil package awarded", "category": "Construction",
+          "period": "2015-04", "date_basis": "period", "scope": "Mysuru Road - Pattanagere",
+          "description": "IL&FS Engineering was awarded the package at approximately INR 327 crore.",
+          "comments": "Exact award day not established.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/others/bmrcl-starts-trial-runs-on-kengeri-metro-corridor/articleshow/81537136.cms"]
+        },
+        {
+          "id": "reach2-safety-authorisation", "title": "Reach 2 safety authorisation issued in September", "category": "Certification",
+          "period": "2015-09", "date_basis": "period", "scope": "Magadi Road - Mysuru Road",
+          "presentation": { "disputed": true },
+          "description": "September authorisation is established, but accounts conflict over issuance and receipt timing.",
+          "comments": "TNIE gives September 19; that exact day remains disputed and is not promoted to a settled event date.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2015/Nov/13/magadi-road-mysuru-road-metro-run-on-monday-842301.html", "https://economictimes.indiatimes.com/news/politics-and-nation/metro-mystery-bmrcl-awaits-nod-safety-body-says-it-was-issued-in-september/articleshow/49668849.cms"]
+        },
+        {
+          "id": "underground-track-reported-complete", "title": "Underground track laying reported complete", "category": "Construction",
+          "date": "2015-10-06", "date_basis": "reported_by", "scope": "Original Purple underground section",
+          "description": "BMRCL's spokesperson reported track laying and associated civil work complete by this date.",
+          "comments": "A reporting-date bound, not proof that every station or system was finished.",
+          "sources": ["https://economictimes.indiatimes.com/industry/transportation/railways/bangalore-metro-rail-corporation-to-start-trial-run-from-magadi-road-to-stadium-soon/articleshow/49238091.cms"]
+        },
+        {
+          "id": "underground-both-track-dynamic-testing", "title": "Both underground tracks tested at up to 60 km/h", "category": "Testing",
+          "date": "2015-11-11", "date_basis": "reported_by", "scope": "Original Purple underground corridor",
+          "description": "An official announcement reproduced in contemporary coverage establishes dynamic testing on both tunnel tracks by November 11.",
+          "comments": "Not an exact construction-completion date or proof of first-ever movement. November 23 cannot be the first underground trial date given the earlier March and November evidence.",
+          "sources": ["https://themetrorailguy.com/2015/11/12/trial-runs-on-bangalores-metros-underground-section-finally-begin/"]
+        },
+        {
+          "id": "underground-january2016-target", "title": "January underground opening forecast reported", "category": "Deadline",
+          "date": "2015-11-12", "date_basis": "reported_on", "scope": "Underground connection",
+          "revised_target": "January 2016, with mid-January reported",
+          "description": "Contemporary coverage forecast January opening; later retrospectives repeated that target. It was missed.",
+          "sources": ["https://themetrorailguy.com/2015/11/12/trial-runs-on-bangalores-metros-underground-section-finally-begin/", "https://www.newindianexpress.com/cities/bengaluru/2016/Apr/25/namma-metro-underground-corridor-to-open-on-friday-928723.html"]
+        },
+        {
+          "id": "reach2-july2015-target-recalled", "title": "July-end Reach 2 target recalled as missed", "category": "Deadline",
+          "date": "2015-11-13", "date_basis": "reported_on", "scope": "Magadi Road - Mysuru Road",
+          "previous_target": "June-end 2015", "revised_target": "July-end 2015, retrospectively reported",
+          "description": "The retrospective described a missed July-end target following June-end.",
+          "comments": "Original revision announcement date not recovered.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2015/Nov/13/magadi-road-mysuru-road-metro-run-on-monday-842301.html"]
+        },
+        {
+          "id": "reach2-september2015-target-recalled", "title": "September Reach 2 target recalled as missed", "category": "Deadline",
+          "date": "2015-11-13", "date_basis": "reported_on", "scope": "Magadi Road - Mysuru Road",
+          "previous_target": "July-end 2015", "revised_target": "September 2015, retrospectively reported",
+          "description": "The same retrospective recorded a further missed September forecast.",
+          "comments": "The evidence date is not the original announcement date.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2015/Nov/13/magadi-road-mysuru-road-metro-run-on-monday-842301.html"]
+        },
+        {
+          "id": "reach2-opening-announced", "title": "Reach 2 November ceremony and later commercial runs announced", "category": "Deadline",
+          "date": "2015-11-13", "date_basis": "reported_on", "scope": "Magadi Road - Mysuru Road",
+          "revised_target": "November 16, 2015 inauguration; commercial runs a day or two later",
+          "description": "The ceremony took place on November 16. CAG records commercial opening on November 18.",
+          "comments": "Do not measure the service opening against the ceremony date as if it were a missed passenger promise.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2015/Nov/13/magadi-road-mysuru-road-metro-run-on-monday-842301.html", "https://d1jmc0u14z2tmp.cloudfront.net/uploads/download_audit_report/2026/CAG-Report-No.-7-of-2026-%28English%29-06a79ba08602d89.76651635.pdf"]
+        },
+        {
+          "id": "reach2-inauguration", "title": "Magadi Road - Mysuru Road inaugurated", "category": "Opening",
+          "date": "2015-11-16", "scope": "Reach 2",
+          "description": "The original western section was ceremonially inaugurated.",
+          "sources": ["https://www.ndtv.com/bangalore-news/bengaluru-starts-metro-services-between-magadi-road-mysuru-road-1244113"]
+        },
+        {
+          "id": "reach2-passenger-opening", "title": "Magadi Road - Mysuru Road passenger service begins", "category": "Opening",
+          "date": "2015-11-18", "scope": "Reach 2",
+          "presentation": { "disputed": true },
+          "description": "CAG Table 1.2 explicitly records November 18 as the commercial-operation date, two days after inauguration.",
+          "comments": "Some official summaries instead use November 16. Preserve the service/ceremony distinction and source discrepancy; the preferred commercial date here follows CAG.",
+          "sources": ["https://d1jmc0u14z2tmp.cloudfront.net/uploads/download_audit_report/2026/CAG-Report-No.-7-of-2026-%28English%29-06a79ba08602d89.76651635.pdf", "https://www.ndtv.com/bangalore-news/bengaluru-starts-metro-services-between-magadi-road-mysuru-road-1244113"]
+        },
+        {
+          "id": "instrumented-oscillation-testing-reported", "title": "Instrumented oscillation testing reported underway", "category": "Testing",
+          "date": "2015-12-12", "date_basis": "reported_by", "scope": "Original Purple corridor",
+          "description": "Measuring-wheel-set trials facilitated by RDSO had taken place over the preceding fortnight, spanning late November and December.",
+          "comments": "Analysis was pending. This is an evidence bound, not an exact trial-start date or clearance issuance date.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2015/Dec/12/metrometrics-with-measuring-wheel-set-856631.html"]
+        },
+        {
+          "id": "western-extension-second-award", "title": "Second western extension package awarded", "category": "Construction",
+          "period": "2016-03", "date_basis": "period", "scope": "Pattanagere - Challaghatta depot",
+          "description": "Soma Enterprises was awarded the package at approximately INR 332 crore.",
+          "comments": "Exact award day not established.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/others/bmrcl-starts-trial-runs-on-kengeri-metro-corridor/articleshow/81537136.cms"]
+        },
+        {
+          "id": "underground-cmrs-inspection", "title": "CMRS inspects underground connection", "category": "Inspection",
+          "date": "2016-04-05", "end_date": "2016-04-06", "scope": "MG Road - Magadi Road",
+          "description": "Actual completion evidence supports a two-day CMRS inspection.",
+          "comments": "Earlier preliminary reporting anticipated three days; the actual two-day interval is retained.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/Underground-metro-will-be-ready-to-take-commuters-in-15-days-K-J-George/articleshow/51882004.cms"]
+        },
+        {
+          "id": "underground-clearance-received", "title": "Conditional underground safety clearance received", "category": "Certification",
+          "date": "2016-04-08", "date_basis": "reported_by", "scope": "MG Road - Magadi Road",
+          "description": "Clearance had been received by the report published at 04:00 IST. Pending amenities included Majestic escalators/lifts; observations also concerned water supply, dust and signalling.",
+          "comments": "Exact issuance day is unconfirmed. April 8 is an evidence bound, not an exact authorisation date.",
+          "sources": ["https://bangaloremirror.indiatimes.com/bangalore/cover-story/metro-good-to-go/articleshow/51734220.cms"]
+        },
+        {
+          "id": "underground-november2015-target-recalled", "title": "November underground opening target recalled as missed", "category": "Deadline",
+          "date": "2016-04-25", "date_basis": "reported_on", "scope": "Underground connection",
+          "revised_target": "November 2015, retrospectively reported",
+          "description": "The retrospective recalled an earlier missed November commercial-opening forecast.",
+          "comments": "Original announcement date not recovered.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2016/Apr/25/namma-metro-underground-corridor-to-open-on-friday-928723.html"]
+        },
+        {
+          "id": "underground-december2015-target-recalled", "title": "December underground target recalled as missed", "category": "Deadline",
+          "date": "2016-04-25", "date_basis": "reported_on", "scope": "Underground connection",
+          "previous_target": "November 2015", "revised_target": "December 2015, retrospectively reported",
+          "description": "The retrospective recorded a missed revision from November to December.",
+          "comments": "No invented original revision date is assigned.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2016/Apr/25/namma-metro-underground-corridor-to-open-on-friday-928723.html"]
+        },
+        {
+          "id": "underground-february2016-target-recalled", "title": "February underground target recalled as missed", "category": "Deadline",
+          "date": "2016-04-25", "date_basis": "reported_on", "scope": "Underground connection",
+          "previous_target": "January 2016", "revised_target": "February 2016, retrospectively reported",
+          "description": "The retrospective recorded a further missed February opening forecast.",
+          "comments": "Original revision announcement date not recovered.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2016/Apr/25/namma-metro-underground-corridor-to-open-on-friday-928723.html"]
+        },
+        {
+          "id": "underground-march2016-target-recalled", "title": "March underground target recalled as missed", "category": "Deadline",
+          "date": "2016-04-25", "date_basis": "reported_on", "scope": "Underground connection",
+          "previous_target": "February 2016", "revised_target": "March 2016, retrospectively reported",
+          "description": "The retrospective recorded the missed March forecast. Majestic underground works were a major reason for earlier delays.",
+          "comments": "Original revision announcement date not recovered.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2016/Apr/25/namma-metro-underground-corridor-to-open-on-friday-928723.html"]
+        },
+        {
+          "id": "underground-opening-announced", "title": "Underground ceremony and passenger dates announced", "category": "Deadline",
+          "date": "2016-04-25", "date_basis": "reported_on", "scope": "Underground connection completing original Purple corridor",
+          "revised_target": "April 29, 2016 ceremony; April 30, 2016 passenger opening",
+          "description": "Both announced dates were achieved.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2016/Apr/25/namma-metro-underground-corridor-to-open-on-friday-928723.html"]
+        },
+        {
+          "id": "underground-inauguration", "title": "Underground connection inaugurated", "category": "Opening",
+          "date": "2016-04-29", "scope": "Connection between original eastern and western Purple sections",
+          "description": "The underground link was ceremonially inaugurated.",
+          "sources": ["https://indianexpress.com/article/india/india-news-india/bangalore-underground-metro-section-inaugurated/"]
+        },
+        {
+          "id": "original-corridor-passenger-opening", "title": "Passenger service spans original Purple corridor", "category": "Opening",
+          "date": "2016-04-30", "scope": "Baiyappanahalli - Mysuru Road",
+          "description": "Public operation connected the original eastern and western sections through the underground link.",
+          "comments": "Later shared Phase 1 delays associated with Green's completion are not delays to Purple passenger opening after this date.",
+          "sources": ["https://indianexpress.com/article/india/india-news-india/bangalore-underground-metro-section-inaugurated/", "https://d1jmc0u14z2tmp.cloudfront.net/uploads/download_audit_report/2026/CAG-Report-No.-7-of-2026-%28English%29-06a79ba08602d89.76651635.pdf"]
+        },
+        {
+          "id": "eastern-extension-awards-reported", "title": "Eastern extension civil awards established by May", "category": "Construction",
+          "period": "2017-05", "date_basis": "period", "scope": "Baiyappanahalli - Whitefield",
+          "description": "ITD-ITD Cementation JV had been awarded the eastern civil packages by May 2017.",
+          "comments": "This is a month-level upper bound, not an exact award day or proof of an award on May 1. March's lowest-bidder announcement must not be substituted for award.",
+          "sources": ["https://themetrorailguy.com/2017/03/22/itd-itd-cem-jv-lowest-bidder-for-bangalore-metros-whitefield-extn/", "https://www.aiib.org/en/projects/approved/2017/_download/india/document/bangalore-metro-document.pdf"]
+        },
+        {
+          "id": "extension-isa-engagement", "title": "Phase 2 extension ISA engagement announced", "category": "Approval",
+          "date": "2019-09-30", "date_basis": "reported_on", "scope": "Phase 2 extension signalling and train control assessment",
+          "description": "RINA announced its contract to assess extension-project signalling and train control.",
+          "comments": "Assessor engagement, not section-specific ISA certification completion. The announcement establishes engagement by this date, not the exact signing day.",
+          "sources": ["https://www.rina.org/en/media/news/2019/09/30/bangalore-project"]
+        },
+        {
+          "id": "kengeri-trials", "title": "Kengeri extension trials commence", "category": "Testing",
+          "date": "2021-04-06", "scope": "Mysuru Road - Kengeri",
+          "description": "Initial low-speed checks began on the western extension.",
+          "comments": "March signalling modifications were preparatory work, not these mainline trials.",
+          "sources": ["https://www.thenewsminute.com/karnataka/bengaluru-metro-begins-trial-runs-mysuru-road-kengeri-line-146626"]
+        },
+        {
+          "id": "kengeri-december2018-target-recalled", "title": "December 2018 Kengeri target recalled as missed", "category": "Deadline",
+          "date": "2021-06-23", "date_basis": "reported_on", "scope": "Mysuru Road - Kengeri",
+          "revised_target": "December 2018, retrospectively reported",
+          "description": "Reporting recalled the earlier missed December 2018 schedule.",
+          "comments": "The original announcement date is unknown; this is the retrospective evidence date.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-commercial-operation-of-kengeri-metro-corridor-likely-from-august/articleshow/83770556.cms"]
+        },
+        {
+          "id": "kengeri-march2019-target-recalled", "title": "March 2019 Kengeri target recalled as missed", "category": "Deadline",
+          "date": "2021-06-23", "date_basis": "reported_on", "scope": "Mysuru Road - Kengeri",
+          "previous_target": "December 2018", "revised_target": "March 2019, retrospectively reported",
+          "description": "The retrospective recorded the missed revision to March 2019.",
+          "comments": "Original revision announcement date unknown.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-commercial-operation-of-kengeri-metro-corridor-likely-from-august/articleshow/83770556.cms"]
+        },
+        {
+          "id": "kengeri-november2019-target-recalled", "title": "November 2019 Kengeri target recalled as missed", "category": "Deadline",
+          "date": "2021-06-23", "date_basis": "reported_on", "scope": "Mysuru Road - Kengeri",
+          "previous_target": "March 2019", "revised_target": "November 2019, retrospectively reported",
+          "description": "The retrospective recorded the missed November revision.",
+          "comments": "Original revision announcement date unknown.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-commercial-operation-of-kengeri-metro-corridor-likely-from-august/articleshow/83770556.cms"]
+        },
+        {
+          "id": "kengeri-october2020-target-recalled", "title": "October 2020 Kengeri target recalled as missed", "category": "Deadline",
+          "date": "2021-06-23", "date_basis": "reported_on", "scope": "Mysuru Road - Kengeri",
+          "previous_target": "November 2019", "revised_target": "October 2020, retrospectively reported",
+          "description": "The retrospective recorded the missed October 2020 revision.",
+          "comments": "Original revision announcement date unknown.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-commercial-operation-of-kengeri-metro-corridor-likely-from-august/articleshow/83770556.cms"]
+        },
+        {
+          "id": "kengeri-february2021-target-recalled", "title": "February 2021 Kengeri target recalled as missed", "category": "Deadline",
+          "date": "2021-06-23", "date_basis": "reported_on", "scope": "Mysuru Road - Kengeri",
+          "previous_target": "October 2020", "revised_target": "February 2021, retrospectively reported",
+          "description": "The retrospective recorded the missed February 2021 revision.",
+          "comments": "Original revision announcement date unknown.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-commercial-operation-of-kengeri-metro-corridor-likely-from-august/articleshow/83770556.cms"]
+        },
+        {
+          "id": "kengeri-april2021-target-recalled", "title": "April 2021 Kengeri target recalled as missed", "category": "Deadline",
+          "date": "2021-06-23", "date_basis": "reported_on", "scope": "Mysuru Road - Kengeri",
+          "previous_target": "February 2021", "revised_target": "April 2021, retrospectively reported",
+          "description": "The retrospective recorded the missed April 2021 revision.",
+          "comments": "Original revision announcement date unknown.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-commercial-operation-of-kengeri-metro-corridor-likely-from-august/articleshow/83770556.cms"]
+        },
+        {
+          "id": "kengeri-june2021-target-reported", "title": "June 2021 Kengeri schedule reported", "category": "Deadline",
+          "date": "2021-06-23", "date_basis": "reported_on", "scope": "Mysuru Road - Kengeri",
+          "previous_target": "April 2021", "revised_target": "June 2021",
+          "description": "The report recorded a June schedule that was subsequently missed.",
+          "comments": "The June target had not yet reached month-end on the evidence date. Its eventual miss is historical context, not a claim that all of June had already passed on June 23.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-commercial-operation-of-kengeri-metro-corridor-likely-from-august/articleshow/83770556.cms"]
+        },
+        {
+          "id": "kengeri-august2021-target", "title": "Kengeri opening forecast for August", "category": "Deadline",
+          "date": "2021-07-29", "date_basis": "reported_on", "scope": "Mysuru Road - Kengeri",
+          "previous_target": "June 2021", "revised_target": "August 2021",
+          "description": "The August forecast was achieved at month precision. Reporting cited pandemic and labour availability while safety inspection was awaited.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-metro-operations-on-extended-purple-line-yet-to-begin-officials-hopeful-of-meeting-august-deadline-7427865/"]
+        },
+        {
+          "id": "kengeri-cmrs-inspection", "title": "CMRS inspects Kengeri extension", "category": "Inspection",
+          "date": "2021-08-11", "end_date": "2021-08-12", "scope": "Mysuru Road - Kengeri",
+          "description": "BMRCL's annual report records the two-day statutory inspection.",
+          "comments": "Prefer this primary record over reports mistakenly saying inspection began on August 10.",
+          "sources": ["https://kla.kar.nic.in/council/house/Paperlaid/146/33.pdf"]
+        },
+        {
+          "id": "kengeri-cmrs-authorisation", "title": "Kengeri extension receives CMRS authorisation", "category": "Certification",
+          "date": "2021-08-16", "scope": "Mysuru Road - Kengeri",
+          "description": "The CRS annual report, printed page 50, gives the authorisation date, corroborated by contemporary reporting.",
+          "sources": ["https://crs.gov.in/wp-content/uploads/2024/03/Annul-Report-2021-22.pdf", "https://indianexpress.com/article/cities/bangalore/bengaluru-extended-mysore-road-kengeri-metro-stretch-gets-safety-approval-7458515/"]
+        },
+        {
+          "id": "kengeri-august20-ceremony-recalled", "title": "Earlier August 20 Kengeri ceremony proposal recalled", "category": "Deadline",
+          "date": "2021-08-17", "date_basis": "reported_on", "scope": "Mysuru Road - Kengeri inauguration only",
+          "revised_target": "August 20, 2021 proposed inauguration",
+          "description": "Coverage recalled an earlier proposed ceremony date, which was not met.",
+          "comments": "Not an independently established passenger-opening promise. Original announcement date was not recovered.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-extended-mysore-road-kengeri-metro-stretch-gets-safety-approval-7458515/"]
+        },
+        {
+          "id": "kengeri-august29-ceremony-announced", "title": "August 29 Kengeri inauguration announced", "category": "Deadline",
+          "date": "2021-08-22", "date_basis": "reported_on", "scope": "Mysuru Road - Kengeri inauguration",
+          "revised_target": "August 29, 2021 inauguration",
+          "description": "The ceremony date was achieved; passenger service followed on August 30.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-metro-extended-purple-line-between-mysore-road-kengeri-7465125/lite/"]
+        },
+        {
+          "id": "kengeri-inauguration", "title": "Kengeri extension inaugurated", "category": "Opening",
+          "date": "2021-08-29", "scope": "Mysuru Road - Kengeri",
+          "description": "The western extension was inaugurated ceremonially.",
+          "sources": ["https://www.pib.gov.in/PressReleasePage.aspx?PRID=1750160"]
+        },
+        {
+          "id": "kengeri-passenger-opening", "title": "Kengeri passenger service begins", "category": "Opening",
+          "date": "2021-08-30", "scope": "Mysuru Road - Kengeri",
+          "description": "BMRCL's annual report distinguishes passenger commencement from the previous day's inauguration.",
+          "sources": ["https://kla.kar.nic.in/council/house/Paperlaid/146/33.pdf"]
+        },
+        {
+          "id": "eastern-december2020-target-recalled", "title": "December 2020 eastern extension target recalled as missed", "category": "Deadline",
+          "date": "2022-04-12", "date_basis": "reported_on", "scope": "Entire Baiyappanahalli - Whitefield extension",
+          "revised_target": "December 2020, retrospectively reported",
+          "description": "The report recalled the missed earlier whole-extension target.",
+          "comments": "Original announcement date unknown; this target includes the later connecting gap, not only KR Puram - Whitefield.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/metro-delay-only-1-new-section-may-be-operational-this-year/articleshow/90787466.cms"]
+        },
+        {
+          "id": "eastern-december2022-official-target", "title": "Official December 2022 eastern target maintained", "category": "Deadline",
+          "date": "2022-04-12", "date_basis": "reported_on", "scope": "Entire Baiyappanahalli - Whitefield extension",
+          "revised_target": "December 2022, official whole-extension target",
+          "description": "The official target was maintained at the evidence date but subsequently missed. Railway crossing design changes, civil works and material constraints were cited.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/metro-delay-only-1-new-section-may-be-operational-this-year/articleshow/90787466.cms"]
+        },
+        {
+          "id": "eastern-march2023-source-forecast", "title": "Source forecasts eastern extension for March 2023", "category": "Deadline",
+          "date": "2022-04-12", "date_basis": "reported_on", "scope": "Entire Baiyappanahalli - Whitefield extension",
+          "revised_target": "March 2023, source forecast rather than confirmed official revision",
+          "description": "A source forecast March completion, but only KR Puram - Whitefield opened in March; the connecting gap opened in October.",
+          "comments": "Do not promote the source forecast to an official revision or mark the full-extension target met by the partial March opening.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/metro-delay-only-1-new-section-may-be-operational-this-year/articleshow/90787466.cms"]
+        },
+        {
+          "id": "challaghatta-march2022-target-recalled", "title": "March 2022 Challaghatta target recalled as missed", "category": "Deadline",
+          "date": "2022-04-12", "date_basis": "reported_on", "scope": "Kengeri - Challaghatta",
+          "revised_target": "March 2022, retrospectively reported",
+          "description": "The report recalled the missed March target.",
+          "comments": "Original announcement date unknown.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/metro-delay-only-1-new-section-may-be-operational-this-year/articleshow/90787466.cms"]
+        },
+        {
+          "id": "challaghatta-december2022-target", "title": "Challaghatta target shifts to December 2022", "category": "Deadline",
+          "date": "2022-04-12", "date_basis": "reported_on", "scope": "Kengeri - Challaghatta",
+          "previous_target": "March 2022", "revised_target": "December 2022",
+          "description": "The revised forecast was also missed.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/metro-delay-only-1-new-section-may-be-operational-this-year/articleshow/90787466.cms"]
+        },
+        {
+          "id": "whitefield-first-trial", "title": "First Whitefield extension trial runs to ITPL", "category": "Testing",
+          "date": "2022-10-21", "scope": "Whitefield - Pattandur Agrahara / ITPL",
+          "description": "The first eastern-extension trial ran on the limited Whitefield - ITPL section.",
+          "comments": "October 25 was an earlier planned commencement date, not the actual start. Starting on October 21 was not a missed testing target.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/whitefield-metro-trial-run-begins-ray-of-hope-for-residents/articleshow/95008059.cms", "https://www.thenewsminute.com/article/bengaluru-namma-metro-conducts-trial-run-whitefield-itpl-169110"]
+        },
+        {
+          "id": "whitefield-80kmh-trials", "title": "First 80-km/h eastern extension trials conducted", "category": "Testing",
+          "date": "2023-02-05", "scope": "Whitefield - KR Puram",
+          "description": "Progressive trials were conducted at 40, 60 and 80 km/h.",
+          "comments": "Multiple-train and service trials were still forthcoming; this is not clearance or complete trial-programme sign-off.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2023/Feb/05/bengaluru-metro-trial-runs-at-80-kmph-done-forfirst-time-on-whitefield-kr-puram-line-2544660.html"]
+        },
+        {
+          "id": "whitefield-cmrs-inspection", "title": "CMRS inspects Whitefield - KR Puram", "category": "Inspection",
+          "date": "2023-02-22", "end_date": "2023-02-24", "scope": "Whitefield - KR Puram",
+          "description": "The statutory inspection covered the eastern section over three days.",
+          "sources": ["https://metrorailtoday.com/news/cmrs-approves-bangalore-metros-whitefield-kr-puram-line-for-commercial-operations"]
+        },
+        {
+          "id": "whitefield-cmrs-authorisation", "title": "Whitefield - KR Puram receives CMRS authorisation", "category": "Certification",
+          "date": "2023-02-28", "scope": "Whitefield - KR Puram",
+          "description": "Authorisation was issued with observations and compliance work remaining.",
+          "sources": ["https://metrorailtoday.com/news/cmrs-approves-bangalore-metros-whitefield-kr-puram-line-for-commercial-operations"]
+        },
+        {
+          "id": "whitefield-initial-operating-layout", "title": "Initial eastern operation uses restricted track layout", "category": "Construction",
+          "period": "2023-03", "date_basis": "period", "scope": "Garudacharpalya - KR Puram initial operating arrangement",
+          "description": "One track was used because KR Puram lacked a crossover.",
+          "comments": "An opening-period operating arrangement, not automatically a CMRS-imposed condition or an exact-day infrastructure completion event.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/minor-civil-works-pending-ahead-of-whitefield-kr-puram-metro-lines-march-25-inauguration-8511024/"]
+        },
+        {
+          "id": "whitefield-inauguration", "title": "Whitefield extension inaugurated", "category": "Opening",
+          "date": "2023-03-25", "scope": "KR Puram - Whitefield",
+          "description": "The eastern extension was inaugurated while still disconnected from existing Purple services.",
+          "sources": ["https://www.pib.gov.in/PressReleasePage.aspx?PRID=1910674"]
+        },
+        {
+          "id": "whitefield-passenger-opening", "title": "KR Puram - Whitefield passenger service begins", "category": "Opening",
+          "date": "2023-03-26", "scope": "KR Puram - Whitefield",
+          "description": "CAG records public operation from March 26, one day after inauguration. The connecting gap to Baiyappanahalli remained closed.",
+          "sources": ["https://d1jmc0u14z2tmp.cloudfront.net/uploads/download_audit_report/2026/CAG-Report-No.-7-of-2026-%28English%29-06a79ba08602d89.76651635.pdf"]
+        },
+        {
+          "id": "connecting-july2023-target-recalled", "title": "Earlier July connecting-section target recalled", "category": "Deadline",
+          "date": "2023-06-23", "date_basis": "reported_on", "scope": "Baiyappanahalli - KR Puram",
+          "revised_target": "July 2023, earlier reported target",
+          "description": "Coverage recorded the earlier July forecast, which was subsequently missed.",
+          "comments": "Original announcement date unknown.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2023/jun/23/metros-k-r-pura-baiyappanahalli-completion-deadline-officially-pushed-to-august-end-2587834.html"]
+        },
+        {
+          "id": "connecting-august2023-target", "title": "Connecting-section target moves to August-end", "category": "Deadline",
+          "date": "2023-06-23", "date_basis": "reported_on", "scope": "Baiyappanahalli - KR Puram",
+          "previous_target": "July 2023", "revised_target": "August-end 2023",
+          "description": "Station work and full-line signalling synchronisation were cited as the forecast moved later. The August-end target was missed.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2023/jun/23/metros-k-r-pura-baiyappanahalli-completion-deadline-officially-pushed-to-august-end-2587834.html"]
+        },
+        {
+          "id": "connecting-first-trial", "title": "First trial crosses eastern connecting section", "category": "Testing",
+          "date": "2023-07-26", "scope": "KR Puram - Baiyappanahalli",
+          "description": "The first connecting-section trial departed at 18:04 IST, as reported the following day.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2023/jul/27/crucial-kr-pura-byp-metro-stretch-sees-first-trial-run-in-bengaluru-2598893.html"]
+        },
+        {
+          "id": "challaghatta-first-trial", "title": "First Challaghatta trial conducted", "category": "Testing",
+          "date": "2023-07-29", "scope": "Kengeri - Challaghatta",
+          "description": "Contemporary reporting embedded BMRCL's spokesperson announcement of the first trial.",
+          "sources": ["https://kannada.oneindia.com/news/bengaluru/kengeri-challaghatta-namma-metro-train-run-begins-304817.html"]
+        },
+        {
+          "id": "connecting-cmrs-inspection", "title": "CMRS inspects eastern connecting section", "category": "Inspection",
+          "date": "2023-09-21", "scope": "Baiyappanahalli - KR Puram",
+          "description": "The statutory inspection covered the connecting gap.",
+          "sources": ["https://themetrorailguy.com/2023/09/21/cmrs-inspects-bangalore-metros-kr-pura-baiyyappanahalli-section/"]
+        },
+        {
+          "id": "connecting-cmrs-authorisation", "title": "Eastern connecting section receives conditional clearance", "category": "Certification",
+          "date": "2023-09-25", "scope": "Baiyappanahalli - KR Puram",
+          "description": "CMRS authorisation was reported for the connecting section.",
+          "comments": "Original order is needed for complete conditions; no unconditional sign-off is inferred.",
+          "sources": ["https://www.deccanherald.com/india/karnataka/bengaluru/baiyappanahalli-kr-pura-metro-link-clears-final-hurdle-2700695", "https://indianexpress.com/article/cities/bangalore/bengaluru-operations-start-whitefield-challaghatta-metro-corridor-monday-8973752/"]
+        },
+        {
+          "id": "challaghatta-cmrs-inspection", "title": "CMRS inspects Challaghatta extension", "category": "Inspection",
+          "date": "2023-09-29", "scope": "Kengeri - Challaghatta",
+          "description": "The inspection date is retrospectively confirmed by the October 4 report.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2023/Oct/04/commuters-stranded-as-metro-test-vehicle-derails-in-bengaluru-2620625.html"]
+        },
+        {
+          "id": "challaghatta-cmrs-authorisation", "title": "Challaghatta extension receives CMRS authorisation", "category": "Certification",
+          "date": "2023-09-30", "scope": "Kengeri - Challaghatta",
+          "description": "Reporting establishes September 30 authorisation for the western final link.",
+          "sources": ["https://www.newindianexpress.com/cities/bengaluru/2023/Oct/04/commuters-stranded-as-metro-test-vehicle-derails-in-bengaluru-2620625.html", "https://indianexpress.com/article/cities/bangalore/bengaluru-operations-start-whitefield-challaghatta-metro-corridor-monday-8973752/"]
+        },
+        {
+          "id": "final-links-october2-proposal-recalled", "title": "October 2 final-links inauguration proposal recalled", "category": "Deadline",
+          "date": "2023-10-08", "date_basis": "reported_on", "scope": "Both final sections; proposed inauguration",
+          "revised_target": "October 2, 2023 proposed inauguration",
+          "description": "The retrospective recorded a missed proposed launch date.",
+          "comments": "Original announcement date not established; not automatically an independent passenger-opening promise.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-operations-start-whitefield-challaghatta-metro-corridor-monday-8973752/"]
+        },
+        {
+          "id": "final-links-october6-proposal-recalled", "title": "October 6 revised final-links launch proposal recalled", "category": "Deadline",
+          "date": "2023-10-08", "date_basis": "reported_on", "scope": "Both final sections; proposed launch",
+          "previous_target": "October 2, 2023", "revised_target": "October 6, 2023",
+          "description": "The revised proposal was missed while launch permissions were reportedly pending.",
+          "comments": "The report date is not an invented original revision announcement date.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-operations-start-whitefield-challaghatta-metro-corridor-monday-8973752/"]
+        },
+        {
+          "id": "final-links-passenger-opening-announced", "title": "October 9 final-links passenger opening announced", "category": "Deadline",
+          "date": "2023-10-08", "date_basis": "reported_on", "scope": "Baiyappanahalli - KR Puram and Kengeri - Challaghatta",
+          "revised_target": "October 9, 2023 passenger opening",
+          "description": "The ministry instructed opening without waiting for an official function. The passenger-opening date was achieved.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-operations-start-whitefield-challaghatta-metro-corridor-monday-8973752/"]
+        },
+        {
+          "id": "connecting-passenger-opening", "title": "Baiyappanahalli - KR Puram passenger service begins", "category": "Opening",
+          "date": "2023-10-09", "scope": "Eastern connecting section",
+          "description": "The connecting gap opened to passengers alongside the Challaghatta extension, establishing continuous Whitefield - Challaghatta service.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/west-to-east-bengaluru-now-in-just-80-minutes-as-full-operations-start-on-metros-purple-line-8975427/"]
+        },
+        {
+          "id": "challaghatta-passenger-opening", "title": "Kengeri - Challaghatta passenger service begins", "category": "Opening",
+          "date": "2023-10-09", "scope": "Western final extension",
+          "description": "The western extension opened on the same day as the eastern connecting gap.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/west-to-east-bengaluru-now-in-just-80-minutes-as-full-operations-start-on-metros-purple-line-8975427/"]
+        },
+        {
+          "id": "final-links-inauguration", "title": "Final Purple sections formally inaugurated after public opening", "category": "Opening",
+          "date": "2023-10-20", "scope": "Baiyappanahalli - KR Puram and Kengeri - Challaghatta",
+          "description": "The two final sections were formally inaugurated, eleven days after passenger service began.",
+          "comments": "Do not replace the October 9 public-service date with this later ceremony date.",
+          "sources": ["https://www.deccanherald.com/india/karnataka/bengaluru/bengaluru-pm-modi-virtually-inaugurates-sections-of-purple-line-2735304"]
+        }
+      ]
+    },
     "pink": {
       "name": "Pink Line",
       "scope": "Kalena Agrahara - Nagawara; elevated section to Tavarekere / SG Palya",
