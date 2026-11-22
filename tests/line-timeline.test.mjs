@@ -275,7 +275,7 @@ test('pink delay story scores elevated and underground sections separately', () 
   assert.equal(elevated.opening.date, '2026-11-14');
   assert.equal(elevated.targets.length, 12);
   assert.equal(elevated.missed, 8);
-  assert.equal(elevated.earliest.label, 'Dec 2025');
+  assert.equal(elevated.earliest.label, 'Sep 2025');
   assert.equal(elevated.targets.find((t) => t.milestoneId === 'august15-internal-target').monthsLate, 3);
   assert.equal(elevated.targets.find((t) => t.milestoneId === 'after-october15-opening-window').outcome, 'held');
   assert.equal(elevated.targets.find((t) => t.milestoneId === 'november13-inauguration-reported').outcome, 'met');

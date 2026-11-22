@@ -1737,6 +1737,18 @@
           "sources": ["https://www.moneycontrol.com/news/india/bengaluru-metro-completes-tunnelling-work-on-citys-longest-underground-section-12855065.html", "https://indianexpress.com/article/cities/bangalore/bengaluru-metro-city-underground-stretch-9646653/"]
         },
         {
+          "id": "september2025-june2026-phased-plan",
+          "title": "September 2025 and June 2026 phased opening plan reported",
+          "category": "Deadline",
+          "date": "2024-09-12",
+          "date_basis": "reported_on",
+          "scope": "Elevated and underground passenger opening",
+          "revised_target": "September 2025 elevated; June 2026 underground",
+          "description": "Reporting described BMRCL's plan to open the elevated section by September 2025 and the underground section by June 2026.",
+          "comments": "The article was first published on 12 September 2024 and updated on 13 September. This establishes the plan by September 2024, not its original announcement day. Both targets precede the December-based schedule reported on 30 October 2024; do not insert them afterwards using the August 2025 ministry report that recalled them.",
+          "sources": ["https://www.moneycontrol.com/news/india/indias-most-congested-city-bengaluru-faces-train-set-supply-crisis-12820475.html"]
+        },
+        {
           "id": "december-phased-forecast",
           "title": "December-based phased schedule reported",
           "category": "Deadline",
@@ -1745,7 +1757,7 @@
           "scope": "Elevated and underground sections",
           "revised_target": "December 2025 elevated; December 2026 underground",
           "description": "Reporting placed elevated opening in December 2025 and underground opening in December 2026.",
-          "comments": "The elevated target was missed; the underground target was later superseded. Indexed DH text supports both dates, but full-page access was blocked in the supplied research. Original announcement date is not established. Retain separately from the competing September 2025 / June 2026 schedule recorded in the research notes.",
+          "comments": "The elevated target was missed; the underground target was later superseded. DH's dated summary supports both dates; full article access was limited in the supplied research. Original announcement date is not established. The September 2025 / June 2026 plan was already reported in September 2024 and is retained as the earlier dated record, not a later revision.",
           "sources": ["https://www.deccanherald.com/india/karnataka/bengaluru/bengaluru-namma-metro-pushes-pink-line-deadline-to-december-2026-3256417"]
         },
         {
@@ -1931,10 +1943,10 @@
           "category": "Deadline",
           "date": "2026-08-23",
           "date_basis": "reported_on",
-          "scope": "Elevated and underground sections",
-          "revised_target": "September 2026 elevated; mid-2027 underground",
-          "description": "Following a minister's 22 August inspection, a report forecast September for elevated opening and mid-2027 for the underground section.",
-          "comments": "The elevated target was missed. The introduction says the first week of September, but the quoted official says only September. Preserve this conflicting precision separately from the 20 August last-week forecast, not as a confirmed reversal. Mid-2027 is a broad future forecast.",
+          "scope": "Elevated passenger opening; underground completion",
+          "revised_target": "September 2026 elevated opening; mid-2027 underground completion",
+          "description": "Following a minister's 22 August inspection, reporting attributed a mid-2027 underground completion target to the minister and a September elevated opening expectation to BMRCL's MD.",
+          "comments": "The elevated target was missed. The introduction says the first week of September, but the quoted official says only September. Preserve this conflicting precision separately from the 20 August last-week forecast, not as a confirmed reversal. The underground wording is completion, not an explicitly stated passenger-opening deadline; retain the report without counting it as a passenger-opening revision or inventing June 30 for mid-2027.",
           "sources": ["https://www.newindianexpress.com/amp/story/cities/bengaluru/2026/Aug/23/bengalurus-pink-line-elevated-stretch-likely-to-open-in-september"]
         },
         {

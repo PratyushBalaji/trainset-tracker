@@ -120,7 +120,7 @@
               {:else}
                 <div class="stat alarm"><dt>Target dates already passed</dt><dd><strong>{section.missed}</strong><span>of {section.targets.length} recorded</span></dd></div>
                 {#if section.current}<div class="stat"><dt>Current target</dt><dd><strong>{section.current.label}</strong><span>{section.current.announced ? `reported ${formatDate(section.current.announced)}` : ''}</span></dd></div>{/if}
-                <div class="stat"><dt>Times the target moved</dt><dd><strong>{Math.max(0, section.targets.length - 1)}</strong><span>since {section.earliest?.label} was first recorded</span></dd></div>
+                <div class="stat"><dt>Times the target moved</dt><dd><strong>{section.changes}</strong><span>since {section.earliest?.label} was first recorded</span></dd></div>
               {/if}
             </dl>
           {/if}

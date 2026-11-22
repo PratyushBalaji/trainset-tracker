@@ -1,7 +1,7 @@
 import { daysBetween } from './date';
 import type { LineMilestone } from './line-types';
 import type { HistoryEntry } from './line-timeline';
-import { reviewedLineStories, type TargetKind } from './reviewed-targets';
+import { reviewedLineStories, type ReviewedTarget, type TargetKind } from './reviewed-targets';
 
 export type TargetOutcome = 'missed' | 'met' | 'held' | 'not-taken' | 'pending' | 'superseded';
 
@@ -36,6 +36,7 @@ export interface SectionStory {
   opening?: { milestoneId: string; date: string };
   targets: OpeningTarget[];
   missed: number;
+  changes: number;
   earliest?: OpeningTarget;
   /** Latest target for a section that has not opened yet. */
   current?: OpeningTarget;
@@ -77,6 +78,21 @@ function outcomeOf(kind: TargetKind, target: string, opening: string | undefined
   if (kind === 'not-before') return opening >= target ? 'held' : 'missed';
   if (opening <= target) return 'met';
   return kind === 'option' ? 'not-taken' : 'missed';
+}
+
+/** Count transitions in reviewed sequence order, not distinct dates or source reports. */
+export function countTargetChanges(targets: Pick<ReviewedTarget, 'section' | 'measuredBy' | 'changeSeries' | 'kind' | 'target'>[]): number {
+  const previous = new Map<string, string>();
+  let changes = 0;
+  for (const target of targets) {
+    // Reviewed month and "by" dates share an upper limit; options/lower bounds are not comparable to it.
+    const basis = target.kind === 'month' || target.kind === 'by' ? 'upper-bound' : target.kind;
+    const series = JSON.stringify([target.section ?? 'line', target.changeSeries ?? target.measuredBy ?? 'passenger-opening', basis]);
+    const prior = previous.get(series);
+    if (prior !== undefined && prior !== target.target) changes++;
+    previous.set(series, target.target);
+  }
+  return changes;
 }
 
 /** Promise-versus-delivery story for a line, or null when no reviewed mapping applies. */
@@ -128,6 +144,7 @@ export function buildDelayStory(lineId: string, milestones: LineMilestone[], tod
       opening,
       targets,
       missed: targets.filter((t) => t.outcome === 'missed').length,
+      changes: countTargetChanges(reviewed),
       // An option (a partial-opening proposal) is not a promise for the whole section.
       earliest: targets.find((t) => t.kind !== 'option') ?? targets[0],
       current: opening ? undefined : targets.at(-1)

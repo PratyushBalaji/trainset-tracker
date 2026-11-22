@@ -73,7 +73,7 @@ function deadlineStory(lineId: string, today: string): Story | null {
     }));
   if (inauguration?.date) rows.push({ label: `${formatDate(inauguration.date)} (inauguration)`, note: '', tone: 'met', struck: false });
   rows.push({ label: compact ? `Opened to passengers ${formatDate(first.opening.date)}` : `Opened ${formatDate(first.opening.date)}`, note: '', tone: 'highlight', struck: false });
-  if (later?.current) rows.push({ label: `${later.label}: ${later.current.label}`, note: `moved ${later.targets.length - 1}×`, tone: 'current', struck: false });
+  if (later?.current) rows.push({ label: `${later.label}: ${later.current.label}`, note: `moved ${later.changes}×`, tone: 'current', struck: false });
   return {
     id: `${lineId}-deadlines`,
     kicker: multi ? `${name} Line · ${first.label.toLowerCase()} section` : `${name} Line`,
@@ -83,7 +83,7 @@ function deadlineStory(lineId: string, today: string): Story | null {
       : `Opened ${late} months after the first target deadline.`,
     body: [
       `${first.missed} of ${first.targets.length} reported ${multi ? first.label.toLowerCase() + ' ' : ''}opening targets missed.`,
-      later?.current ? `The ${later.label.toLowerCase()} target has moved ${later.targets.length - 1} times; it now stands at ${later.current.label}.` : civil ? `${civil.months} months between ${spanPhrases[civil.label] ?? civil.label} .`.replace(' .', '.') : ''
+      later?.current ? `The ${later.label.toLowerCase()} target has moved ${later.changes} times; it now stands at ${later.current.label}.` : civil ? `${civil.months} months between ${spanPhrases[civil.label] ?? civil.label} .`.replace(' .', '.') : ''
     ].filter(Boolean).join(' '),
     link: { href: `/timeline/${lineId}`, label: 'Walk through the timeline' },
     visual: { type: 'ladder', rows }

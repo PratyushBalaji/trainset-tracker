@@ -34,6 +34,8 @@ function load(file) {
 
 const { buildStories } = await import(load(resolve(root, 'src/lib/data/stories.ts')));
 const { todayIsoDate } = await import(load(resolve(root, 'src/lib/data/date.ts')));
+const { buildDelayStory } = await import(load(resolve(root, 'src/lib/data/delay-story.ts')));
+const { lines } = await import(load(resolve(root, 'src/lib/data/lines.ts')));
 
 // Every slide the Home carousel is expected to show. Adding a slide: add its id here.
 const EXPECTED = [
@@ -62,4 +64,12 @@ test('story slides contain no broken numbers or blank text', () => {
     if (s.visual.type === 'window') assert.ok(s.visual.marks.length > 0, `${s.id} has no deliveries`);
     if (s.visual.type === 'bars') assert.ok(s.visual.rows.every((r) => r.value >= 0 && r.value <= s.visual.max + 0.5), `${s.id} bar out of range`);
   }
+});
+
+test('Home target-movement text uses the same deduplicated count as Timeline', () => {
+  const today = todayIsoDate();
+  const underground = buildDelayStory('pink', lines.pink.milestones, today).sections.find((s) => s.id === 'underground');
+  const slide = buildStories(today).find((s) => s.id === 'pink-deadlines');
+  assert.ok(slide.body.includes(`has moved ${underground.changes} times`));
+  assert.equal(slide.visual.rows.find((r) => r.tone === 'current').note, `moved ${underground.changes}×`);
 });

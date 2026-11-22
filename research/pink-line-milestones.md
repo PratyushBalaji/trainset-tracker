@@ -37,12 +37,11 @@ the timeline's month-based format:
   imported as an established event date.
 - Formal whole-line civil completion: no verified certificate or single date.
   Final elevated segment launching and completed tunnelling remain distinct.
-- Competing early phased forecast: September 2025 elevated / June 2026
-  underground. Original announcement and the evidence publication date were not
-  established in the supplied timeline. Preserve this sourced claim separately:
-  [Moneycontrol report](https://www.moneycontrol.com/news/india/indias-most-congested-city-bengaluru-faces-train-set-supply-crisis-12820475.html).
-  Both targets were later superseded and missed. The distinct December-based
-  forecast has its own 30 October 2024 reporting-date record in `lines.json`.
+- The early September 2025 elevated / June 2026 underground opening plan was
+  rechecked against the [Moneycontrol report](https://www.moneycontrol.com/news/india/indias-most-congested-city-bengaluru-faces-train-set-supply-crisis-12820475.html),
+  first published on 12 September 2024 and updated on 13 September. It now has
+  its own reporting-date record in `lines.json`, before the 30 October 2024
+  December-based schedule. Its original announcement day remains unknown.
 
 ## Date and deadline discipline
 
@@ -80,6 +79,22 @@ Whole-line forecasts and construction deadlines are not scored against elevated
 passenger opening. Early overlapping forecasts remain independent sourced claims,
 not a fabricated continuous revision chain. Undated reports retained above do not
 gain an invented announcement date through scorecard presentation.
+
+The movement count compares successive canonical deadline limits within the same
+section, milestone scope and promise basis. Reviewed month-end and "by" readings
+can share an upper limit; lower-bound windows and options remain separate. Moving
+back to a previously used deadline counts again. Reaffirmations remain in the
+timeline without adding a revision.
+
+Pink's underground passenger-opening sequence is June 2026, December 2026,
+September 2026, December 2026, March 2027 and May 2027. The count is derived from
+that source-backed order, not stored as a fixed number. The August 2026
+[TNIE report](https://www.newindianexpress.com/amp/story/cities/bengaluru/2026/Aug/23/bengalurus-pink-line-elevated-stretch-likely-to-open-in-september)
+explicitly describes underground completion in mid-2027, so it remains in the
+timeline but is not mapped to a passenger-opening date. Ministry confirmation,
+AIIB corroboration and the November 2026 May reaffirmation are not new revisions.
+Reported BMRCL/ministerial statements count as attributed official deadlines;
+publication in a news outlet does not make them journalist estimates.
 
 ## Still unresolved
 
