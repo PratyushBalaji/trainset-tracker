@@ -7,7 +7,8 @@
   import { decorateTrainsetForDate, resolvedTrainsets } from '$lib/data/resolve';
   import { pendingOn, trackedContractsLabel, untrackedFleet } from '$lib/data/coverage';
   import { lines } from '$lib/data/lines';
-  import { buildDelayStory, monthsBetween } from '$lib/data/delay-story';
+  import { buildStories } from '$lib/data/stories';
+  import StoryCarousel from '$lib/components/StoryCarousel.svelte';
   import ContractsCard from '$lib/components/ContractsCard.svelte';
   import { contractSummaries } from '$lib/data/contracts';
 
@@ -30,9 +31,7 @@
       return { line, trains, designs };
     })
     .filter((row) => row.trains.length);
-  const yellow = buildDelayStory('yellow', lines.yellow?.milestones ?? [], today);
-  const lateBy = yellow?.opening && yellow.earliest ? monthsBetween(yellow.earliest.target, yellow.opening.date) : null;
-  const civil = yellow?.spans.find((s) => s.label.startsWith('Civil'));
+  const stories = buildStories(today);
 </script>
 
 <svelte:head>
@@ -91,24 +90,8 @@
     </a>
   </section>
 
-  {#if yellow && lateBy !== null}
-    <section class="story-wrap">
-      <a class="story" href="/timeline/yellow">
-        <div class="story-text">
-          <p class="kicker"><span class="dot" style={`--dot: ${lineColors.yellow}`}></span>Yellow Line</p>
-          <h2>Opened {lateBy} months after the first target deadline.</h2>
-          <p class="tnum">{yellow.missed} of {yellow.targets.length} reported opening targets missed.{#if civil}{' '}{civil.months} months between civil works completion and the first revenue service.{/if}</p>
-          <span class="story-link">Walk through the timeline <ArrowRight size={16} /></span>
-        </div>
-        <ol class="ladder" aria-label="Reported opening targets in order">
-          {#each yellow.targets as target}
-            <li class={target.outcome}><span class="target tnum">{target.label.replace('(option)', '(phased opening)')}</span><span class="outcome tnum">{target.outcome === 'missed' ? `+${target.monthsLate} mo` : target.outcome === 'not-taken' ? 'retracted' : target.outcome}</span></li>
-          {/each}
-          <li class="opened"><span class="target tnum">Opened {formatDate(yellow.opening!.date)}</span></li>
-        </ol>
-      </a>
-    </section>
-      <p>Press releases should not overshadow broken promises.</p>
+  {#if stories.length}
+    <section class="story-wrap"><StoryCarousel {stories} /></section>
   {/if}
 
   <section class="explore" aria-label="Explore">
@@ -125,6 +108,7 @@
       <p>We all know BMRCL and their contractors have a terrible track record when it comes to meeting deadlines. Heck, the Yellow Line was inaugurated almost 2 years after civil works completion, all due to a lack of <strong>trains</strong>.</p>
       <p>Major cities like London, Paris, and Tokyo run 2-minute frequencies while I still have to wait 10 minutes during peak hour if I miss a train at Whitefield!</p>
       <p>Namma Metro needs more trains, and the public needs to know when they'll get here, so this repository strives to track and plot every trainset received, tested, and inducted into service to keep BMRCL accountable.</p>
+      <p>Press releases should not overshadow broken promises.</p>
       <p>All information comes from news outlets, reporters, and on-ground sources as BMRCL does not release this information publicly.</p>
     </div>
     <div>
@@ -184,20 +168,6 @@
   .board-line, .board-count { line-height: 16px; }
 
   .story-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px 56px; }
-  .story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: 48px; padding: 40px 44px; border-radius: 16px; background: var(--ink); color: var(--surface); text-decoration: none; }
-  .story-text { display: flex; flex-direction: column; gap: 14px; }
-  .kicker { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #e9c75a; }
-  .story h2 { margin: 0; font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -0.02em; font-weight: 800; }
-  .story-text p:not(.kicker) { margin: 0; font-size: 15px; line-height: 1.6; color: #c9d0c5; }
-  .story-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; margin-top: 4px; }
-  .ladder { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; align-self: center; }
-  .ladder li { display: flex; justify-content: space-between; gap: 12px; padding: 5px 10px; border-radius: 6px; font-size: 13px; background: #ffffff0d; }
-  .ladder .missed .target { text-decoration: line-through; text-decoration-color: #e0705a; color: #c9d0c5; }
-  .ladder .outcome { font-weight: 700; font-size: 12px; }
-  .ladder .missed .outcome { color: #f09a85; }
-  .ladder .met .outcome, .ladder .held .outcome { color: #7fd1a2; }
-  .ladder .not-taken .outcome { color: #8a928a; }
-  .ladder .opened { background: #d7a719; color: var(--ink); font-weight: 700; }
 
   .contracts-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px 64px; }
   .explore { max-width: 1240px; margin: 0 auto; padding: 0 32px 64px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
@@ -216,7 +186,6 @@
     h1 { font-size: clamp(40px, 8vw, 64px); }
     .title-grid { --map-w: clamp(96px, 24vw, 170px); column-gap: 20px; }
     .hero { grid-template-columns: 1fr; gap: 32px; padding: 40px 20px 32px; }
-    .story { grid-template-columns: 1fr; padding: 28px 24px; gap: 24px; }
     .story-wrap, .explore { padding-left: 16px; padding-right: 16px; }
     .explore { grid-template-columns: 1fr; }
     .contracts-wrap { padding: 0 16px 48px; }
