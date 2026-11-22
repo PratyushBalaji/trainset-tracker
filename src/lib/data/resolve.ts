@@ -1,4 +1,6 @@
 import rawDataset from '../../../trainsets.json';
+import { lineLabels } from './presentation';
+import { reviewedQualification } from './reviewed-qualifications';
 import { addDays, maxIsoDate, minIsoDate, todayIsoDate } from './date';
 import {
   buildTimelineSegments,
@@ -20,21 +22,7 @@ import type {
 
 export const dataset = rawDataset as RawDataset;
 
-export const lineLabels: Record<string, string> = {
-  yellow: 'Yellow Line',
-  green: 'Green Line',
-  purple: 'Purple Line',
-  pink: 'Pink Line',
-  blue: 'Blue Line'
-};
-
-export const lineColors: Record<string, string> = {
-  yellow: '#d7a719',
-  green: '#13824f',
-  purple: '#6b4aa0',
-  pink: '#d35f8d',
-  blue: '#2377b9'
-};
+export { lineColors, lineLabels } from './presentation';
 
 function lineLabel(line: LineId): string {
   return lineLabels[line] ?? `${line[0]?.toUpperCase() ?? ''}${line.slice(1)} Line`;
@@ -57,7 +45,7 @@ function resolveMilestones(trainset: ResolvedTrainset | { milestones: ResolvedMi
 }
 
 function makeResolvedMilestones(
-  rawMilestones: RawDataset['trainsets'][string]['milestones']
+  rawMilestones: RawDataset['trainsets'][string]['milestones'], id: string
 ): ResolvedMilestone[] {
   return Object.entries(rawMilestones ?? {})
     .map(([key, milestone]) => ({
@@ -65,7 +53,8 @@ function makeResolvedMilestones(
       label: milestoneLabels[key] ?? key.replaceAll('_', ' '),
       date: milestone.date,
       sources: milestone.sources,
-      comments: milestone.comments
+      comments: milestone.comments,
+      presentation: reviewedQualification(id, key, milestone.date)
     }))
     .sort((a, b) => a.date.localeCompare(b.date));
 }
@@ -104,7 +93,7 @@ const baseTrainsets = Object.entries(dataset.trainsets)
       displayLine,
       lineKeys,
       lineSummary: lineLabel(displayLine),
-      milestones: makeResolvedMilestones(trainset.milestones),
+      milestones: makeResolvedMilestones(trainset.milestones, id),
       timelineSegments: []
     } satisfies ResolvedTrainset;
   })

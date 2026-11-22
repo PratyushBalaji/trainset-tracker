@@ -58,6 +58,14 @@ export interface LifecycleStageDefinition {
 }
 
 export interface ResolvedMilestone {
+  presentation?: {
+    relation: 'exact' | 'before' | 'after' | 'uncertain';
+    inferred?: boolean;
+    derived?: boolean;
+    disputed?: boolean;
+    provisional?: boolean;
+    approximate?: boolean;
+  };
   key: MilestoneKey;
   label: string;
   date: string;

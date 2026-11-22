@@ -8,7 +8,17 @@ A timeline from rolling stock procurement to induction.
 
 Parts of this project, especially the Svelte UI and supporting documentation, are being developed with AI assistance. I am not a frontend developer, so these tools are my interface between the data side I know and love, and being able to tell a story. The trainset data is source-backed and human-reviewed; I've spent hours tracing Twitter posts, news articles, and press releases. All factual information is backed by reputable sources to the best of my abilities to ensure a clear audit trail.
 
-## Data
+## Local website preview
+
+Run `npm install`, then `npm run dev`. The SvelteKit routes are Home (`/`), Fleet (`/fleet`), Lifecycle (`/lifecycle`), Timeline (`/timeline/yellow`) and Route Map (`/routemap`). The old `/tracker` URL redirects to `/fleet`, keeping `?trainset=` deep links. Validate with `npm test`, `npm run check` and `npm run build`.
+
+Line history lives separately in [`lines.json`](./lines.json), leaving the trainset format unchanged. Entries distinguish exact dates, month-only periods, inspection intervals, reported dates and disputed derived dates. Yellow Line research is preliminary; other lines currently show their recorded trainset events only.
+
+Timeline presentation is built by the pure `buildLineTimeline` function, then rendered by `LineTimeline.svelte`. Chart and card components accept resolved data as props rather than importing the dataset, allowing reuse in a future Metro Central application.
+
+The route-map asset is derived from [the original map project](https://github.com/PratyushBalaji/maps), revision 24 June 2025. It is a schematic artwork, not a live operating-status map. The Timeline mini-map reuses its route paths without station labels or roads.
+
+## Trainset data
 
 The canonical dataset is stored in [`trainsets.json`](./trainsets.json). Version 1 keeps the data model deliberately small: contracts describe procurement packages, rolling stock entries describe materially distinct train designs/specifications, and trainsets represent the individual physical trains whose timelines are being tracked.
 

@@ -46,15 +46,13 @@ export function minIsoDate(...dates: string[]): string {
   return dates.sort(compareIsoDate)[0] ?? toIsoDate();
 }
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/** One site-wide format: 22 Nov 2026. */
 export function formatDate(date?: string): string {
   if (!date) return 'Not yet recorded';
-
-  return new Intl.DateTimeFormat('en', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    timeZone: 'UTC'
-  }).format(parseIsoDate(date));
+  const [year, month, day] = date.split('-').map(Number);
+  return `${day} ${MONTHS[month - 1]} ${year}`;
 }
 
 export function percentageBetween(date: string, start: string, end: string): number {

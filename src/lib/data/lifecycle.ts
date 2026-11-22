@@ -16,9 +16,9 @@ export const stageDefinitions: LifecycleStageDefinition[] = [
   },
   {
     id: 'manufacturing',
-    label: 'Manufacturing',
-    filterLabel: 'Manufacturing',
-    description: 'The trainset has a recorded delivery path, but has not yet left the factory by the selected date.'
+    label: 'Pre-delivery (inferred)',
+    filterLabel: 'Pre-delivery (inferred)',
+    description: 'No delivery-path milestone is recorded on or before this date; this is not evidence of manufacturing.'
   },
   {
     id: 'dispatch',
@@ -163,7 +163,7 @@ export function buildTimelineSegments(
     segments.push({
       id: 'manufacturing-window',
       stageId: 'manufacturing',
-      label: 'Pre-dispatch window',
+      label: 'Illustrative pre-dispatch window',
       start: maxIsoDate(chartStart, addDays(factoryDispatch.date, -70)),
       end: factoryDispatch.date,
       sourceMilestones: [],

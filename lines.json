@@ -1,0 +1,315 @@
+{
+  "schema_version": "1.0.0",
+  "lines": {
+    "yellow": {
+      "name": "Yellow Line",
+      "scope": "RV Road - Bommasandra",
+      "research_status": "preliminary",
+      "milestones": [
+        {
+          "id": "dpr-preparation",
+          "title": "DPR preparation authorised",
+          "category": "Approval",
+          "date": "2011-01-04",
+          "description": "Karnataka authorised preparation of Phase II DPRs, including RV Road - Bommasandra.",
+          "comments": "Permission to prepare the DPR, not submission or approval of the completed DPR.",
+          "sources": ["https://data-opencity.sgp1.cdn.digitaloceanspaces.com/Documents/Recent/Metro-DPR-Phase-2-for-web.pdf"]
+        },
+        {
+          "id": "state-approval",
+          "title": "Karnataka project approval",
+          "category": "Approval",
+          "date": "2012-02-21",
+          "description": "State approval for Bangalore Metro Phase II, including RV Road - Bommasandra, under government order UDD 179 PRJ 2011.",
+          "sources": ["https://kla.kar.nic.in/council/Replies/unstarred/06032025/usq302%2806032025%29.pdf"]
+        },
+        {
+          "id": "cabinet-approval",
+          "title": "Union Cabinet approval",
+          "category": "Approval",
+          "date": "2014-01-30",
+          "description": "The Union Cabinet approved Phase II, explicitly including RV Road - Bommasandra.",
+          "comments": "The five-year completion period was envisaged from commencement of work, not from this approval date.",
+          "sources": ["https://www.pib.gov.in/newsite/PrintRelease.aspx?relid=102854"]
+        },
+        {
+          "id": "union-sanction",
+          "title": "Formal Union sanction",
+          "category": "Approval",
+          "date": "2014-02-21",
+          "description": "The Ministry of Urban Development conveyed Government of India approval for implementation of Phase II.",
+          "comments": "Separate from the January Cabinet decision.",
+          "sources": ["https://kla.kar.nic.in/council/Replies/unstarred/06032025/usq302%2806032025%29.pdf"]
+        },
+        {
+          "id": "civil-awards",
+          "title": "Major civil contracts awarded",
+          "category": "Construction",
+          "period": "2017-06",
+          "date_basis": "period",
+          "description": "BMRCL records June 2017 awards for the three civil packages. ITD CEMINDIA JV covered packages 1 and 2; HCC-URC JV covered Bommanahalli - RV Road.",
+          "comments": "Specialist reporting instead dates packages 1 and 2 to April 2017. Exact award days and the distinction between selection, LOA and agreement remain unresolved. June is the month recorded by BMRCL, not an established exact award date.",
+          "sources": ["https://kla.kar.nic.in/council/house/Paperlaid/146/33.pdf", "https://hccindia.com/uploads/reports/0_39707800_1530774875_HCC-Annual-Report-FY-2017-18.pdf", "https://themetrorailguy.com/2018/03/09/itd-cem-casts-1st-pier-for-bangalore-metros-line-3-at-electronics-city/"]
+        },
+        {
+          "id": "piling-start",
+          "title": "Package 1 piling begins",
+          "category": "Construction",
+          "period": "2017-08",
+          "date_basis": "period",
+          "scope": "Package 1, near Electronic City",
+          "description": "Piling for the first pier reportedly began in August 2017.",
+          "comments": "Exact day not established. This is the earliest physical activity found in the supplied research, not proof of the first work anywhere on the corridor.",
+          "sources": ["https://themetrorailguy.com/2018/03/09/itd-cem-casts-1st-pier-for-bangalore-metros-line-3-at-electronics-city/"]
+        },
+        {
+          "id": "first-pier",
+          "title": "First pier reported complete",
+          "category": "Construction",
+          "date": "2018-03-09",
+          "date_basis": "reported_by",
+          "description": "Contemporaneous specialist reporting documented the first Yellow Line pier near Electronic City, with photographs.",
+          "comments": "The supplied research uses the report date. A separate contractor record establishing the precise casting day has not been obtained.",
+          "sources": ["https://themetrorailguy.com/2018/03/09/itd-cem-casts-1st-pier-for-bangalore-metros-line-3-at-electronics-city/"]
+        },
+        {
+          "id": "package2-final-segment",
+          "title": "Package 2 final viaduct segment launched",
+          "category": "Construction",
+          "period": "2021-04",
+          "date_basis": "period",
+          "description": "The final segment of the approximately 6.385-km package 2 viaduct was launched in April 2021.",
+          "comments": "The 11 April report refers to the preceding Tuesday; an exact day is not stored. This is a viaduct milestone, not completion of stations or systems.",
+          "sources": ["https://themetrorailguy.com/2021/04/11/itd-launches-bangalore-metro-yellow-line-p2s-final-segment/"]
+        },
+        {
+          "id": "phased-opening-plan",
+          "title": "Phased opening plan reported",
+          "category": "Deadline",
+          "date": "2022-08-20",
+          "date_basis": "reported_on",
+          "previous_target": "December 2022, entire corridor",
+          "revised_target": "June 2023: Bommasandra - Central Silk Board; December 2023: Central Silk Board - RV Road",
+          "description": "BMRCL linked the feasibility of a phased opening to rolling-stock availability.",
+          "comments": "Reporting date; exact announcement day not established. The two sections did not share a June deadline.",
+          "sources": ["https://timesofindia.indiatimes.com/city/bengaluru/e-city-metro-to-meet-june-2023-deadline-bmrcl/articleshow/93668812.cms"]
+        },
+        {
+          "id": "package3-final-segment",
+          "title": "Package 3 final segment launched",
+          "category": "Construction",
+          "period": "2022-09",
+          "date_basis": "period",
+          "description": "HCC-URC completed its final viaduct segment launch in September 2022.",
+          "comments": "The 17 September report says 'last week'; its publication day is not the construction event date.",
+          "sources": ["https://themetrorailguy.com/2022/09/17/hcc-urcc-launches-bangalore-metro-yellow-lines-final-segment/"]
+        },
+        {
+          "id": "single-opening-plan",
+          "title": "Full-corridor opening plan replaces phased plan",
+          "category": "Deadline",
+          "date": "2023-05-19",
+          "date_basis": "reported_on",
+          "previous_target": "Two-stage June / December 2023 opening",
+          "revised_target": "December 2023, entire corridor",
+          "description": "The BMRCL MD announced that the corridor would open in one go.",
+          "comments": "Reporting date; exact interview day and the reason for changing the opening configuration need confirmation.",
+          "sources": ["https://www.moneycontrol.com/news/business/electronics-city-metro-corridor-likely-to-commence-operations-by-december-2023-10624751.html"]
+        },
+        {
+          "id": "feb2024-target",
+          "title": "February 2024 opening expectation announced",
+          "category": "Deadline",
+          "date": "2023-10-05",
+          "previous_target": "December 2023",
+          "revised_target": "February 2024",
+          "description": "An MP announced an expected opening, dependent on train availability and trials.",
+          "comments": "An announced expectation, not regulatory authorisation or a confirmed opening date.",
+          "sources": ["https://www.moneycontrol.com/news/business/bengaluru-south-mp-tejasvi-surya-says-electronics-city-metro-will-be-ready-by-feb-2024-11485261.html"]
+        },
+        {
+          "id": "yearend-target",
+          "title": "Opening target moves to year-end",
+          "category": "Deadline",
+          "date": "2024-03-06",
+          "date_basis": "reported_on",
+          "previous_target": "February 2024 expectation; other reporting mentioned July 2024",
+          "revised_target": "End of 2024 / December 2024",
+          "description": "Reporting described a revised year-end target, with train availability a principal dependency.",
+          "comments": "Precise announcement provenance and intervening targets are not fully established.",
+          "sources": ["https://www.deccanherald.com/india/karnataka/bengaluru/bengaluru-metros-yellow-line-deadline-pushed-to-year-end-trial-runs-start-this-weekend-2925498"]
+        },
+        {
+          "id": "first-mainline-movement",
+          "title": "First confirmed mainline movement",
+          "category": "Testing",
+          "date": "2024-03-07",
+          "scope": "Bommasandra - Bommanahalli",
+          "description": "The first slow trial movement left Hebbagodi depot, with departure reported at 18:55.",
+          "comments": "A limited-section movement, not evidence of full-corridor testing or completion of signalling integration.",
+          "sources": ["https://www.moneycontrol.com/news/technology/bengaluru-metro-begins-1st-trial-run-of-driverless-train-on-electronics-city-line-12421911.html"]
+        },
+        {
+          "id": "civil-track-reported",
+          "title": "Civil work and track installation reported complete",
+          "category": "Construction",
+          "date": "2024-05-10",
+          "date_basis": "reported_by",
+          "description": "Officials described civil work as complete, tracks and signalling installed, and rail grinding finished.",
+          "comments": "Completion was reported by this date; no exact completion day or formal certificate is established. Full-line third-rail energisation was still anticipated by May-end.",
+          "sources": ["https://www.moneycontrol.com/technology/titagarh-to-supply-the-first-train-for-bengaluru-metros-electronics-city-corridor-in-august-2024-article-12719184.html"]
+        },
+        {
+          "id": "full-corridor-trial",
+          "title": "First reported full-corridor trial run",
+          "category": "Testing",
+          "date": "2024-06-13",
+          "scope": "Bommasandra - RV Road",
+          "description": "A train ran the full route, stopping at intermediate stations.",
+          "comments": "Does not establish the start or completion of the entire integrated signalling test programme.",
+          "sources": ["https://www.deccanherald.com/india/karnataka/bengaluru/namma-metros-yellow-line-to-open-with-5-6-trains-20-min-frequency-3066156"]
+        },
+        {
+          "id": "rdso-trials",
+          "title": "RDSO oscillation and emergency-braking trials begin",
+          "category": "Testing",
+          "date": "2024-09-09",
+          "scope": "Bommanahalli - RV Road",
+          "description": "BMRCL announced a roughly 12-14-day oscillation and EBD trial programme.",
+          "comments": "Testing commencement, not clearance. The announced scope must not be expanded to the entire corridor.",
+          "sources": ["https://x.com/OfficialBMRCL/status/1833024022990205187", "https://www.financialexpress.com/business/infrastructure-bengaluru-metro-begins-key-oscillation-amp-ebd-trials-on-reach-5-line-stretch-between-bommanahalli-and-rv-road-3605563/"]
+        },
+        {
+          "id": "january-target",
+          "title": "January 2025 opening plan reported",
+          "category": "Deadline",
+          "date": "2024-10-06",
+          "date_basis": "reported_on",
+          "previous_target": "December 2024",
+          "revised_target": "January 2025",
+          "description": "BMRCL envisaged inspection in December and sufficient trains by November-December; civil and systems work was described as substantially complete.",
+          "comments": "Conditional plan. Exact release day and final completion certificates are not established.",
+          "sources": ["https://www.newindianexpress.com/states/karnataka/2024/Oct/06/bmrcls-yellow-line-to-begin-operations-in-january-2025"]
+        },
+        {
+          "id": "reduced-fleet-option",
+          "title": "Reduced-fleet opening considered",
+          "category": "Deadline",
+          "date": "2025-01-07",
+          "date_basis": "reported_on",
+          "previous_target": "January 2025",
+          "revised_target": "March / April 2025, exploratory option",
+          "description": "The BMRCL MD said a reduced-fleet opening was being considered.",
+          "comments": "An exploratory option, not a fixed launch announcement. Interview day unspecified.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-metro-yellow-line-electronic-city-9765391/"]
+        },
+        {
+          "id": "rdso-design-clearance",
+          "title": "RDSO train-design clearance reported",
+          "category": "Certification",
+          "date": "2025-01-21",
+          "description": "A BMRCL official subsequently said RDSO cleared the new train design on this date.",
+          "comments": "Reported technical clearance; the underlying document remains unlocated. Not passenger-opening authorisation.",
+          "sources": ["https://www.newindianexpress.com/amp/story/cities/bengaluru/2025/Feb/21/safety-inspection-for-bengaluru-metros-first-driverless-train-on-february-24"]
+        },
+        {
+          "id": "may-target",
+          "title": "May 2025 opening target stated",
+          "category": "Deadline",
+          "date": "2025-03-04",
+          "previous_target": "March / April 2025 option",
+          "revised_target": "By May 2025",
+          "description": "The Deputy CM stated the May target in the Assembly. Rolling-stock shortage was identified as a delay factor.",
+          "comments": "Statement reported on 10 March; the event date is 4 March.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-s-electronics-city-metro-to-be-operational-by-may-2025-12960533.html"]
+        },
+        {
+          "id": "july-forecast",
+          "title": "Opening forecast moves beyond May",
+          "category": "Deadline",
+          "date": "2025-05-26",
+          "date_basis": "reported_on",
+          "previous_target": "May 2025",
+          "revised_target": "Not before July-end, potentially later",
+          "description": "Statutory rolling-stock and multi-train tests were reported conducted, while ISA/signalling assessment remained pending.",
+          "comments": "Reporting date and forecast, not a formally fixed opening date or exact test-completion date.",
+          "sources": ["https://www.deccanherald.com/india/karnataka/bengaluru/yellow-line-delayed-again-won-t-open-before-july-end-3558406"]
+        },
+        {
+          "id": "isa-certification",
+          "title": "ISA certification reportedly issued",
+          "category": "Certification",
+          "date": "2025-07-17",
+          "date_basis": "derived",
+          "description": "Contemporary reporting on Saturday 19 July says certification was issued on Thursday; BMRCL confirmed receipt of the ISA report.",
+          "comments": "17 July is derived from the explicit weekday reference. A retrospective instead gives 19 July. The conflict remains unresolved pending the certificate.",
+          "sources": ["https://www.newindianexpress.com/amp/story/cities/bengaluru/2025/Jul/19/finally-namma-metros-yellow-line-gets-isa-clearance", "https://indianexpress.com/article/cities/bangalore/bengaluru-metro-yellow-line-finish-line-8-year-delay-10176296/"]
+        },
+        {
+          "id": "august15-forecast",
+          "title": "Mid-August opening expectation reported",
+          "category": "Deadline",
+          "date": "2025-07-19",
+          "date_basis": "reported_on",
+          "previous_target": "July-end forecast",
+          "revised_target": "By August 15",
+          "description": "A former BMRCL MD expected an opening by mid-August, conditional on certification and inspection.",
+          "comments": "A reported expectation; exact announcement day is not established.",
+          "sources": ["https://www.newindianexpress.com/amp/story/cities/bengaluru/2025/Jul/19/finally-namma-metros-yellow-line-gets-isa-clearance"]
+        },
+        {
+          "id": "cmrs-inspection",
+          "title": "CMRS corridor inspection",
+          "category": "Inspection",
+          "date": "2025-07-22",
+          "end_date": "2025-07-25",
+          "description": "The safety commissioner inspected the corridor over this interval, according to reporting based on the inspection report.",
+          "comments": "Separate from earlier train-only inspections.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-metros-yellow-line-19-km-took-8-years-to-complete-cost-escalated-to-around-rs-400-crore-per-km-13395305.html"]
+        },
+        {
+          "id": "cmrs-authorisation",
+          "title": "Dated CMRS report and conditional authorisation",
+          "category": "Certification",
+          "date": "2025-07-30",
+          "description": "Reporting identifies a safety report dated 30 July permitting GoA-2 operation with drivers, rather than unattended GoA-4 operation.",
+          "comments": "Another account gives 1 August as the clearance date. The signed report and opening order are needed to resolve this. ATS integration, training, manuals and cybersecurity validation were among outstanding matters.",
+          "sources": ["https://www.moneycontrol.com/news/india/bengaluru-metro-s-yellow-line-set-for-august-10-launch-fully-automated-driverless-operations-to-begin-later-13410910.html", "https://indianexpress.com/article/cities/bangalore/bengaluru-metro-yellow-line-finish-line-8-year-delay-10176296/"]
+        },
+        {
+          "id": "inauguration-announcement",
+          "title": "August 10 inauguration announced",
+          "category": "Deadline",
+          "date": "2025-08-02",
+          "previous_target": "By August 15",
+          "revised_target": "August 10 inauguration",
+          "description": "A Union minister announced the inauguration date.",
+          "comments": "Ceremonial target; ordinary passenger services began on August 11.",
+          "sources": ["https://indianexpress.com/article/cities/bangalore/bengaluru-metro-yellow-line-finish-line-8-year-delay-10176296/"]
+        },
+        {
+          "id": "inauguration",
+          "title": "Yellow Line inaugurated",
+          "category": "Opening",
+          "date": "2025-08-10",
+          "description": "The Prime Minister inaugurated the Yellow Line.",
+          "comments": "Ceremonial opening; distinct from the following day's passenger-service commencement.",
+          "sources": ["https://www.pib.gov.in/PressReleasePage.aspx?PRID=2154848"]
+        },
+        {
+          "id": "passenger-opening",
+          "title": "Passenger operations begin",
+          "category": "Opening",
+          "date": "2025-08-11",
+          "scope": "RV Road - Bommasandra",
+          "description": "Commercial services began, with the first departure reported at 06:30. A reporter travelled on the first service.",
+          "sources": ["https://www.moneycontrol.com/news/india/19-km-32-minutes-first-hand-account-of-bengaluru-metros-rv-road-bommasandra-ride-13437668.html"]
+        }
+      ]
+    },
+    "green": { "name": "Green Line", "research_status": "not_started", "milestones": [] },
+    "purple": { "name": "Purple Line", "research_status": "not_started", "milestones": [] },
+    "pink": { "name": "Pink Line", "research_status": "not_started", "milestones": [] },
+    "blue": { "name": "Blue Line", "research_status": "not_started", "milestones": [] }
+  }
+}
