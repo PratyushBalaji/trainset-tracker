@@ -12,6 +12,8 @@
   const today = todayIsoDate();
   const fleet = resolvedTrainsets.map((t) => decorateTrainsetForDate(t, today));
   const count = (id: string) => fleet.filter((t) => t.currentStage.id === id).length;
+  const contracts = contractSummaries(today);
+  const lastDataUpdate = __TRAINSETS_UPDATED_AT__ ? formatDate(todayIsoDate(new Date(__TRAINSETS_UPDATED_AT__))) : null;
   const stats = [
     { label: 'In service', value: count('service') + untrackedFleet.trainsets, color: 'var(--service)', note: `${count('service')} tracked + ${untrackedFleet.trainsets} older` },
     { label: 'Delivered, testing', value: count('testing'), color: 'var(--testing)' },
@@ -49,7 +51,7 @@
         <a class="action-link" href="/fleet">See the fleet <ArrowRight size={18} /></a>
         <a class="secondary-link" href="/timeline/yellow">Yellow Line timeline</a>
       </div>
-      <p class="as-of tnum">Data as of {formatDate(today)} · {resolvedTrainsets.length} trainsets · {trackedContractsLabel} contracts</p>
+      <p class="as-of tnum">{lastDataUpdate ? `Last data update on ${lastDataUpdate}` : 'Last data update unavailable'} · {resolvedTrainsets.length} trainsets · {trackedContractsLabel} contracts</p>
     </div>
 
     <a class="today-panel" href="/fleet" aria-label="Fleet today. Open the fleet page">
