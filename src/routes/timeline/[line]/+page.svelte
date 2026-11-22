@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Snapshot } from '@sveltejs/kit';
-  import { ArrowDownToLine, ArrowUpToLine } from '@lucide/svelte';
+  import { ArrowUpToLine } from '@lucide/svelte';
   import type { PageData } from './$types';
   import LineTimeline from '$lib/components/LineTimeline.svelte';
   import NetworkMap from '$lib/components/NetworkMap.svelte';
@@ -19,16 +19,16 @@
     restore: (ids) => { for (const id of ids) { const el = document.getElementById(id)?.querySelector('details'); if (el) el.open = true; } }
   };
   const today = todayIsoDate();
-  let entries = $derived(buildLineTimeline(data.line.milestones, resolvedTrainsets, data.lineId, today));
+  // The feed shows recorded events only; the generated "current date" entry is left out.
+  let entries = $derived(buildLineTimeline(data.line.milestones, resolvedTrainsets, data.lineId, today).filter((entry) => entry.kind !== 'today'));
   let story = $derived(buildDelayStory(data.lineId, data.line.milestones, today));
   let gaps = $derived(timelineGaps(entries));
   let atTop = $state(true);
-  let atCurrent = $state(false);
   let visibleIds = $state<string[]>([]);
   let dock: HTMLDivElement;
   let dockHeight = $state(60);
   let pinned = $state(false);
-  let hasHistory = $derived(entries.some((entry) => entry.kind !== 'today'));
+  let hasHistory = $derived(entries.length > 0);
   let color = $derived(lineColors[data.lineId]);
 
   function jumpTo(id: string) {
@@ -47,8 +47,6 @@
         elements = entries.map((entry) => document.getElementById(entry.id));
       }
       atTop = window.scrollY < 180;
-      const marker = document.getElementById('current-date')?.getBoundingClientRect();
-      atCurrent = !!marker && marker.top >= 0 && marker.top < window.innerHeight;
       const dockRect = dock.getBoundingClientRect();
       const guide = dockRect.bottom + 8;
       pinned = dockRect.top <= (header?.getBoundingClientRect().height ?? 76) + 1;
@@ -101,7 +99,6 @@
         {#if data.line.scope}<p>{data.line.scope}</p>{/if}
         <div class="timeline-jumps">
           {#if !atTop}<button type="button" aria-label="Go to top" title="Go to top" onclick={() => window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}><ArrowUpToLine size={14} /><span>Top</span></button>{/if}
-          {#if hasHistory && !atCurrent}<button type="button" aria-label="Go to current date" title="Go to current date" onclick={() => jumpTo('current-date')}><ArrowDownToLine size={14} /><span>Today</span></button>{/if}
         </div>
       </div>
 
