@@ -90,6 +90,38 @@ function deadlineStory(lineId: string, today: string): Story | null {
   };
 }
 
+// Lines that opened in many parts: one bar per part, months from its first recorded target to its opening.
+const partLabels: Record<string, Record<string, string>> = {
+  purple: { reach1: 'Reach 1 (east)', reach2: 'Reach 2 (west)', underground: 'Underground', kengeri: 'Kengeri', eastern: 'Whitefield', challaghatta: 'Challaghatta' }
+};
+
+function partsStory(lineId: string, today: string): Story | null {
+  const story = buildDelayStory(lineId, lines[lineId]?.milestones ?? [], today);
+  const parts = (story?.sections ?? []).flatMap((s) => (s.opening && s.earliest ? [{ s, late: monthsBetween(s.earliest.target, s.opening.date) }] : []));
+  if (!story || parts.length < 2) return null;
+  const name = lineShortLabels[lineId] ?? lineId;
+  const missed = parts.reduce((n, p) => n + p.s.missed, 0);
+  const total = parts.reduce((n, p) => n + p.s.targets.length, 0);
+  const worst = [...parts].sort((a, b) => b.late - a.late)[0];
+  const busiest = [...parts].sort((a, b) => b.s.targets.length - a.s.targets.length)[0];
+  const label = (id: string, fallback: string) => partLabels[lineId]?.[id] ?? fallback;
+  return {
+    id: `${lineId}-parts`,
+    kicker: `${name} Line · ${parts.length} openings`,
+    color: lineColors[lineId],
+    headline: parts.every((p) => p.late > 0)
+      ? `Every part of the ${name} Line opened late.`
+      : `${parts.filter((p) => p.late > 0).length} of ${parts.length} parts of the ${name} Line opened late.`,
+    body: `${missed} of ${total} reported opening targets were missed across its ${parts.length} openings. ${label(worst.s.id, worst.s.label)} came ${mo(worst.late)} after its first target; ${label(busiest.s.id, busiest.s.label)} went through ${busiest.s.targets.length} dates.`,
+    link: { href: `/timeline/${lineId}`, label: 'Walk through the timeline' },
+    visual: {
+      type: 'bars', unit: 'mo', max: Math.max(...parts.map((p) => p.late)),
+      rows: [...parts].sort((a, b) => b.late - a.late).map((p) => ({ label: label(p.s.id, p.s.label), value: p.late, color: lineColors[lineId] })),
+      caption: "Months from each part's first recorded target to its passenger opening."
+    }
+  };
+}
+
 function contractStory(id: string, today: string): Story | null {
   const c = dataset.contracts[id] as unknown as ContractRaw | undefined;
   const reading = deliveryReadings[id];
@@ -200,8 +232,8 @@ export function buildStories(today: string): Story[] {
   return [
     deadlineStory('yellow', today),
     deadlineStory('pink', today),
+    partsStory('purple', today),
     contractStory('bmrcl-4rs-dm', today),
-    contractStory('bmrcl-5rs-dm', today),
     waitedStory(today),
     waitingNowStory(today)
   ].filter((s): s is Story => s !== null);

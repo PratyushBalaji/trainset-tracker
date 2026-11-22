@@ -39,8 +39,8 @@ const { todayIsoDate } = await import(load(resolve(root, 'src/lib/data/date.ts')
 const EXPECTED = [
   'yellow-deadlines',
   'pink-deadlines',
+  'purple-parts',
   'bmrcl-4rs-dm-delivery',
-  'bmrcl-5rs-dm-delivery',
   'delivery-to-passengers',
   'waiting-now'
 ];
