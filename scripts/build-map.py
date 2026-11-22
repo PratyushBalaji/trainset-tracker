@@ -2,7 +2,8 @@
 
 Usage:  python scripts/build-map.py "path/to/metro map.svg"
 
-Writes static/maps/namma-metro-layers.svg plus small PNGs in static/maps/assets/.
+Writes static/maps/namma-metro-layers.svg plus small PNGs in static/maps/assets/ (for the page),
+and static/maps/namma-metro-download.svg with those PNGs embedded (one standalone file to download).
 - Every Inkscape layer keeps its id and gains data-layer="<layer name>", which the
   Route Map page uses for its show/hide toggles. Rename a layer in Inkscape and the
   toggle follows; add a layer and it appears in the "Other layers" group.
@@ -30,6 +31,7 @@ ET.register_namespace('xlink', XLINK)
 
 root_dir = Path(__file__).resolve().parent.parent
 out_svg = root_dir / 'static' / 'maps' / 'namma-metro-layers.svg'
+out_download = root_dir / 'static' / 'maps' / 'namma-metro-download.svg'
 asset_dir = root_dir / 'static' / 'maps' / 'assets'
 
 
@@ -72,6 +74,7 @@ def main(src: str) -> None:
             pw, ph = largest.get(key, (0, 0))
             largest[key] = (max(pw, w), max(ph, h))
     written = {}
+    embedded = {}
     for im in images:
         href = im.get('{%s}href' % XLINK) or im.get('href') or ''
         if not href.startswith('data:image'):
@@ -86,6 +89,7 @@ def main(src: str) -> None:
                 img.thumbnail(target, Image.LANCZOS)
             path = asset_dir / f'{key}.png'
             img.save(path, optimize=True)
+            embedded[key] = 'data:image/png;base64,' + base64.b64encode(path.read_bytes()).decode()
             written[key] = f'/maps/assets/{key}.png'
         for attr in ('{%s}href' % XLINK, 'href'):
             if attr in im.attrib:
@@ -102,6 +106,13 @@ def main(src: str) -> None:
     text = re.sub(r'\s*-inkscape-[a-z-]+:[^;"]*;?', '', text)
     text = re.sub(r'>\s+<', '><', text)
     out_svg.write_text(text, encoding='utf-8')
+    # Standalone copy for download: same drawing, images inlined, licence noted.
+    notice = '<!-- Namma Metro map by Pratyush Balaji. CC BY-NC 4.0: free to share and modify, not for commercial use. https://creativecommons.org/licenses/by-nc/4.0/ -->'
+    standalone = text
+    for key, url in written.items():
+        standalone = standalone.replace(f'href="{url}"', f'href="{embedded[key]}"')
+    out_download.write_text(notice + standalone, encoding='utf-8')
+    print(f'{out_download.relative_to(root_dir)}: {out_download.stat().st_size // 1024} KB')
     print(f'{out_svg.relative_to(root_dir)}: {out_svg.stat().st_size // 1024} KB, {len(written)} images')
     print('Layers:', ', '.join(layers))
 

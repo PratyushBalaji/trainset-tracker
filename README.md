@@ -16,7 +16,9 @@ Line history lives separately in [`lines.json`](./lines.json), leaving the train
 
 Timeline presentation is built by the pure `buildLineTimeline` function, then rendered by `LineTimeline.svelte`. Chart and card components accept resolved data as props rather than importing the dataset, allowing reuse in a future Metro Central application.
 
-The route-map asset is derived from [the original map project](https://github.com/PratyushBalaji/maps), revision 24 June 2025. It is a schematic artwork, not a live operating-status map. The Timeline mini-map reuses its route paths without station labels or roads.
+The Route Map shows Pratyush Balaji's artistic rendition of the official Namma Metro map from [the map project](https://github.com/PratyushBalaji/maps), revision 18 January 2026, extended with upcoming lines and the city's natural features. It is a schematic artwork, not a live operating-status map. `static/maps/namma-metro-layers.svg` is built from the Inkscape file with `python scripts/build-map.py "<path to metro map.svg>"`, which keeps layer names for the page's toggles. The Timeline mini-map reuses route paths from the 24 June 2025 revision.
+
+The map artwork is licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/): free to share and adapt with credit, not for commercial use.
 
 ## Trainset data
 
