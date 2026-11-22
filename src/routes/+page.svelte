@@ -108,6 +108,7 @@
         </ol>
       </a>
     </section>
+      <p>Press releases should not overshadow broken promises.</p>
   {/if}
 
   <section class="explore" aria-label="Explore">
@@ -122,14 +123,14 @@
     <div>
       <h2>About</h2>
       <p>We all know BMRCL and their contractors have a terrible track record when it comes to meeting deadlines. Heck, the Yellow Line was inaugurated almost 2 years after civil works completion, all due to a lack of <strong>trains</strong>.</p>
-      <p>Major cities like London, Paris, and Tokyo run 2-minute frequencies while I still have to wait 10 minutes at Whitefield if I miss a train at peak hour.</p>
+      <p>Major cities like London, Paris, and Tokyo run 2-minute frequencies while I still have to wait 10 minutes during peak hour if I miss a train at Whitefield!</p>
       <p>Namma Metro needs more trains, and the public needs to know when they'll get here, so this repository strives to track and plot every trainset received, tested, and inducted into service to keep BMRCL accountable.</p>
       <p>All information comes from news outlets, reporters, and on-ground sources as BMRCL does not release this information publicly.</p>
     </div>
     <div>
       <h2>Acknowledgements</h2>
-      <p>Thank you to journalists <a href="https://x.com/ChristinMP_" target="_blank" rel="noreferrer">Christin Mathew Philip (@ChristinMP_)</a> and <a href="https://x.com/ever_pessimist" target="_blank" rel="noreferrer">Muthi-ur-Rahman Siddiqui (@ever_pessimist)</a>, <a href="https://x.com/blrmetrotracker" target="_blank" rel="noreferrer">BLR Metro Tracker (@blrmetrotracker)</a>, and the news outlets and insiders who share this information with us Bengalureans.</p>
-      <p>Their reporting and groundwork allow enthusiasts like me to stay informed and make this tracker possible.</p>
+      <p>Thank you to journalists like Christin Mathew Philip (<a href="https://x.com/ChristinMP_" target="_blank" rel="noreferrer">@ChristinMP_</a>) and Muthi-ur-Rahman Siddiqui (<a href="https://x.com/ever_pessimist" target="_blank" rel="noreferrer">@ever_pessimist</a>), enthusiasts like BLR Metro Tracker (<a href="https://x.com/blrmetrotracker" target="_blank" rel="noreferrer">@blrmetrotracker</a>), and all the news outlets and insiders who share this information with us Bengalureans.</p>
+      <p>Their reporting and groundwork allow us to stay informed and enable hobbyists like myself to make projects like this tracker possible.</p>
     </div>
   </section>
 </main>
