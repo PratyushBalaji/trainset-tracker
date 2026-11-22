@@ -11,6 +11,7 @@ export type MilestoneKey =
 export type LineId = 'yellow' | 'green' | 'purple' | 'pink' | 'blue' | string;
 
 export interface RawContract {
+  tracked?: boolean;
   uid: string;
   awardee: string;
   rolling_stock: string[];

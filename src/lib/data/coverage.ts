@@ -17,10 +17,11 @@ export const trackedContractsLabel = '4RS-DM and 5RS-DM';
 
 interface ContractScope { id: string; ordered: number; basis: 'trainsets' | 'cars' }
 
-type ContractRecord = { base_trainsets?: number; base_cars?: number; variations?: { additional_trainsets?: number }[]; rolling_stock: string[] };
+type ContractRecord = { tracked?: boolean; base_trainsets?: number; base_cars?: number; variations?: { additional_trainsets?: number }[]; rolling_stock: string[] };
 
-/** Trainsets ordered per contract: base order plus variations. Falls back to cars ÷ cars per train. */
+/** Trainsets ordered per contract: base order plus variations. Falls back to cars / cars per train. */
 export const contractScopes: ContractScope[] = Object.entries(dataset.contracts as Record<string, ContractRecord>).flatMap(([id, contract]) => {
+  if (contract.tracked === false) return [];
   const carsPerTrain = dataset.rolling_stock[contract.rolling_stock[0]]?.cars_per_trainset;
   const base = contract.base_trainsets ?? (contract.base_cars && carsPerTrain ? contract.base_cars / carsPerTrain : undefined);
   if (base === undefined || !Number.isInteger(base)) return [];

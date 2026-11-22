@@ -84,6 +84,8 @@ Each contract and trainset also has an immutable generated `uid`, independent of
 
 A contract describes the procurement package itself. It stores the awardee, known procurement dates, original contract scope/value, later contract variations, and the rolling stock types sanctioned under that contract.
 
+All four procurement records live in the `contracts` section of `trainsets.json`, including descriptions, original delivery periods, qualifications and sources. Legacy 2RS-DM/3RS-DM records have `tracked: false` and no individual trainsets; they do not contribute to tracked order or pending totals. Their empty `rolling_stock` arrays indicate that no legacy design is tracked. In particular, 3RS-DM's base 150 intermediate cars lengthened existing trains rather than creating 50 new trains. Original delivery schedules are historical commitments, not current forecasts. Unknown exact dates are omitted.
+
 ```jsonc
 "bmrcl-5rs-dm": {
   "uid": "contract_...",

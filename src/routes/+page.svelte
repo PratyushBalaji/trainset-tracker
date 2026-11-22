@@ -1,27 +1,34 @@
 <script lang="ts">
   import { ArrowRight } from '@lucide/svelte';
   import { formatDate, todayIsoDate } from '$lib/data/date';
-  import { lineColors, lineDesigns, lineLabels, lineOrder, trainDesignLabels } from '$lib/data/presentation';
+  import { lineColors, lineLabels, lineOrder, rollingStockDesign, trainDesignLabels } from '$lib/data/presentation';
   import NetworkMap from '$lib/components/NetworkMap.svelte';
   import TrainIcon from '$lib/components/TrainIcon.svelte';
   import { decorateTrainsetForDate, resolvedTrainsets } from '$lib/data/resolve';
   import { pendingOn, trackedContractsLabel, untrackedFleet } from '$lib/data/coverage';
   import { lines } from '$lib/data/lines';
   import { buildDelayStory, monthsBetween } from '$lib/data/delay-story';
+  import ContractsCard from '$lib/components/ContractsCard.svelte';
+  import { contractSummaries } from '$lib/data/contracts';
 
   const today = todayIsoDate();
-  const fleet = resolvedTrainsets.map((t) => decorateTrainsetForDate(t, today));
-  const count = (id: string) => fleet.filter((t) => t.currentStage.id === id).length;
   const contracts = contractSummaries(today);
   const lastDataUpdate = __TRAINSETS_UPDATED_AT__ ? formatDate(todayIsoDate(new Date(__TRAINSETS_UPDATED_AT__))) : null;
+  const fleet = resolvedTrainsets.map((t) => decorateTrainsetForDate(t, today));
+  const count = (id: string) => fleet.filter((t) => t.currentStage.id === id).length;
   const stats = [
-    { label: 'In service', value: count('service') + untrackedFleet.trainsets, color: 'var(--service)', note: `${count('service')} tracked + ${untrackedFleet.trainsets} older` },
-    { label: 'Delivered, testing', value: count('testing'), color: 'var(--testing)' },
-    { label: 'In transit', value: count('dispatch'), color: 'var(--dispatch-ink)' },
-    { label: 'Ordered, pending', value: pendingOn(today), color: 'var(--muted)' }
+    { label: 'In service', value: count('service') + untrackedFleet.trainsets, color: 'var(--service)', note: `${count('service')} newly inducted + ${untrackedFleet.trainsets}` },
+    { label: 'Undergoing testing', value: count('testing'), color: 'var(--testing)' },
+    { label: 'Currently in transit', value: count('dispatch'), color: 'var(--dispatch-ink)' },
+    { label: 'Pending delivery', value: pendingOn(today), color: 'var(--muted)' }
   ];
   const board = lineOrder
-    .map((line) => ({ line, trains: fleet.filter((t) => t.displayLine === line) }))
+    .map((line) => {
+      const trains = fleet.filter((t) => t.displayLine === line);
+      // Only the designs of the tracked trains in this row; older fleets have their own row.
+      const designs = [...new Set(trains.map((t) => rollingStockDesign[t.rollingStockId]).filter(Boolean))];
+      return { line, trains, designs };
+    })
     .filter((row) => row.trains.length);
   const yellow = buildDelayStory('yellow', lines.yellow?.milestones ?? [], today);
   const lateBy = yellow?.opening && yellow.earliest ? monthsBetween(yellow.earliest.target, yellow.opening.date) : null;
@@ -39,7 +46,7 @@
       <div class="title-grid">
         <h1 id="home-title"><span>Namma Metro</span> <span>Trainset Tracker</span></h1>
         <div class="hero-map"><NetworkMap caption={false} weight={3} /></div>
-        <p class="lede">[Your one-line description of the project]</p>
+        <p class="lede">Tracking Namma Metro's trains, from delivery to passenger service.</p>
         <!-- Parked side by side, like trains on stabling lines. -->
         <ul class="hero-trains" aria-label="Train designs on Namma Metro">
           {#each ['beml-og', 'crrc-trsl', 'beml-new'] as const as design}
@@ -64,23 +71,22 @@
       <div class="board">
         {#each board as row (row.line)}
           <div class="board-row">
-            <span class="board-line"><span class="dot" style={`--dot: ${lineColors[row.line]}`}></span>{(lineLabels[row.line] ?? row.line).replace(' Line', '')}<span class="row-icons">{#each lineDesigns[row.line] ?? [] as design}<TrainIcon {design} size={16} />{/each}</span></span>
+            <span class="board-line"><span class="dot" style={`--dot: ${lineColors[row.line]}`}></span>{(lineLabels[row.line] ?? row.line).replace(' Line', '')}<span class="row-icons">{#each row.designs as design}<TrainIcon {design} size={16} />{/each}</span></span>
             <span class="pills">{#each row.trains as t (t.id)}<span class="pill {t.currentStage.id}" title={`${t.trainsetNumber} · ${t.currentStage.label}`}></span>{/each}</span>
             <span class="board-count tnum">{row.trains.length}</span>
           </div>
         {/each}
         <div class="board-row untracked">
           <span class="board-line"><span class="dot" style={`--dot: ${lineColors.purple}`}></span><span class="dot" style={`--dot: ${lineColors.green}`}></span>Older<span class="row-icons"><TrainIcon design="beml-og" size={16} /></span></span>
-          <span class="pills">{#each Array(untrackedFleet.trainsets) as _}<span class="pill ghost"></span>{/each}</span>
+          <span class="older-bar">In service, not tracked individually</span>
           <span class="board-count tnum">{untrackedFleet.trainsets}</span>
         </div>
       </div>
-      <p class="panel-foot">The {untrackedFleet.trainsets} older {untrackedFleet.contracts} trains on Purple and Green are in service but not tracked individually.</p>
+      <p class="panel-foot">The older {untrackedFleet.contracts} trains on the Purple and Green lines are not tracked due to insufficient data during their procurement → induction lifecycle.</p>
       <ul class="legend" aria-hidden="true">
         <li><span class="pill service"></span>In service</li>
         <li><span class="pill testing"></span>Testing</li>
         <li><span class="pill dispatch"></span>In transit</li>
-        <li><span class="pill ghost"></span>In service, not tracked</li>
       </ul>
     </a>
   </section>
@@ -90,13 +96,13 @@
       <a class="story" href="/timeline/yellow">
         <div class="story-text">
           <p class="kicker"><span class="dot" style={`--dot: ${lineColors.yellow}`}></span>Yellow Line</p>
-          <h2>Opened {lateBy} months after the first recorded target.</h2>
-          <p class="tnum">{yellow.missed} of {yellow.targets.length} reported opening targets missed.{#if civil}{' '}{civil.months} months between civil work being reported complete and the first passengers.{/if}</p>
+          <h2>Opened {lateBy} months after the first target deadline.</h2>
+          <p class="tnum">{yellow.missed} of {yellow.targets.length} reported opening targets missed.{#if civil}{' '}{civil.months} months between civil works completion and the first revenue service.{/if}</p>
           <span class="story-link">Walk through the timeline <ArrowRight size={16} /></span>
         </div>
         <ol class="ladder" aria-label="Reported opening targets in order">
           {#each yellow.targets as target}
-            <li class={target.outcome}><span class="target tnum">{target.label}</span><span class="outcome tnum">{target.outcome === 'missed' ? `+${target.monthsLate} mo` : target.outcome === 'not-taken' ? 'option' : target.outcome}</span></li>
+            <li class={target.outcome}><span class="target tnum">{target.label.replace('(option)', '(phased opening)')}</span><span class="outcome tnum">{target.outcome === 'missed' ? `+${target.monthsLate} mo` : target.outcome === 'not-taken' ? 'retracted' : target.outcome}</span></li>
           {/each}
           <li class="opened"><span class="target tnum">Opened {formatDate(yellow.opening!.date)}</span></li>
         </ol>
@@ -105,19 +111,25 @@
   {/if}
 
   <section class="explore" aria-label="Explore">
-    <a href="/fleet"><span class="num">01</span><strong>Fleet</strong><span>Every tracked trainset, its status on any date, and the sources behind it.</span></a>
-    <a href="/lifecycle"><span class="num">02</span><strong>Lifecycle</strong><span>Dispatch, testing and service for every tracked train on one chart.</span></a>
-    <a href="/routemap"><span class="num">03</span><strong>Route Map</strong><span>The Namma Metro network, redrawn with planned lines added.</span></a>
+    <a href="/fleet"><span class="num">01</span><strong>Fleet</strong><span>Every trainset, its status on any date, and the sources behind it.</span></a>
+    <a href="/lifecycle"><span class="num">02</span><strong>Lifecycle</strong><span>The dispatch, testing, and service lifecycle for every tracked train, visualised.</span></a>
+    <a href="/routemap"><span class="num">03</span><strong>Route Map</strong><span>My own rendition of the official metro map, with future lines and landmarks.</span></a>
   </section>
+
+  <section class="contracts-wrap"><ContractsCard {contracts} /></section>
 
   <section class="about">
     <div>
       <h2>About</h2>
-      <p>[Your About copy]</p>
+      <p>We all know BMRCL and their contractors have a terrible track record when it comes to meeting deadlines. Heck, the Yellow Line was inaugurated almost 2 years after civil works completion, all due to a lack of <strong>trains</strong>.</p>
+      <p>Major cities like London, Paris, and Tokyo run 2-minute frequencies while I still have to wait 10 minutes at Whitefield if I miss a train at peak hour.</p>
+      <p>Namma Metro needs more trains, and the public needs to know when they'll get here, so this repository strives to track and plot every trainset received, tested, and inducted into service to keep BMRCL accountable.</p>
+      <p>All information comes from news outlets, reporters, and on-ground sources as BMRCL does not release this information publicly.</p>
     </div>
     <div>
       <h2>Acknowledgements</h2>
-      <p>[Your acknowledgements]</p>
+      <p>Thank you to journalists <a href="https://x.com/ChristinMP_" target="_blank" rel="noreferrer">Christin Mathew Philip (@ChristinMP_)</a> and <a href="https://x.com/ever_pessimist" target="_blank" rel="noreferrer">Muthi-ur-Rahman Siddiqui (@ever_pessimist)</a>, <a href="https://x.com/blrmetrotracker" target="_blank" rel="noreferrer">BLR Metro Tracker (@blrmetrotracker)</a>, and the news outlets and insiders who share this information with us Bengalureans.</p>
+      <p>Their reporting and groundwork allow enthusiasts like me to stay informed and make this tracker possible.</p>
     </div>
   </section>
 </main>
@@ -161,7 +173,8 @@
   .pill.service { background: var(--service); }
   .pill.testing { background: var(--testing); }
   .pill.dispatch { background: var(--dispatch); }
-  .pill.ghost { background: color-mix(in srgb, var(--service) 14%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--service) 55%, transparent); }
+  /* One block for the untracked fleet: counted as a group, not drawn train by train. */
+  .older-bar { display: flex; align-items: center; height: 16px; padding: 0 8px; border-radius: 3px; background: color-mix(in srgb, var(--service) 14%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--service) 55%, transparent); font-size: 10.5px; color: var(--service-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .panel-foot { margin: 0; font-size: 12px; line-height: 1.5; color: var(--muted); }
   .legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 11px; color: var(--muted); }
   .legend li { display: flex; align-items: center; gap: 6px; }
@@ -185,6 +198,7 @@
   .ladder .not-taken .outcome { color: #8a928a; }
   .ladder .opened { background: #d7a719; color: var(--ink); font-weight: 700; }
 
+  .contracts-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px 64px; }
   .explore { max-width: 1240px; margin: 0 auto; padding: 0 32px 64px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
   .explore a { display: flex; flex-direction: column; gap: 8px; padding: 24px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); text-decoration: none; }
   .explore a:hover { border-color: var(--faint); }
@@ -195,6 +209,7 @@
   .about { border-top: 1px solid var(--border); background: var(--surface); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 64px; padding: 56px max(32px, calc((100% - 1176px) / 2)) 64px; }
   .about h2 { margin: 0 0 14px; font-family: var(--font-display); font-size: 30px; letter-spacing: -0.02em; }
   .about p { margin: 0; font-size: 16px; line-height: 1.75; color: var(--ink-3); }
+  .about p + p { margin-top: 16px; }
 
   @media (max-width: 960px) {
     h1 { font-size: clamp(40px, 8vw, 64px); }
@@ -203,6 +218,7 @@
     .story { grid-template-columns: 1fr; padding: 28px 24px; gap: 24px; }
     .story-wrap, .explore { padding-left: 16px; padding-right: 16px; }
     .explore { grid-template-columns: 1fr; }
+    .contracts-wrap { padding: 0 16px 48px; }
     .about { grid-template-columns: 1fr; gap: 32px; padding: 40px 20px 48px; }
   }
   @media (max-width: 520px) {
