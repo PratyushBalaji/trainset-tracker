@@ -87,7 +87,8 @@
           <span class="line-trains-title">Trains on this line</span>
           <ul>
             {#each lineDesigns[data.lineId] as design}
-              <li><TrainIcon {design} variant="solid" size={44} color={lineColors[data.lineId]} /><span>{trainDesignLabels[design]}</span></li>
+              {@const [manufacturer, contract] = trainDesignLabels[design].split(' (')}
+              <li><TrainIcon {design} variant="solid" size={44} color={lineColors[data.lineId]} /><span>{manufacturer}{#if contract}<span class="train-contract">({contract}</span>{/if}</span></li>
             {/each}
           </ul>
         </div>
@@ -157,10 +158,11 @@
   .line-trains-title { display: block; margin-bottom: 10px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
   .line-trains ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 16px; }
   .line-trains li { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 64px; text-align: center; font-size: 11px; line-height: 1.25; color: var(--ink-3); }
+  .train-contract { display: block; white-space: nowrap; }
   .full-map-link { display: inline-block; margin-top: 8px; font-size: 11px; color: #687267; text-underline-offset: 3px; }
   .line-content { min-width: 0; }
 
-  .timeline-dock { position: sticky; top: var(--site-header-height); z-index: 10; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 14px; padding: 12px 0; margin-bottom: 18px; border-bottom: 1px solid #d8ded4; background: #f4f6f1; }
+  .timeline-dock { position: sticky; top: var(--site-header-height); z-index: 10; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 14px; padding: 12px 0 12px 14px; margin-left: -14px; margin-bottom: 18px; border-bottom: 1px solid #d8ded4; background: #f4f6f1; }
   .timeline-dock h2 { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 24px; line-height: 1.2; }
   .timeline-dock h2 .line-dot { width: 13px; height: 13px; }
   .timeline-dock p { font-size: 12px; color: #687267; margin: 0; }
