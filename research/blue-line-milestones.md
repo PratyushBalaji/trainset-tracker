@@ -21,11 +21,12 @@ inauguration is established by this research.
 
 ## Opening-count discipline
 
-No Blue entry is added to `reviewedLineStories` in this import. Its exact-date
-mapping cannot faithfully express an undated historical target, a broad period
-such as 2023-24 or early 2028, and unresolved simultaneous airport forecasts.
-The three histories are retained through explicit record scopes and target text;
-they must not become one automatically inferred chain.
+The Timeline now scores Blue in `reviewedLineStories` as five separate histories:
+whole line, ORR (2A), whole Phase 2B, Hebbal - Airport and KR Puram - Hebbal.
+Broad periods take the latest day they could cover (2023-24 as end-2024); early
+2028 is only ordered after December 2027 and is never shown as a day. The 2021
+ORR date is scored as retrospective, and conflicting reports are left unscored.
+The histories must not become one automatically inferred chain.
 
 - Whole-airport and whole-line promises are not assigned retroactively to later
   airport subsections, or counted once for each subsection.

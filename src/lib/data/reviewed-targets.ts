@@ -39,7 +39,8 @@ export interface ReviewedSection {
 }
 
 export interface ReviewedLineStory {
-  openingMilestoneId: string;
+  /** Passenger opening of a single-section line; null while it has not opened. */
+  openingMilestoneId: string | null;
   /** Lines that open in parts (Pink: elevated, underground) score each part separately. */
   sections?: ReviewedSection[];
   targets: ReviewedTarget[];
@@ -224,6 +225,55 @@ export const reviewedLineStories: Record<string, ReviewedLineStory> = {
       { section: 'challaghatta', milestoneId: 'final-links-october2-proposal-recalled', field: 'revised_target', matches: 'October 2, 2023 proposed inauguration', target: '2023-10-02', label: '2 Oct 2023 (proposed launch)', kind: 'by', retrospective: true, changeSeries: 'proposed-launch' },
       { section: 'challaghatta', milestoneId: 'final-links-october6-proposal-recalled', field: 'revised_target', matches: 'October 6, 2023', target: '2023-10-06', label: '6 Oct 2023 (proposed launch)', kind: 'by', retrospective: true, changeSeries: 'proposed-launch' },
       { section: 'challaghatta', milestoneId: 'final-links-passenger-opening-announced', field: 'revised_target', matches: 'October 9, 2023 passenger opening', target: '2023-10-09', label: '9 Oct 2023 (passengers)', kind: 'by' }
+    ],
+    spans: []
+  },
+  // Blue has not opened. Five histories are kept apart, as the research note requires: whole-line and
+  // whole-airport (Phase 2B) promises are never assigned to later sections or counted once per section.
+  // Not scored: reaffirmations (June 2026 ORR, June/December 2027 airport, May 2027 ORR), trial-start and
+  // commissioning dates, the January 2023 construction schedule, the broad "commercial operation in 2027"
+  // line, the Nagawara - Hebbal sub-section window, and the conflicting reports (November 29, 2024
+  // airport phasing; October 23, 2026 mid-2027 airport connectivity).
+  blue: {
+    openingMilestoneId: null,
+    sections: [
+      { id: 'whole', label: 'Whole line', noun: 'whole-line', openingMilestoneId: null },
+      { id: 'orr', label: 'ORR: Silk Board – KR Puram (2A)', noun: 'ORR', openingMilestoneId: null },
+      { id: 'airport', label: 'Airport line, all of 2B', noun: 'airport-line', openingMilestoneId: null },
+      { id: 'hebbal-airport', label: 'Hebbal – Airport', noun: 'Hebbal - Airport', openingMilestoneId: null },
+      { id: 'krpuram-hebbal', label: 'KR Puram – Hebbal', noun: 'KR Puram - Hebbal', openingMilestoneId: null }
+    ],
+    targets: [
+      { section: 'whole', milestoneId: 'combined-2023-24-forecast', field: 'revised_target', matches: '2023-24', target: '2024-12-31', label: '2023-24', kind: 'by' },
+      { section: 'whole', milestoneId: 'september2026-both-corridors-target', field: 'revised_target', matches: 'September 2026, both corridors', target: '2026-09-30', label: 'Sep 2026', kind: 'month' },
+      { section: 'whole', milestoneId: 'december2027-full-line-forecast', field: 'revised_target', matches: 'December 2027, entire Blue Line', target: '2027-12-31', label: 'Dec 2027', kind: 'month' },
+      { section: 'whole', milestoneId: 'august2026-airport-phasing', field: 'revised_target', matches: 'Hebbal - Airport September/October 2027; Nagawara - Hebbal December 2027-March 2028; full Blue Line March 2028', target: '2028-03-31', label: 'Mar 2028', kind: 'month' },
+
+      // The 2021 date comes from the 2016 DPR, recalled in a 2020 report.
+      { section: 'orr', milestoneId: 'initial-2021-orr-target-reported', field: 'revised_target', matches: '2021 operational target in the 2016 DPR', target: '2021-12-31', label: '2021 (2016 DPR)', kind: 'by', retrospective: true },
+      { section: 'orr', milestoneId: 'cm-june-september2025-targets', field: 'revised_target', matches: 'June 2025 ORR; September 2025 Airport', target: '2025-06-30', label: 'Jun 2025', kind: 'month' },
+
+      // June 2026 is first on record as the target this May 2024 visit reaffirmed; the reaffirmation itself is not a new target.
+      { section: 'orr', milestoneId: 'orr-june2026-reaffirmed', field: 'previous_target', matches: 'June 2026 ORR', target: '2026-06-30', label: 'Jun 2026', kind: 'month' },
+      { section: 'orr', milestoneId: 'december2026-orr-target', field: 'revised_target', matches: 'December 2026 ORR', target: '2026-12-31', label: 'Dec 2026', kind: 'month' },
+      { section: 'orr', milestoneId: 'may2027-orr-opening-target', field: 'revised_target', matches: 'May 2027 ORR opening; November 2026 trials', target: '2027-05-31', label: 'May 2027', kind: 'month' },
+
+      // Whole Phase 2B promises; later reports give only section dates, so this history has no current target.
+      { section: 'airport', milestoneId: 'cm-june-september2025-targets', field: 'revised_target', matches: 'June 2025 ORR; September 2025 Airport', target: '2025-09-30', label: 'Sep 2025', kind: 'month' },
+      { section: 'airport', milestoneId: 'airport-december2024-target', field: 'revised_target', matches: 'December 2024 Airport', target: '2024-12-31', label: 'Dec 2024', kind: 'month' },
+      { section: 'airport', milestoneId: 'june2026-qualified-forecast', field: 'revised_target', matches: 'June 2026, plus or minus three months', target: '2026-09-30', label: 'Jun 2026 ± 3 mo', kind: 'by' },
+
+      { section: 'hebbal-airport', milestoneId: 'airport-split-nov28-forecast', field: 'revised_target', matches: 'Hebbal - Airport June-September 2026; Hebbal - KR Puram December 2026; ORR June 2026', target: '2026-09-30', label: 'Jun–Sep 2026', kind: 'by' },
+      { section: 'hebbal-airport', milestoneId: 'june-december2027-airport-forecast', field: 'revised_target', matches: 'June 2027 Hebbal - Airport; December 2027 Hebbal - KR Puram', target: '2027-06-30', label: 'Jun 2027', kind: 'month' },
+      { section: 'hebbal-airport', milestoneId: 'june-july2027-airport-forecast', field: 'revised_target', matches: 'June-July 2027 Hebbal - Airport', target: '2027-07-31', label: 'Jun–Jul 2027', kind: 'by' },
+      { section: 'hebbal-airport', milestoneId: 'august2026-airport-phasing', field: 'revised_target', matches: 'Hebbal - Airport September/October 2027; Nagawara - Hebbal December 2027-March 2028; full Blue Line March 2028', target: '2027-10-31', label: 'Sep / Oct 2027', kind: 'by' },
+      { section: 'hebbal-airport', milestoneId: 'october-airport-section-review', field: 'revised_target', matches: 'Hebbal - Airport end-2027; Hebbal - KR Puram early 2028', target: '2027-12-31', label: 'End-2027', kind: 'by' },
+
+      { section: 'krpuram-hebbal', milestoneId: 'airport-split-nov28-forecast', field: 'revised_target', matches: 'Hebbal - Airport June-September 2026; Hebbal - KR Puram December 2026; ORR June 2026', target: '2026-12-31', label: 'Dec 2026', kind: 'month' },
+      { section: 'krpuram-hebbal', milestoneId: 'june-december2027-airport-forecast', field: 'revised_target', matches: 'June 2027 Hebbal - Airport; December 2027 Hebbal - KR Puram', target: '2027-12-31', label: 'Dec 2027', kind: 'month' },
+
+      // "Early 2028" has no reviewed day. The date only orders it after Dec 2027 and keeps it off the rail; it is never shown.
+      { section: 'krpuram-hebbal', milestoneId: 'october-airport-section-review', field: 'revised_target', matches: 'Hebbal - Airport end-2027; Hebbal - KR Puram early 2028', target: '2028-06-30', label: 'Early 2028', kind: 'by' }
     ],
     spans: []
   }

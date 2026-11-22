@@ -233,7 +233,7 @@ test('delay story counts missed opening targets only while reviewed target text 
   assert.equal(story.missed, 7);
   const edited = yellow.map((m) => m.id === 'feb2024-target' ? { ...m, revised_target: 'March 2024' } : m);
   assert.equal(buildDelayStory('yellow', edited, '2026-11-22').targets.some((t) => t.milestoneId === 'feb2024-target'), false);
-  assert.equal(buildDelayStory('blue', [], '2026-11-22'), null);
+  assert.equal(buildDelayStory('orange', [], '2026-11-22'), null);
   assert.equal(monthsBetween('2022-12-31', '2025-08-11'), 32);
 });
 
@@ -356,7 +356,11 @@ test('Blue forecasts retain section scopes without fabricating openings or score
   assert.match(byId.get('conflicting-mid2027-airport-forecast').revised_target, /mid-2027/);
   const reaffirmed = byId.get('may2027-orr-target-reaffirmed');
   assert.equal(reaffirmed.previous_target, reaffirmed.revised_target);
-  assert.equal(buildDelayStory('blue', blue.milestones, '2026-11-22'), null);
+  // Scored per history with no opening invented; whole-line and whole-airport promises stay in their own sections.
+  const story = buildDelayStory('blue', blue.milestones, '2026-11-22');
+  assert.ok(story.sections.every((s) => !s.opening));
+  assert.ok(!story.targets.some((t) => ['may2027-orr-target-reaffirmed', 'conflicting-mid2027-airport-forecast', 'airport-split-nov29-forecast', 'orrca-coordination-targets', 'october-trial-target', 'october-trials-2027-service-reaffirmed', 'staged-orr-trial-targets', 'end-october-trials-mid2027-commissioning'].includes(t.milestoneId)));
+  assert.equal(story.targets.filter((t) => t.milestoneId === 'september2026-both-corridors-target').length, 1);
   const entries = buildLineTimeline(blue.milestones, [], 'blue', '2026-11-22');
   assert.equal(entries.filter((e) => e.kind === 'line').length, blue.milestones.length);
   assert.ok(entries.every((e, i) => i === 0 || entries[i - 1].sortDate <= e.sortDate));

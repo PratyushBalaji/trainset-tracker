@@ -76,3 +76,18 @@ test('purple targets are scored per opening part, with recalled targets kept off
   assert.equal(byId.underground.targets[0].outcome, 'not-taken');
   assert.equal(byId.underground.earliest.label, 'Nov 2015');
 });
+
+test('blue keeps five unopened histories with current targets and no invented openings', () => {
+  const story = buildDelayStory('blue', lines.blue.milestones, '2026-11-22');
+  const byId = Object.fromEntries(story.sections.map((s) => [s.id, s]));
+  assert.deepEqual(story.sections.map((s) => s.id), ['whole', 'orr', 'airport', 'hebbal-airport', 'krpuram-hebbal']);
+  assert.equal(story.targets.length, 20);
+  assert.deepEqual(story.sections.map((s) => s.missed), [2, 3, 3, 1, 0]);
+  assert.deepEqual(story.sections.map((s) => s.current?.label), ['Mar 2028', 'May 2027', undefined, 'End-2027', 'Early 2028']);
+  // Changed future targets are superseded, not missed; the airport advance to Dec 2024 still counts as a change.
+  assert.equal(byId.orr.targets.find((t) => t.milestoneId === 'december2026-orr-target').outcome, 'superseded');
+  assert.equal(byId.airport.changes, 2);
+  // The 2021 ORR date is only known from a 2020 recollection of the 2016 DPR.
+  const recalled = byId.orr.targets[0];
+  assert.deepEqual([recalled.label, recalled.announced, recalled.recalledOn], ['2021 (2016 DPR)', undefined, '2020-10-14']);
+});

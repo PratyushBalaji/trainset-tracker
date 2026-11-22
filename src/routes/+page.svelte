@@ -55,7 +55,7 @@
       </div>
       <div class="actions">
         <a class="action-link" href="/fleet">See the fleet <ArrowRight size={18} /></a>
-        <a class="secondary-link" href="/timeline/yellow">Yellow Line timeline</a>
+        <a class="secondary-link" href="/timeline">Line timelines</a>
       </div>
       <p class="as-of tnum">{lastDataUpdate ? `Last data update on ${lastDataUpdate}` : 'Last data update unavailable'} · {resolvedTrainsets.length} trainsets · {trackedContractsLabel} contracts</p>
     </div>

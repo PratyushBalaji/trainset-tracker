@@ -108,7 +108,7 @@
         {#each story.sections as section, i (section.id)}
           {#if section.targets.length}
             {#if story.sections.length > 1}<p class="scorecard-title"><strong>{section.label}</strong> · {section.opening ? `opened ${formatDate(section.opening.date)}` : 'not open yet'}</p>{/if}
-            <dl class="scorecard" class:stacked={story.sections.length > 1 && i < story.sections.length - 1} style={`--cols: ${section.opening ? 2 + (i === 0 ? story.spans.length : 0) : 3}`}>
+            <dl class="scorecard" class:stacked={story.sections.length > 1 && i < story.sections.length - 1} style={`--cols: ${section.opening ? 2 + (i === 0 ? story.spans.length : 0) : section.current ? 3 : 2}`}>
               {#if section.opening && section.earliest}
                 <div class="stat alarm"><dt>Opening targets missed</dt><dd><strong>{section.missed}</strong><span>of {section.targets.length} recorded</span></dd></div>
                 <div class="stat"><dt>Late against first recorded target</dt><dd><strong>{monthsBetween(section.earliest.target, section.opening.date)} mo</strong><span>{section.earliest.label} target → opened {formatDate(section.opening.date)}</span></dd></div>

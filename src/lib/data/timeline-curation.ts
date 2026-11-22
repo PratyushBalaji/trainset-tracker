@@ -44,6 +44,18 @@ export const hiddenMilestones: Record<string, string[]> = {
     'underground-both-track-dynamic-testing',
     'instrumented-oscillation-testing-reported',
     'whitefield-80kmh-trials'
+  ],
+  blue: [
+    // Paperwork superseded by the approval, sanction or award listed next to it.
+    'orr-dpr-submitted',
+    'airport-alignment-cabinet-approval',
+    'combined-proposal-forwarded',
+    'planning-committee-approval',
+    'orr-financial-bids',
+    'adb-orr-contract-record',
+    'airport-infrastructure-mous',
+    // A second first-girder milestone; Package 3's is listed.
+    'airport-package2-first-u-girder'
   ]
 };
 

@@ -147,7 +147,7 @@ export function buildDelayStory(lineId: string, milestones: LineMilestone[], tod
       changes: countTargetChanges(reviewed),
       // An option (a partial-opening proposal) is not a promise for the whole section.
       earliest: targets.find((t) => t.kind !== 'option') ?? targets[0],
-      current: opening ? undefined : targets.at(-1)
+      current: opening || targets.at(-1)?.outcome === 'missed' ? undefined : targets.at(-1)
     };
   });
 
