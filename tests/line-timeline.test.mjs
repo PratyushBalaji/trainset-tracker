@@ -15,11 +15,27 @@ const { buildLineTimeline, historyDateLabel, trainMilestoneGroups } = await impo
 const { todayIsoDate } = await import(dateModule);
 const { milestoneDateLabel, referenceCount } = await import(evidenceModule);
 const { createChartDrag } = await import(moduleUrl(compile('../src/lib/data/chart-drag.ts').replace("'./date'", JSON.stringify(dateModule))));
-const { getCurrentStage } = await import(moduleUrl(compile('../src/lib/data/lifecycle.ts').replace("'./date'", JSON.stringify(dateModule))));
+const { getCurrentStage, buildTimelineSegments, timelineStageDefinitions } = await import(moduleUrl(compile('../src/lib/data/lifecycle.ts').replace("'./date'", JSON.stringify(dateModule))));
 const { reviewedQualification } = await import(moduleUrl(compile('../src/lib/data/reviewed-qualifications.ts')));
 const { togglePinned, emphasizedStage } = await import(moduleUrl(compile('../src/lib/data/chart-interaction.ts')));
 const { percentageBetween } = await import(dateModule);
 const { buildServiceBands } = await import(moduleUrl(compile('../src/lib/data/service-chart.ts').replace("'./date'", JSON.stringify(dateModule))));
+
+test('Gantt includes only dispatch, testing and service without changing historical statuses', () => {
+  const milestones = [
+    { key: 'factory_dispatch', date: '2026-01-10', sources: [] },
+    { key: 'depot_arrival', date: '2026-01-20', sources: [] },
+    { key: 'revenue_induction', date: '2026-02-01', sources: [] }
+  ];
+  const segments = buildTimelineSegments(milestones, '2026-03-01');
+  assert.deepEqual(segments.map((segment) => segment.stageId), ['dispatch', 'testing', 'service']);
+  assert.deepEqual(segments.map((segment) => [segment.start, segment.end]), [
+    ['2026-01-10', '2026-01-20'], ['2026-01-20', '2026-02-01'], ['2026-02-01', '2026-03-01']
+  ]);
+  assert.deepEqual(timelineStageDefinitions.map((stage) => stage.id), ['dispatch', 'testing', 'service']);
+  assert.deepEqual(buildTimelineSegments([], '2026-03-01'), []);
+  assert.equal(getCurrentStage(milestones, '2026-01-01').stage.id, 'manufacturing');
+});
 
 test('single-pass service bands preserve every original SVG coordinate', () => {
   const data = JSON.parse(readFileSync(new URL('../trainsets.json', import.meta.url), 'utf8'));

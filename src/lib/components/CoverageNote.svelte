@@ -1,14 +1,9 @@
 <script lang="ts">
   import { Info } from '@lucide/svelte';
-  import { pendingOn, trackedContractsLabel, untrackedFleet } from '$lib/data/coverage';
-  import { resolvedTrainsets } from '$lib/data/resolve';
-
-  let { date }: { date: string } = $props();
-  let pending = $derived(pendingOn(date));
 </script>
 
 <p class="coverage"><Info size={15} aria-hidden="true" />
-  <span>Tracking the <strong>{trackedContractsLabel}</strong> contracts: {resolvedTrainsets.length} trains on record{#if pending}, <strong class="tnum">{pending}</strong> more ordered but not yet delivered{/if}. The <strong class="tnum">{untrackedFleet.trainsets}</strong> {untrackedFleet.label} ({untrackedFleet.contracts}) are not tracked here.</span>
+  <span>Tracking the <strong>4RS-DM and 5RS-DM</strong> contracts covering 102 trainsets. 38 trains on record as of today. The <strong class="tnum">57</strong> older trains on Purple and Green (2RS-DM and 3RS-DM) do not have sufficient tracking information and are thus omitted</span>
 </p>
 
 <style>

@@ -75,7 +75,7 @@
 
   <div class="fleet-body" class:with-detail={!!selected && !mobile}>
     <div class="groups">
-      <CoverageNote date={tracker.selectedDate} />
+      <CoverageNote />
       {#each groups as group (group.line)}
         <section class="group" aria-labelledby={`group-${group.line}`} style={`--line-color: ${lineColors[group.line] ?? '#6f786f'}`}>
           <header>

@@ -7,12 +7,14 @@
   import { buildServiceBands } from '$lib/data/service-chart';
   import type { DateBounds, ResolvedTrainset } from '$lib/data/types';
 
-  let { trainsets, bounds, selectedDate }: { trainsets: ResolvedTrainset[]; bounds: DateBounds; selectedDate: string } = $props();
+  // `ordered`: trains ordered across the tracked contracts; without it the count is out of the trains on record.
+  let { trainsets, bounds, selectedDate, ordered }: { trainsets: ResolvedTrainset[]; bounds: DateBounds; selectedDate: string; ordered?: number } = $props();
+  let outOf = $derived(ordered ?? trainsets.length);
 
   const H = 100;
   const modes = {
     delivered: { key: 'depot_arrival', label: 'Delivered', first: 'First delivered', aria: 'delivered to depot' },
-    service: { key: 'revenue_induction', label: 'In service', first: 'First entered service', aria: 'in passenger service' }
+    service: { key: 'revenue_induction', label: 'In service', first: 'First inducted', aria: 'in passenger service' }
   } as const;
   let mode = $state<keyof typeof modes>('service');
   let m = $derived(modes[mode]);
@@ -37,13 +39,13 @@
       {/each}
     </div>
     <span class="label">{m.label} on {formatDate(selectedDate)}</span>
-    <strong class="tnum">{atDate}<span class="of"> of {trainsets.length}</span></strong>
+    <strong class="tnum">{atDate}<span class="of">{` of ${outOf}${ordered ? ' ordered' : ''}`}</span></strong>
     {#if firstDate}<span class="sub tnum">{m.first} {formatDate(firstDate)}</span>{/if}
     <ul class="legend">
       {#each lines as line}<li><span class="dot" style={`--dot: ${lineColors[line]}`}></span>{lineLabels[line] ?? line}</li>{/each}
     </ul>
   </div>
-  <svg viewBox={`0 0 1000 ${H}`} preserveAspectRatio="none" role="img" aria-label={`Stacked step chart of tracked trains ${m.aria} by line, reaching ${total} of ${trainsets.length} by ${formatDate(bounds.end)}`}>
+  <svg viewBox={`0 0 1000 ${H}`} preserveAspectRatio="none" role="img" aria-label={`Stacked step chart of tracked trains ${m.aria} by line, reaching ${total} of ${outOf} by ${formatDate(bounds.end)}`}>
     {#each bands as band (band.line)}<path d={band.d} fill={lineColors[band.line] ?? '#6f786f'} fill-opacity="0.85"></path>{/each}
     <line x1={x(selectedDate)} x2={x(selectedDate)} y1="0" y2={H} stroke="#17211d" stroke-width="1.5" stroke-dasharray="3 3" vector-effect="non-scaling-stroke"></line>
   </svg>

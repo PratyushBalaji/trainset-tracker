@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy, tick } from 'svelte';
+  import { onDestroy, tick, type Snippet } from 'svelte';
   import { EyeOff } from '@lucide/svelte';
   import IntervalPreview from './IntervalPreview.svelte';
   import { emphasizedStage, togglePinned } from '$lib/data/chart-interaction';
@@ -27,13 +27,16 @@
     onHideFromChart: (id: string) => void;
     onDateChange: (date: string) => void;
     onDragBoundsChange: (bounds: DateBounds | null) => void;
+    /** Optional content under the heading, e.g. the hidden-trains control. */
+    headingExtra?: Snippet;
   }
 
-  const labelColumnWidth = 140;
+  // Match ServiceChart's 230px plot start and 20px outer inset.
+  const labelColumnWidth = 210;
   const axisHeight = 32;
   const canvasSidePadding = 12;
   const canvasBottomPadding = 10;
-  const plotSidePadding = 48;
+  const plotSidePadding = 8;
   const plotVerticalPadding = 28;
 
   let {
@@ -45,7 +48,8 @@
     onSelect,
     onHideFromChart,
     onDateChange,
-    onDragBoundsChange
+    onDragBoundsChange,
+    headingExtra
   }: Props = $props();
 
   let canvasElement = $state<HTMLDivElement | null>(null);
@@ -55,6 +59,8 @@
   let drag = $state<ReturnType<typeof createChartDrag> | null>(null);
   let hoverPercent = $state(0);
   let hoverDate = $state('');
+  let cursorLabelWidth = $state(0);
+  let hoverLabelWidth = $state(0);
   let pinnedStage = $state<StageId | null>(null);
   let previewStage = $state<StageId | null>(null);
   let highlightedStageId = $derived(emphasizedStage(pinnedStage, previewStage));
@@ -126,6 +132,12 @@
     return Math.min(Math.max(value, min), max);
   }
 
+  function dateLabelOffset(percent: number, width: number): number {
+    const inset = canvasSidePadding + plotSidePadding;
+    const center = inset + labelColumnWidth + (canvasWidth - labelColumnWidth - 2 * inset) * percent / 100;
+    return clamp(center, width / 2 + 8, canvasWidth - width / 2 - 8) - center;
+  }
+
   function stageStyle(stageId: StageId): string {
     const stageColor = stageColors[stageId];
     return `--stage-color: ${stageColor.color}; --stage-soft: ${stageColor.softColor}; --stage-text: ${stageColor.textColor};`;
@@ -134,13 +146,11 @@
   function segmentStyle(segment: TimelineSegment): string {
     const left = percentageBetween(segment.start, bounds.start, bounds.end);
     const right = percentageBetween(segment.end, bounds.start, bounds.end);
-    return `left: ${left}%; width: ${Math.max(right - left, 0.7)}%; ${stageStyle(segment.stageId)}`;
+    // Keep minimum-width intervals inside their recorded or chart-boundary end.
+    return `right: ${100 - right}%; width: ${Math.max(right - left, 0.7)}%; ${stageStyle(segment.stageId)}`;
   }
 
   function segmentTitle(trainset: DatedTrainset, segment: TimelineSegment): string {
-    if (segment.id === 'manufacturing-window') {
-      return `${trainset.trainsetNumber} - Illustrative pre-dispatch window: 70-day lead-in ending at the recorded dispatch value ${milestoneDateLabel(trainset.milestones.find((m) => m.key === 'factory_dispatch'))} (clipped to chart range). Actual manufacturing dates are not recorded; no references establish this window.`;
-    }
     const sourceCount = segment.sourceMilestones.reduce(
       (count, milestone) => count + milestone.sources.length,
       0
@@ -244,7 +254,10 @@
 <svelte:window onkeydown={(event) => { if (event.key === 'Escape' && inspected) { event.preventDefault(); dismissInspection(); } }} />
 <section class="gantt-section" id="lifecycle-chart" aria-label="Lifecycle timeline" tabindex="-1">
   <div class="timeline-heading">
-    <h2 class="tnum">{trainsets.length} trainsets on the chart</h2>
+    <div>
+      <h2 class="tnum">{trainsets.length} trainsets recorded</h2>
+      {#if headingExtra}{@render headingExtra()}{/if}
+    </div>
 
     <div class="legend" aria-label="Lifecycle legend">
       {#each timelineStageDefinitions as stage}
@@ -255,7 +268,7 @@
           class="legend-item"
           type="button"
           style={stageStyle(stage.id)}
-          aria-label={`Highlight ${stage.id === 'manufacturing' ? 'Illustrative pre-dispatch window' : stage.filterLabel}`}
+          aria-label={`Highlight ${stage.filterLabel}`}
           aria-pressed={pinnedStage === stage.id}
           onclick={() => { pinnedStage = togglePinned(pinnedStage, stage.id); previewStage = null; }}
           onblur={() => { previewStage = null; }}
@@ -264,14 +277,12 @@
           onpointerleave={() => { previewStage = null; }}
         >
           <span class={`legend-swatch stage-${stage.id}`} aria-hidden="true"></span>
-          <span>{stage.id === 'manufacturing' ? 'Illustrative pre-dispatch' : stage.filterLabel}</span>
-          {#if stage.id === 'manufacturing'}<small>70-day lead-in, not recorded manufacturing</small>{/if}
+          <span>{stage.filterLabel}</span>
         </button>
       {/each}
     </div>
   </div>
   <div class="chart-links"><span class="pan-hint">Scroll to pan · Drag the date pill to scrub</span></div>
-  {#if !cursorVisible}<p class="chart-note">Selected date: {formatDate(selectedDate)} (outside this fleet's plotted history).</p>{/if}
 
   <!-- svelte-ignore a11y_no_noninteractive_tabindex (Native keyboard scrolling needs a focusable chart region.) -->
   <div class="timeline-shell" role="region" aria-label="Scrollable lifecycle chart" tabindex="0" onfocus={(event) => { const frame = event.currentTarget; requestAnimationFrame(() => { if (document.activeElement === frame) frame.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'instant' }); }); }}>
@@ -307,12 +318,12 @@
 
       <div class="timeline-track-layer">
         {#if cursorVisible}<span class="selected-date-line">
-          <button data-date-cursor type="button" aria-label={`Drag selected date, ${formatDate(selectedDate)}`} onkeydown={(event) => { if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); onDateChange(clampIsoDate(addDays(selectedDate, event.key === 'ArrowRight' ? 1 : -1), bounds.start, maxDate)); } }}>{formatDate(selectedDate)}</button>
+          <button bind:clientWidth={cursorLabelWidth} style={`margin-left: ${dateLabelOffset(cursorLeft, cursorLabelWidth)}px`} data-date-cursor type="button" aria-label={`Drag selected date, ${formatDate(selectedDate)}`} onkeydown={(event) => { if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); onDateChange(clampIsoDate(addDays(selectedDate, event.key === 'ArrowRight' ? 1 : -1), bounds.start, maxDate)); } }}>{formatDate(selectedDate)}</button>
         </span>{/if}
 
         {#if (isPointerInside || isDraggingDate) && hoverDate && hoverDate !== selectedDate}
           <span class="hover-date-line"></span>
-          <span class="hover-date-handle">
+          <span class="hover-date-handle" bind:clientWidth={hoverLabelWidth} style={`margin-left: ${dateLabelOffset(hoverPercent, hoverLabelWidth)}px`}>
             {formatDate(hoverDate || selectedDate)}
           </span>
         {/if}
@@ -390,7 +401,7 @@
       </div>
     </div>
   </div>
-  {#if inspected && inspectedTrain && inspectedSegment}<IntervalPreview trainset={inspectedTrain} segment={inspectedSegment} pinned={Boolean(pinnedInspection)} top={inspected.top} left={inspected.left} onClose={dismissInspection} onOpen={openInspectedTrain} onEnter={keepPreview} onLeave={leavePreview} />{/if}
+  {#if inspected && inspectedTrain && inspectedSegment}<IntervalPreview trainset={inspectedTrain} segment={inspectedSegment} pinned={Boolean(pinnedInspection)} anchor={inspected.origin} onClose={dismissInspection} onOpen={openInspectedTrain} onEnter={keepPreview} onLeave={leavePreview} />{/if}
 </section>
 
 <style>
@@ -398,11 +409,9 @@
   .chart-links { display: flex; gap: 18px; align-items: center; font-size: 12px; color: #536055; }
   .pan-hint { display: none; }
   .legend-item.pinned { background: #e3e9df; box-shadow: inset 0 -2px #26342e; border-radius: 4px; }
-  .legend-item small { max-width: 135px; font-size: 10px; font-weight: 400; line-height: 1.4; text-align: left; }
   .axis-label { display: flex; align-items: center; padding-left: 8px; }
   .row-contract { white-space: nowrap; }
   .axis-label { position: sticky; left: 0; z-index: 8; background: #fffdfa; }
-  .chart-note { font-size: 12px; line-height: 1.6; color: #536055; margin: 0; max-width: 1050px; }
   @media(max-width: 820px) { .row-hide-button { opacity: 1 !important; min-width: 36px; min-height: 36px; } .axis-row { font-size: 12px; } .timeline-row { min-height: 36px; } }
   .gantt-section {
     display: grid;
@@ -518,7 +527,6 @@
 
   .axis-track {
     position: relative;
-    border-left: 1px solid transparent;
     border-bottom: 1px solid #e3e7df;
   }
 
@@ -551,7 +559,7 @@
     top: 0;
     bottom: 0;
     width: 0;
-    translate: -1px 0;
+    translate: -50% 0;
   }
 
   .selected-date-line {
@@ -715,7 +723,7 @@
     min-width: 0;
     min-height: 26px;
     align-self: stretch;
-    border-left: 1px solid #e3e7df;
+    box-shadow: inset 1px 0 #e3e7df;
   }
 
   .lane-plot {
@@ -782,13 +790,6 @@
     padding-left: 24px;
     color: #8c9488;
     font-size: 0.72rem;
-  }
-
-  /* Illustrative lead-in: deliberately quiet, since it is not a recorded interval. */
-  .stage-manufacturing {
-    background: repeating-linear-gradient(45deg, transparent 0 4px, color-mix(in srgb, var(--stage-color) 45%, transparent) 4px 5px);
-    border-style: dashed !important;
-    border-color: color-mix(in srgb, var(--stage-color) 70%, transparent) !important;
   }
 
   .stage-dispatch,

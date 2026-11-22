@@ -5,7 +5,9 @@
   import FleetToolbar from '$lib/components/FleetToolbar.svelte';
   import CoverageNote from '$lib/components/CoverageNote.svelte';
   import GanttChart from '$lib/components/GanttChart.svelte';
+  import HiddenTrains from '$lib/components/HiddenTrains.svelte';
   import ServiceChart from '$lib/components/ServiceChart.svelte';
+  import { orderedTrainsets } from '$lib/data/coverage';
   import TrainsetDetail from '$lib/components/TrainsetDetail.svelte';
   import { minIsoDate } from '$lib/data/date';
   import { buildTimelineSegments } from '$lib/data/lifecycle';
@@ -28,7 +30,7 @@
   let plottedFleet = $derived(tracker.fleet.filter((t) => !tracker.hidden.has(t.id)));
   let dataBounds = $derived(getTrainsetTimelineBounds(plottedFleet, timelineBounds));
   let bounds = $derived(dragBounds ?? { start: dataBounds.start, end: minIsoDate(dataBounds.end, timelineBounds.end) });
-  let segments = $derived(new Map(plottedFleet.map((t) => [t.id, buildTimelineSegments(t.milestones, bounds.start, bounds.end)])));
+  let segments = $derived(new Map(plottedFleet.map((t) => [t.id, buildTimelineSegments(t.milestones, bounds.end)])));
   let chartTrainsets = $derived(visible.map((t) => ({ ...t, timelineSegments: segments.get(t.id)! })));
   let hiddenTrains = $derived(dated.filter((t) => tracker.hidden.has(t.id)));
   let selected = $derived(selectedId ? (dated.find((t) => t.id === selectedId) ?? null) : null);
@@ -58,15 +60,13 @@
 
 <main class="lifecycle-page">
   <FleetToolbar title="Lifecycle" playFrom={dataBounds.start}>
-    {#snippet summary()}From factory to passengers, one row per tracked train.{/snippet}
+    {#snippet summary()}From factory to passengers.{/snippet}
   </FleetToolbar>
 
   <div class="body">
-    <CoverageNote date={tracker.selectedDate} />
-    <ServiceChart trainsets={tracker.fleet} {bounds} selectedDate={tracker.selectedDate} />
-    {#if hiddenTrains.length}
-      <p class="hidden-note">{hiddenTrains.length} hidden: {hiddenTrains.map((t) => `${t.trainsetNumber} (${t.lineSummary})`).join(', ')} <button type="button" onclick={() => tracker.showAll()}>Show all</button></p>
-    {/if}
+    <CoverageNote />
+    <!-- Out of all trains ordered under the tracked contracts; a line or maker filter falls back to the filtered trains. -->
+    <ServiceChart trainsets={tracker.fleet} {bounds} selectedDate={tracker.selectedDate} ordered={tracker.filtersActive ? undefined : orderedTrainsets} />
     <GanttChart
       trainsets={chartTrainsets}
       selectedDate={tracker.selectedDate}
@@ -77,7 +77,9 @@
       onHideFromChart={(id) => tracker.toggleHidden(id)}
       onDateChange={(date) => tracker.setDate(date)}
       onDragBoundsChange={(b) => { dragBounds = b; }}
-    />
+    >
+      {#snippet headingExtra()}<HiddenTrains trains={hiddenTrains} onRestore={(id) => tracker.toggleHidden(id)} onRestoreAll={() => tracker.showAll()} />{/snippet}
+    </GanttChart>
   </div>
 
   {#if selected}
@@ -92,8 +94,6 @@
 
 <style>
   .body { max-width: 1400px; margin: 0 auto; padding: 24px 32px 64px; display: grid; gap: 18px; }
-  .hidden-note { margin: 0; font-size: 13px; color: var(--muted); }
-  .hidden-note button { margin-left: 8px; height: 30px; padding: 0 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); font-size: 12px; }
   .drawer { position: fixed; inset: var(--site-header-height) 0 0 auto; z-index: 45; width: min(420px, 100%); display: flex; }
   .drawer :global(.detail-panel) { position: relative; width: 100%; max-height: none; height: 100%; overflow: auto; border-radius: 0; border-right: 0; border-bottom: 0; box-shadow: -12px 0 32px #17211d22; }
   .drawer :global(.detail-header) { top: 0; }

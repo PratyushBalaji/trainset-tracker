@@ -129,7 +129,7 @@ export const timelineBounds: DateBounds = {
 
 export const resolvedTrainsets: ResolvedTrainset[] = baseTrainsets.map((trainset) => ({
   ...trainset,
-  timelineSegments: buildTimelineSegments(trainset.milestones, timelineBounds.start, timelineBounds.end)
+  timelineSegments: buildTimelineSegments(trainset.milestones, timelineBounds.end)
 }));
 
 export const manufacturerOptions = Array.from(
