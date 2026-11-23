@@ -84,6 +84,8 @@ Each contract and trainset also has an immutable generated `uid`, independent of
 
 A contract describes the procurement package itself. It stores the awardee, known procurement dates, original contract scope/value, later contract variations, and the rolling stock types sanctioned under that contract.
 
+`base_allocations` distributes the base order by actual manufacturer and line; each variation's `allocations` distributes only its additional quantity. These rows do not add to the order a second time. A row with multiple `lines` is a shared pool with no known per-line split, counted once when either or both lines are selected. Allocation sources and qualifications sit alongside the rows. Operational deployment decisions do not amend these procurement allocations. Lifecycle chart denominators use the allocations, including trains without individual records, independently of the date cursor and visibility controls.
+
 All four procurement records live in the `contracts` section of `trainsets.json`, including descriptions, original delivery periods, qualifications and sources. Legacy 2RS-DM/3RS-DM records have `tracked: false` and no individual trainsets; they do not contribute to tracked order or pending totals. Their empty `rolling_stock` arrays indicate that no legacy design is tracked. In particular, 3RS-DM's base 150 intermediate cars lengthened existing trains rather than creating 50 new trains. Original delivery schedules are historical commitments, not current forecasts. Unknown exact dates are omitted.
 
 ```jsonc

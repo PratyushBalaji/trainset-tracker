@@ -10,11 +10,20 @@ export type MilestoneKey =
 
 export type LineId = 'yellow' | 'green' | 'purple' | 'pink' | 'blue' | string;
 
+export interface OrderAllocation {
+  lines: LineId[];
+  manufacturer: string;
+  trainsets: number;
+}
+
 export interface RawContract {
   tracked?: boolean;
   uid: string;
   awardee: string;
   rolling_stock: string[];
+  base_allocations?: OrderAllocation[];
+  allocation_sources?: string[];
+  allocation_comments?: string;
 }
 
 export interface RawRollingStock {

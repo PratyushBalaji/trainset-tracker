@@ -7,9 +7,9 @@
   import { buildServiceBands } from '$lib/data/service-chart';
   import type { DateBounds, ResolvedTrainset } from '$lib/data/types';
 
-  // `ordered`: trains ordered across the tracked contracts; without it the count is out of the trains on record.
-  let { trainsets, bounds, selectedDate, ordered }: { trainsets: ResolvedTrainset[]; bounds: DateBounds; selectedDate: string; ordered?: number } = $props();
-  let outOf = $derived(ordered ?? trainsets.length);
+  let { trainsets, bounds, selectedDate, ordered, sharedPools = [] }: { trainsets: ResolvedTrainset[]; bounds: DateBounds; selectedDate: string; ordered?: number; sharedPools?: string[] } = $props();
+  let outOf = $derived(ordered === undefined ? 'unknown' : ordered);
+  const poolLabel = (pool: string) => pool.split('/').map((line) => (lineLabels[line] ?? line).replace(/ Line$/, '')).join('/');
 
   const H = 100;
   const modes = {
@@ -39,7 +39,8 @@
       {/each}
     </div>
     <span class="label">{m.label} on {formatDate(selectedDate)}</span>
-    <strong class="tnum">{atDate}<span class="of">{` of ${outOf}${ordered ? ' ordered' : ''}`}</span></strong>
+    <strong class="tnum">{atDate}<span class="of">{ordered === undefined ? ' ordered total unavailable' : ` of ${ordered} ordered`}</span></strong>
+    {#each sharedPools as pool}<span class="sub">Includes the shared {poolLabel(pool)} order.</span>{/each}
     {#if firstDate}<span class="sub tnum">{m.first} {formatDate(firstDate)}</span>{/if}
     <ul class="legend">
       {#each lines as line}<li><span class="dot" style={`--dot: ${lineColors[line]}`}></span>{lineLabels[line] ?? line}</li>{/each}

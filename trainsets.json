@@ -87,6 +87,16 @@
       "awardee": "CRRC Nanjing Puzhen",
       "awarded_on": "2019-12-02",
       "base_cars": 216,
+      "base_allocations": [
+        { "lines": ["yellow"], "manufacturer": "CRRC Nanjing Puzhen", "trainsets": 1 },
+        { "lines": ["yellow"], "manufacturer": "Titagarh Rail Systems", "trainsets": 14 },
+        { "lines": ["purple", "green"], "manufacturer": "CRRC Nanjing Puzhen", "trainsets": 1 },
+        { "lines": ["purple", "green"], "manufacturer": "Titagarh Rail Systems", "trainsets": 20 }
+      ],
+      "allocation_sources": [
+        "https://www.moneycontrol.com/technology/titagarh-to-supply-the-first-train-for-bengaluru-metros-electronics-city-corridor-in-august-2024-article-12719184.html"
+      ],
+      "allocation_comments": "Multiple lines identify a shared pool, not a quantity per line. The original Purple/Green split is unknown. Manufacturer allocations reflect the subsequent production arrangement. Operational deployment decisions do not amend these procurement allocations.",
       "base_contract_value": {
         "amount": 1578,
         "currency": "INR",
@@ -113,6 +123,14 @@
       "signed_on": "2023-08-19",
       "base_trainsets": 53,
       "base_cars": 318,
+      "base_allocations": [
+        { "lines": ["pink"], "manufacturer": "BEML", "trainsets": 16 },
+        { "lines": ["blue"], "manufacturer": "BEML", "trainsets": 37 }
+      ],
+      "allocation_sources": [
+        "https://timesofindia.indiatimes.com/city/bengaluru/bengaluru-bmrcl-floats-tender-for-318-coaches-for-pink-line-orr-kia-metro-corridors/articleshow/94334073.cms"
+      ],
+      "allocation_comments": "Blue comprises 16 trains for Phase 2A and 21 for Phase 2B.",
       "base_contract_value": {
         "amount": 3176.43,
         "currency": "INR",
@@ -128,7 +146,14 @@
             "currency": "INR",
             "unit": "crore"
           },
-          "intended_line": "pink"
+          "intended_line": "pink",
+          "allocations": [
+            { "lines": ["pink"], "manufacturer": "BEML", "trainsets": 7 }
+          ],
+          "sources": [
+            "https://www.bemlindia.in/wp-content/uploads/2025/03/28032025.pdf"
+          ],
+          "comments": "The recorded ordered_on date is the announcement date; the underlying order issuance date is not separately established."
         },
         {
           "ordered_on": "2025-12-03",
@@ -139,7 +164,14 @@
             "currency": "INR",
             "unit": "crore"
           },
-          "intended_line": "yellow"
+          "intended_line": "yellow",
+          "allocations": [
+            { "lines": ["yellow"], "manufacturer": "BEML", "trainsets": 6 }
+          ],
+          "sources": [
+            "https://www.bemlindia.in/wp-content/uploads/2025/12/pressrelease041225_2.pdf"
+          ],
+          "comments": "The recorded ordered_on date is the disclosure date; the underlying order issuance date is not separately established."
         }
       ],
       "rolling_stock": [

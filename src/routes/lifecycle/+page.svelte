@@ -7,11 +7,11 @@
   import GanttChart from '$lib/components/GanttChart.svelte';
   import HiddenTrains from '$lib/components/HiddenTrains.svelte';
   import ServiceChart from '$lib/components/ServiceChart.svelte';
-  import { orderedTrainsets } from '$lib/data/coverage';
+  import { orderForFilters } from '$lib/data/coverage';
   import TrainsetDetail from '$lib/components/TrainsetDetail.svelte';
   import { minIsoDate } from '$lib/data/date';
   import { buildTimelineSegments } from '$lib/data/lifecycle';
-  import { getTrainsetTimelineBounds, timelineBounds } from '$lib/data/resolve';
+  import { getTrainsetTimelineBounds, lineOptions, timelineBounds } from '$lib/data/resolve';
   import { tracker } from '$lib/tracker-state.svelte';
   import type { DateBounds, DatedTrainset } from '$lib/data/types';
 
@@ -26,6 +26,7 @@
   onDestroy(() => tracker.stop());
 
   let dated = $derived(tracker.dated);
+  let order = $derived(orderForFilters(tracker.lines.size === lineOptions.length ? undefined : tracker.lines, tracker.manufacturers));
   let visible = $derived(dated.filter((t) => !tracker.hidden.has(t.id)));
   let plottedFleet = $derived(tracker.fleet.filter((t) => !tracker.hidden.has(t.id)));
   let dataBounds = $derived(getTrainsetTimelineBounds(plottedFleet, timelineBounds));
@@ -65,8 +66,7 @@
 
   <div class="body">
     <CoverageNote />
-    <!-- Out of all trains ordered under the tracked contracts; a line or maker filter falls back to the filtered trains. -->
-    <ServiceChart trainsets={tracker.fleet} {bounds} selectedDate={tracker.selectedDate} ordered={tracker.filtersActive ? undefined : orderedTrainsets} />
+    <ServiceChart trainsets={tracker.fleet} {bounds} selectedDate={tracker.selectedDate} ordered={order.ordered} sharedPools={order.sharedPools} />
     <GanttChart
       trainsets={chartTrainsets}
       selectedDate={tracker.selectedDate}
