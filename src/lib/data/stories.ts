@@ -35,7 +35,7 @@ const delivered = (t: ResolvedTrainset, today: string) => {
 };
 
 // Reviewed readings of contract delivery periods (prose in trainsets.json).
-const deliveryReadings: Record<string, { matches: string; due?: (awarded: string) => string; window?: { from: string; to: string } }> = {
+export const deliveryReadings: Record<string, { matches: string; due?: (awarded: string) => string; window?: { from: string; to: string } }> = {
   'bmrcl-4rs-dm': { matches: 'Original delivery period: 173 weeks; subsequently delayed', due: (awarded) => addDays(awarded, 173 * 7) },
   'bmrcl-5rs-dm': { matches: 'Original base-order delivery schedule: June 2025–May 2027; comprehensive maintenance for up to 15 years', window: { from: '2025-06-01', to: '2027-05-31' } }
 };

@@ -22,6 +22,7 @@
     { href: '/fleet', label: 'Fleet', match: '/fleet' },
     { href: '/lifecycle', label: 'Lifecycle', match: '/lifecycle' },
     { href: '/timeline/yellow', label: 'Timeline', match: '/timeline' },
+    { href: '/stats', label: 'Stats', match: '/stats' },
     { href: '/routemap', label: 'Route Map', match: '/routemap' }
   ];
   onMount(() => {

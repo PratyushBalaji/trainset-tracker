@@ -171,7 +171,7 @@ export const reviewedLineStories: Record<string, ReviewedLineStory> = {
       { id: 'reach2', label: 'Reach 2 (west)', noun: 'Reach 2', openingMilestoneId: 'reach2-passenger-opening' },
       { id: 'underground', label: 'Underground link', noun: 'underground', openingMilestoneId: 'original-corridor-passenger-opening' },
       { id: 'kengeri', label: 'Kengeri extension', noun: 'Kengeri', openingMilestoneId: 'kengeri-passenger-opening' },
-      { id: 'eastern', label: 'Eastern extension', noun: 'eastern-extension', openingMilestoneId: 'connecting-passenger-opening' },
+      { id: 'eastern', label: 'Whitefield extension', noun: 'Whitefield', openingMilestoneId: 'connecting-passenger-opening' },
       { id: 'challaghatta', label: 'Challaghatta extension', noun: 'Challaghatta', openingMilestoneId: 'challaghatta-passenger-opening' }
     ],
     targets: [

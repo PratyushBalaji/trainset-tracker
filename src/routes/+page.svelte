@@ -91,7 +91,7 @@
   </section>
 
   {#if stories.length}
-    <section class="story-wrap"><StoryCarousel {stories} /></section>
+    <section class="story-wrap"><StoryCarousel {stories} /><a class="more-stats" href="/stats">See more stats <ArrowRight size={16} /></a></section>
   {/if}
 
   <section class="explore" aria-label="Explore">
@@ -168,6 +168,8 @@
   .board-line, .board-count { line-height: 16px; }
 
   .story-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px 56px; }
+  .more-stats { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: none; }
+  .more-stats:hover { text-decoration: underline; text-underline-offset: 4px; }
 
   .contracts-wrap { max-width: 1240px; margin: 0 auto; padding: 0 32px 64px; }
   .explore { max-width: 1240px; margin: 0 auto; padding: 0 32px 64px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }

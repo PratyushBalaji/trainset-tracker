@@ -1,6 +1,8 @@
 // Route geometry extracted from PratyushBalaji/maps, revision c03cdcc (2026-11-22).
 export const networkViewBox = '60 0 1020 980';
-export const networkPaths = [
+// segment: matches a reviewed timeline section id, so a stat can highlight that stretch.
+// labelAt: where a label for that stretch sits, in viewBox units (just outside its curve).
+export const networkPaths: { line: string; segment?: string; labelAt?: [number, number]; d: string; transform: string }[] = [
   {
     "line": "purple",
     "d": "m 1052.2352,196.53544 v 52.91339 c 0,0 -0.2751,18.89764 -18.8977,18.89764 h -31.7627 c 0,0 -14.06257,-1.18919 -14.06257,14.06258 v 21.02514 c 0,0 -0.19653,18.60844 -18.60845,18.60844 h -37.08177 c 0,0 -17.01782,0.63871 -17.01782,-17.01781 v -23.25748 c 0,0 0.231,-13.13886 -15.27662,-13.42087 h -75.52755 l -11.60609,0.10476 -14.91361,-0.10476 -58.54867,56.69292 h -38.02619 v 22.67716 h -41.56498 l -20.60031,20.60031 H 574.48819 L 542.5493,336.37797 h -20.97449 l -22.67717,22.67717 H 336.37796 l -22.67717,22.67716 v 64.25198 L 168.07143,591.61363",
@@ -18,11 +20,14 @@ export const networkPaths = [
   },
   {
     "line": "blue",
+    "segment": "orr",
+    "labelAt": [890, 615],
     "d": "m 635.46157,575.43663 54.01187,0.0332 32.45107,-32.45107 102.41666,0.0395 45.39388,-45.39388 0.0869,-177.6378 -57.33039,-55.06799 -14.58117,-0.007",
     "transform": "translate(1.889765,181.63843)"
   },
   {
     "line": "blue",
+    "segment": "airport",
     "d": "m 642.1756,-154.96066 h -70.29519 -9.87067 l -22.93219,18.03677 -40.17991,31.0971 v 212.0141 l 43.52417,-0.002 6.20954,1.07101 119.08899,0.0557 95.54885,95.54885 -0.17678,75.89635 17.28989,0.10228 12.44478,-10.95078 2.65132,-5.0084 2.3878,-0.0707",
     "transform": "translate(1.889765,181.63843)"
   },
