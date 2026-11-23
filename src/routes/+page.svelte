@@ -105,12 +105,11 @@
   <section class="about">
     <div>
       <h2>About</h2>
-      <p>We all know BMRCL and their contractors have a terrible track record when it comes to meeting deadlines. Heck, the Yellow Line was inaugurated almost 2 years after civil works completion, all due to a lack of <strong>trains</strong>.</p>
+      <p>We all know BMRCL and their contractors don't have the best track record when it comes to planning and meeting deadlines. Remember how long the Yellow Line was sitting, collecting dust after its civil works were finished, due to a lack of <strong>trains</strong>?</p>
       <p>Major cities like London, Paris, and Tokyo run 2-minute frequencies while I still have to wait 10 minutes during peak hour if I miss a train at Whitefield!</p>
       <p>Namma Metro needs more trains, and the public needs to know when they'll get here, so this repository strives to track and plot every trainset received, tested, and inducted into service to keep BMRCL accountable.</p>
-      <p>All information comes from news outlets, reporters, and on-ground sources as BMRCL does not release this information publicly.</p>
-      <p><strong>This project is not affiliated with BMRCL and is built to serve the public interest.</strong></p>
-    </div>
+      <p>All information comes from news outlets, reporters, press releases, and on-ground sources as BMRCL does not release this information publicly.</p>
+      <p><strong>This project is not affiliated with BMRCL and is built to serve the public interest.</strong></p>    </div>
     <div>
       <h2>Acknowledgements</h2>
       <p>Thank you to journalists like Christin Mathew Philip (<a href="https://x.com/ChristinMP_" target="_blank" rel="noreferrer">@ChristinMP_</a>) and Muthi-ur-Rahman Siddiqui (<a href="https://x.com/ever_pessimist" target="_blank" rel="noreferrer">@ever_pessimist</a>), enthusiasts like BLR Metro Tracker (<a href="https://x.com/blrmetrotracker" target="_blank" rel="noreferrer">@blrmetrotracker</a>), and all the news outlets and insiders who share this information with us Bengalureans.</p>
