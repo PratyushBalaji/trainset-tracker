@@ -9,7 +9,10 @@
 
   let { tile }: { tile: Tile } = $props();
 
-  const parts = (text: string) => text.split('**').map((t, i) => ({ t, strong: i % 2 === 1 }));
+  // One rule for every tile at every width: each sentence starts on its own line (a sentence ends with
+  // "." or ")" — possibly just inside a bold run — and the next starts with a capital, digit or "(").
+  const sentences = (text: string) => text.replace(/([.)])(\*\*)? +(?=(\*\*)?[A-Z0-9(])/g, '$1$2\n');
+  const parts = (text: string) => sentences(text).split('**').map((t, i) => ({ t, strong: i % 2 === 1 }));
   // How long something took. Never a line colour, so it can't be mistaken for one.
   const speed = (days: number, s: SpeedScale) => (days <= s.fast ? 'var(--fast)' : days > s.slow ? 'var(--slow)' : 'var(--mid)');
   const pct = (date: string, start: string, end: string) => Math.max(0, Math.min(100, ((yearFraction(date) - yearFraction(start)) / (yearFraction(end) - yearFraction(start))) * 100));
@@ -215,8 +218,8 @@
   .big small { font-size: 0.4em; letter-spacing: -0.01em; font-weight: 700; margin-left: 6px; color: var(--on-3); }
   .big .to { color: var(--on-3); font-weight: 600; margin: 0 0.1em; }
   .big s { text-decoration-thickness: 0.07em; text-decoration-color: var(--slow); color: var(--on-3); }
-  .text { margin: 0; white-space: pre-line; font-size: 15px; line-height: 1.45; color: var(--on-2); max-width: 46ch; }
-  .text strong { color: var(--on); font-weight: 650; }
+  .text { margin: 0; white-space: pre-line; font-size: 15px; line-height: 1.45; color: var(--on-2); max-width: 62ch; }
+  .text strong { color: var(--on); font-weight: 650; white-space: nowrap; }
   .viz { margin-top: 16px; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; }
   .viz.top { justify-content: flex-start; }
   .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
