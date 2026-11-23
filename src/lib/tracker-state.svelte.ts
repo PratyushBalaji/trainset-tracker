@@ -2,7 +2,7 @@
 // hidden trains survive moving between the two pages.
 import { addDays, clampIsoDate, compareIsoDate, daysBetween, formatDate, todayIsoDate } from '$lib/data/date';
 import { decorateTrainsetForDate, lineOptions, manufacturerOptions, resolvedTrainsets, timelineBounds } from '$lib/data/resolve';
-import { lineOrder } from '$lib/data/presentation';
+import { lineOrder, lineShortLabels, makerSlug, manufacturerShortLabels } from '$lib/data/presentation';
 import type { LineId } from '$lib/data/types';
 
 export const trackerToday = clampIsoDate(todayIsoDate(), timelineBounds.start, timelineBounds.end);
@@ -48,6 +48,22 @@ class TrackerState {
     this.manufacturers = name === null || (this.manufacturers.size === 1 && this.manufacturers.has(name)) ? new Set(manufacturerOptions) : new Set([name]);
   }
   clearFilters() { this.lines = new Set(lineOptions); this.manufacturers = new Set(manufacturerOptions); }
+
+  /** Apply ?maker= and ?line= from a link (e.g. from a Stats tile). Unknown values are ignored. */
+  applyFromUrl(params: URLSearchParams) {
+    const maker = manufacturerOptions.find((m) => makerSlug(m) === params.get('maker')?.toLowerCase());
+    const line = lineOptions.find((l) => l === params.get('line')?.toLowerCase());
+    if (!maker && !line) return;
+    this.manufacturers = new Set(maker ? [maker] : manufacturerOptions);
+    this.lines = new Set(line ? [line] : lineOptions);
+  }
+
+  /** Plain-words description of the active filters, e.g. "Titagarh trains" or "BEML trains on the Pink Line". */
+  get filterLabel() {
+    const makers = this.manufacturers.size === manufacturerOptions.length ? '' : [...this.manufacturers].map((m) => manufacturerShortLabels[m] ?? m).join(' and ');
+    const lines = this.lines.size === lineOptions.length ? '' : [...this.lines].map((l) => lineShortLabels[l] ?? l).join(' and ');
+    return `${makers ? `${makers} trains` : 'trains'}${lines ? ` on the ${lines} Line` : ''}`;
+  }
 
   toggleHidden(id: string) {
     const next = new Set(this.hidden);

@@ -230,7 +230,7 @@ function deliveryTiles(trains: FleetTrain[], today: string): Tile[] {
         text: `The contract gave 173 weeks, so every train was due by **${monthLabel(due)}**. The first one arrived in **${monthLabel(first)}**.`,
         note: 'Dashed box: the time the contract allowed. Each tick: one train delivered.',
         share: `Namma Metro's ${code} trains (built by ${builderOf(id)}) were all due by ${monthLabel(due)}. The first one arrived in ${monthLabel(first)}.`,
-        link: { href: '/lifecycle', label: 'Every delivery' },
+        link: { href: `/lifecycle?maker=${builderOf(id).toLowerCase()}`, label: `See ${builderOf(id)}'s deliveries` },
         viz: { type: 'window', start: `${c.awarded_on.slice(0, 4)}-01-01`, end: `${Number(today.slice(0, 4)) + 1}-06-30`, band: { from: c.awarded_on, to: due }, ticks, legend, flags: [{ date: due, label: `All due ${monthLabel(due)}`, due: true }, { date: first, label: `First train ${monthLabel(first)}`, due: false }] }
       });
     } else if (reading.window) {
@@ -242,7 +242,7 @@ function deliveryTiles(trains: FleetTrain[], today: string): Tile[] {
         text: `${makerName((dataset.contracts[id] as { awardee: string }).awardee)} was to deliver between **${monthLabel(from)} and ${monthLabel(to)}**. Its first train came in **${monthLabel(first)}**, and ${ordered - arrivals.length} are still to come${left > 0 ? ` with ${plural(left, 'month')} of that window left` : ' after that window closed'}.`,
         note: 'Dashed box: the original delivery schedule. Each tick: one train delivered.',
         share: `BEML was to deliver Namma Metro's ${ordered} ${code} trains between ${monthLabel(from)} and ${monthLabel(to)}. ${arrivals.length} have arrived so far; the first came in ${monthLabel(first)}.`,
-        link: { href: '/fleet', label: 'Fleet' },
+        link: { href: `/fleet?maker=${builderOf(id).toLowerCase()}`, label: `View ${builderOf(id)}'s fleet` },
         viz: { type: 'window', start: `${from.slice(0, 4)}-01-01`, end: `${to.slice(0, 4)}-12-31`, band: { from, to }, ticks, legend, flags: [{ date: from, label: `First due ${monthLabel(from)}`, due: true }, { date: first, label: `First train ${monthLabel(first)}`, due: false }, { date: to, label: `All due ${monthLabel(to)}`, due: true }] }
       });
     }
@@ -263,7 +263,7 @@ function deliveryTiles(trains: FleetTrain[], today: string): Tile[] {
       big: { parts: [{ n: `${early}` }, { n: `${recent}`, unit: 'days' }], arrow: true },
       text: `Titagarh's first trains arrived about **${early} days apart**. Now a new one turns up about **every ${recent} days**.`,
       share: `Titagarh now delivers a Namma Metro train about every ${recent} days. Its first ones came ${early} days apart.`,
-      link: { href: '/lifecycle', label: 'Lifecycle' },
+      link: { href: '/lifecycle?maker=titagarh', label: "See Titagarh's deliveries" },
       viz: { type: 'gaps', bars: titGaps.map((g) => ({ days: g.days, label: `${g.train.number}: ${g.days} days after the one before` })), scale: SPEED, ends: [titGaps[0].train.number, titGaps.at(-1)!.train.number], max: gapMax }
     });
   }
@@ -278,7 +278,7 @@ function deliveryTiles(trains: FleetTrain[], today: string): Tile[] {
       big: { parts: [{ n: `${bemlTypical}`, unit: 'days' }] },
       text: `BEML builds in ${makerPlaces.BEML} and has sent a train about **every ${bemlTypical} days** since its first.`,
       share: `BEML sends Namma Metro a new train about every ${bemlTypical} days.`,
-      link: { href: '/lifecycle', label: 'Lifecycle' },
+      link: { href: '/lifecycle?maker=beml', label: "See BEML's deliveries" },
       viz: { type: 'gaps', bars: bemlGaps.map((g) => ({ days: g.days, label: `${g.train.number}: ${g.days} days after the one before` })), scale: SPEED, ends: [bemlGaps[0].train.number, bemlGaps.at(-1)!.train.number], max: gapMax }
     });
   }
@@ -298,7 +298,7 @@ function deliveryTiles(trains: FleetTrain[], today: string): Tile[] {
       text: `The road trip from ${makerPlaces[TITAGARH]} to the Bengaluru depot now takes **${range(Math.min(...recentT), Math.max(...recentT))} days**${times >= 2 ? `, about ${times} times faster than the first` : ''}.`,
       note: 'Hollow dots indicate approximate dates. Some trains with ambiguous data are excluded.',
       share: `Titagarh's trains now reach the Bengaluru depot ${range(Math.min(...recentT), Math.max(...recentT))} days after leaving the factory. The first took ${firstT}.`,
-      link: { href: '/lifecycle', label: 'Lifecycle' },
+      link: { href: '/lifecycle?maker=titagarh', label: "See Titagarh's deliveries" },
       viz: { type: 'line', points: transit.map((t) => ({ days: t.trip!.days, approx: t.trip!.approx, label: `${t.number}: ${t.trip!.days} days${t.trip!.approx ? ' (approximate date)' : ''}` })), scale: { fast: 12, slow: 20 }, ends: [transit[0].number, transit.at(-1)!.number] }
     });
   }

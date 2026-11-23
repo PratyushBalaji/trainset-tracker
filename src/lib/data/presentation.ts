@@ -24,6 +24,9 @@ export const manufacturerCodes: Record<string, string> = { 'CRRC Nanjing Puzhen'
 
 export const manufacturerShortLabels: Record<string, string> = { 'CRRC Nanjing Puzhen': 'CRRC', 'Titagarh Rail Systems': 'Titagarh', BEML: 'BEML' };
 
+/** URL value for a maker filter on Fleet and Lifecycle, e.g. ?maker=titagarh. */
+export const makerSlug = (maker: string) => (manufacturerShortLabels[maker] ?? maker).toLowerCase();
+
 export type TrainDesign = 'beml-og' | 'crrc-trsl' | 'beml-new';
 
 export const trainDesignLabels: Record<TrainDesign, string> = {

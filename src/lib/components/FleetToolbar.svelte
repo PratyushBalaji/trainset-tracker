@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { Pause, Play } from '@lucide/svelte';
+  import { Pause, Play, X } from '@lucide/svelte';
+  import { page } from '$app/state';
+  import { replaceState } from '$app/navigation';
   import { lineOptions, manufacturerOptions, timelineBounds } from '$lib/data/resolve';
   import { lineColors, lineOrder, lineShortLabels, manufacturerShortLabels } from '$lib/data/presentation';
   import { dateSliderMax, tracker } from '$lib/tracker-state.svelte';
@@ -20,6 +22,23 @@
   let progress = $derived((sliderValue / dateSliderMax) * 100);
   const allLines = $derived(tracker.lines.size === lineOptions.length);
   const allMakers = $derived(tracker.manufacturers.size === manufacturerOptions.length);
+  // Links like /lifecycle?maker=titagarh arrive with that filter already on.
+  let appliedSearch = '';
+  $effect(() => {
+    const search = page.url.search;
+    if (search === appliedSearch) return;
+    appliedSearch = search;
+    tracker.applyFromUrl(page.url.searchParams);
+  });
+  // Clearing also drops ?maker= / ?line= from the address, so a refresh doesn't switch the filter back on.
+  function clearAll() {
+    tracker.clearFilters();
+    if (!page.url.searchParams.has('maker') && !page.url.searchParams.has('line')) return;
+    const url = new URL(page.url);
+    url.searchParams.delete('maker');
+    url.searchParams.delete('line');
+    replaceState(url, page.state);
+  }
 </script>
 
 <div class="toolbar">
@@ -46,6 +65,12 @@
       </div>
     </div>
 
+    {#if tracker.filtersActive}
+      <div class="active-filter" role="status">
+        <span>Showing only <strong>{tracker.filterLabel}</strong></span>
+        <button type="button" onclick={clearAll}><X size={14} aria-hidden="true" />Clear filter</button>
+      </div>
+    {/if}
     <div class="filters" role="group" aria-label="Filter trains">
       <button type="button" class="chip" aria-pressed={allLines} onclick={() => tracker.pickLine(null)}>All lines</button>
       {#each lines as line}
@@ -81,6 +106,9 @@
   .scale { position: absolute; left: 8px; right: 8px; bottom: 0; height: 14px; font-size: 11px; color: var(--muted); }
   .scale span { position: absolute; transform: translateX(-50%); }
   .filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .active-filter { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 8px 8px 14px; border-radius: 10px; background: #f2b84b2e; border: 1px solid #e6a23c80; font-size: 14px; color: var(--ink-2); }
+  .active-filter strong { color: var(--ink); }
+  .active-filter button { display: inline-flex; align-items: center; gap: 6px; flex: none; height: 32px; padding: 0 12px; border-radius: 8px; border: 0; background: var(--ink); color: var(--surface); font-size: 13px; font-weight: 600; cursor: pointer; }
   .divider { width: 1px; height: 22px; background: var(--border); margin: 0 4px; }
   @media (max-width: 860px) {
     .toolbar { position: static; }
