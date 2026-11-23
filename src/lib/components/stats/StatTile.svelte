@@ -220,7 +220,7 @@
   .viz { margin-top: 16px; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; }
   .viz.top { justify-content: flex-start; }
   .viz svg { width: 100%; height: auto; display: block; overflow: visible; }
-  .note { margin: 10px 0 0; font-size: 12px; color: var(--on-3); }
+  .note { margin: 10px 0 0; white-space: pre-line; font-size: 12px; color: var(--on-3); }
   .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 12px; }
   .dark .foot { border-color: #ffffff17; }
   .src { color: var(--on-3); text-decoration: none; }

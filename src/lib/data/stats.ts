@@ -541,9 +541,10 @@ function datesTiles(today: string): Tile[] {
     const hasMap = networkPaths.some((p) => p.segment === s.id);
     slipTile = {
       id: 'furthest-slip', size: 'w3', kicker: `${lineName(line)} Line · ${s.label}`,
-      big: { parts: [{ n: first, struck: true }, { n: s.current!.label }], arrow: true },
-      text: source ? `The first date came from the ${source.replace('DPR', 'project report (DPR)')}.` : 'The first date given, and the date now.',
-      note: `Deadline moved ${plural(s.changes, 'time')} so far, for this stretch alone.`,
+      // Not opened yet, so the current date carries an asterisk: it can still move.
+      big: { parts: [{ n: first, struck: true }, { n: `${s.current!.label}*` }], arrow: true },
+      text: `The deadline has moved ${plural(s.changes, 'time')} so far${source ? ` from the ${source}` : ''} for just this stretch alone.`,
+      note: '*Subject to further delays.',
       share: `The ${lineName(line)} Line's ${s.label} stretch was first due in ${first}. The date now is ${s.current!.label}, after moving ${plural(s.changes, 'time')}.`,
       link: { href: `/timeline/${line}`, label: `${lineName(line)} timeline` },
       viz: hasMap ? { type: 'map', segment: s.id, label: segmentKm(s.id) !== undefined ? `${segmentKm(s.id)} km` : undefined } : { type: 'compare', items: [{ label: 'first date', value: first }, { label: 'now', value: s.current!.label }] }
