@@ -17,17 +17,22 @@
 </script>
 
 <article class="tile {tile.size}" class:dark={tile.dark} class:has-route={tile.route} id={tile.id}>
-  {#if tile.route}<div class="route-map"><IndiaRoute {...tile.route} size={0} /></div>{/if}
   <div class="head">
     <p class="kicker">{tile.kicker}</p>
     {#if tile.icon}<TrainIcon design={tile.icon} size={34} color={tile.dark ? '#eef1ea' : 'var(--ink)'} />{/if}
   </div>
+  <!-- With a route map, headline and text share a row with it, so the chart always starts below the map. -->
+  <div class="intro" class:with-route={tile.route}>
+  <div>
   {#if tile.big}
     <p class="big tnum">
       {#each tile.big.parts as part, i}{#if i && tile.big.arrow}<span class="to" aria-label="down to">→</span>{/if}{#if part.struck}<s>{part.n}</s>{:else}{part.n}{/if}{#if part.unit}<small>{part.unit}</small>{/if}{/each}
     </p>
   {/if}
   <p class="text">{#each parts(tile.text) as p}{#if p.strong}<strong>{p.t}</strong>{:else}{p.t}{/if}{/each}</p>
+  </div>
+  {#if tile.route}<div class="route-map"><IndiaRoute {...tile.route} size={0} /></div>{/if}
+  </div>
 
   {#if tile.viz}
     {@const v = tile.viz}
@@ -59,16 +64,26 @@
         </svg>
         <div class="key"><span><i style="--c: var(--fast)"></i>{v.scale.fast} days or less</span><span><i style="--c: var(--mid)"></i>{v.scale.fast + 1}–{v.scale.slow} days</span><span><i style="--c: var(--slow)"></i>more than {v.scale.slow}</span></div>
       {:else if v.type === 'line'}
-        {@const max = Math.max(...v.points.map((p) => p.days)) + 4}
-        {@const x = (i: number) => 14 + (i / Math.max(1, v.points.length - 1)) * 272}
-        {@const y = (n: number) => 146 - (n / max) * 130}
-        <svg viewBox="0 0 300 170" role="img" aria-label={`Factory to depot days, ${v.ends[0]} to ${v.ends[1]}`}>
+        <!-- Scaled to the data's own range (not from zero) so small changes in days are visible. The highest
+             and lowest dots carry their values. -->
+        {@const days = v.points.map((p) => p.days)}
+        {@const lo = Math.max(0, Math.min(...days) - 1)}
+        {@const hi = Math.max(...days) + 1}
+        {@const x = (i: number) => 26 + (i / Math.max(1, v.points.length - 1)) * 260}
+        {@const y = (n: number) => 186 - ((n - lo) / Math.max(1, hi - lo)) * 160}
+        {@const top = days.indexOf(Math.max(...days))}
+        {@const bottom = days.indexOf(Math.min(...days))}
+        <!-- Labels sit to the right of their dot (to the left near the right edge). -->
+        {@const anchor = (i: number) => (x(i) > 230 ? 'end' : 'start')}
+        {@const ax = (i: number) => (x(i) > 230 ? x(i) - 10 : x(i) + 10)}
+        <svg viewBox="0 0 300 226" role="img" aria-label={`Factory to depot days, ${v.ends[0]} to ${v.ends[1]}`}>
+          {#each [lo, Math.round((lo + hi) / 2), hi] as g}<line x1="18" x2="292" y1={y(g)} y2={y(g)} stroke="currentColor" stroke-opacity="0.07" /><text x="0" y={y(g) + 3} font-size="9" fill="var(--muted)">{g}</text>{/each}
           <polyline points={v.points.map((p, i) => `${x(i)},${y(p.days)}`).join(' ')} fill="none" stroke="#c9d0c5" stroke-width="1.5" />
-          {#each v.points as p, i}<circle cx={x(i)} cy={y(p.days)} r={i === 0 || i === v.points.length - 1 ? 6 : 4} fill={speed(p.days, v.scale)}><title>{p.label}</title></circle>{/each}
-          <text x={x(0) + 10} y={y(v.points[0].days) + 4} font-size="11" font-weight="700" fill="var(--slow)">{v.points[0].days} days</text>
-          <text x={x(v.points.length - 1)} y={y(v.points.at(-1)!.days) - 12} font-size="11" font-weight="700" text-anchor="end" fill="var(--fast)">{v.points.at(-1)!.days} days</text>
-          <text x="14" y="167" font-size="10" fill="var(--muted)">{v.ends[0]}</text>
-          <text x="286" y="167" font-size="10" text-anchor="end" fill="var(--muted)">{v.ends[1]}</text>
+          {#each v.points as p, i}<circle cx={x(i)} cy={y(p.days)} r={i === 0 || i === v.points.length - 1 ? 6 : 4} fill={p.approx ? 'var(--surface)' : speed(p.days, v.scale)} stroke={p.approx ? speed(p.days, v.scale) : 'none'} stroke-width="2"><title>{p.label}</title></circle>{/each}
+          <text x={ax(top)} y={y(days[top]) + 4} font-size="11" font-weight="700" text-anchor={anchor(top)} fill={speed(days[top], v.scale)}>{days[top]} days</text>
+          <text x={ax(bottom)} y={y(days[bottom]) + 4} font-size="11" font-weight="700" text-anchor={anchor(bottom)} fill={speed(days[bottom], v.scale)}>{days[bottom]} days</text>
+          <text x="26" y="220" font-size="10" text-anchor="middle" fill="var(--muted)">{v.ends[0]}</text>
+          <text x="286" y="220" font-size="10" text-anchor="middle" fill="var(--muted)">{v.ends[1]}</text>
         </svg>
       {:else if v.type === 'columns'}
         {@const max = Math.max(...v.bars.map((b) => b.days))}
@@ -187,9 +202,9 @@
   /* The route map sits in its own top-right corner; the headline and text stop short of it. */
   .has-route { --map-w: clamp(84px, 26%, 136px); }
   /* Top edge lines up with the big number (kicker line + its margin), so the kicker keeps the full width. */
-  .route-map { position: absolute; top: 46px; right: 18px; width: var(--map-w); }
+  .intro.with-route { display: grid; grid-template-columns: minmax(0, 1fr) var(--map-w); gap: 12px; align-items: start; }
+  .route-map { margin-top: 6px; }
   .route-map :global(.india-route) { width: 100%; }
-  .has-route .big, .has-route .text { max-width: calc(100% - var(--map-w) - 12px); }
   .kicker { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-3); }
   .big { margin: 10px 0 4px; font: 800 clamp(40px, 4.6vw, 62px)/0.95 var(--font-display); letter-spacing: -0.04em; }
   .w2 .big { font-size: clamp(36px, 3.6vw, 50px); }

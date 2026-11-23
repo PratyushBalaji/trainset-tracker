@@ -7,6 +7,7 @@ import { lineColors, lineOrder, lineShortLabels, manufacturerShortLabels, rollin
 import { dataset, resolvedTrainsets } from './resolve';
 import { networkPaths } from './network-map';
 import { deliveryReadings } from './stories';
+import { dateQualification } from './evidence';
 import type { ResolvedTrainset } from './types';
 
 export interface FleetTrain {
@@ -23,6 +24,9 @@ export interface FleetTrain {
   arrivedOn?: string;
   servedOn?: string;
   transitDays?: number;
+  /** Factory to depot from any recorded dates (approximate ones included), unless a reviewed note
+   * says the dates don't measure the trip. Used for the trend chart. */
+  trip?: { days: number; approx: boolean };
   /** Depot arrival to first passengers, or to today while still waiting. */
   depotDays?: number;
   waiting: boolean;
@@ -43,7 +47,7 @@ export type StopState = 'missed' | 'kept' | 'floor';
 export type TileViz =
   | { type: 'window'; start: string; end: string; band: { from: string; to: string }; ticks: { date: string; color: string }[]; flags: { date: string; label: string; due: boolean }[]; legend: { color: string; label: string }[] }
   | { type: 'gaps'; bars: { days: number; label: string }[]; scale: SpeedScale; ends: [string, string]; max: number }
-  | { type: 'line'; points: { days: number; label: string }[]; scale: SpeedScale; ends: [string, string] }
+  | { type: 'line'; points: { days: number; label: string; approx?: boolean }[]; scale: SpeedScale; ends: [string, string] }
   | { type: 'columns'; bars: { days: number; label: string }[]; scale: SpeedScale; ends: [string, string]; legend: [string, string, string] }
   | { type: 'compare'; items: { label: string; value: string; sub?: string; design?: TrainDesign }[] }
   | { type: 'spans'; rows: { line: string; label: string; color: string; from: string; to: string; months: number }[] }
@@ -125,6 +129,33 @@ function reportedDate(t: ResolvedTrainset, key: string, today: string): string |
   return p?.inferred || p?.derived || p?.approximate ? undefined : m.date;
 }
 
+/** A date the site shows as exact: no "on or before/after", no unconfirmed note, nothing inferred. */
+function exactDate(t: ResolvedTrainset, key: string, today: string): string | undefined {
+  const m = t.milestones.find((x) => x.key === key);
+  if (!m || m.date > today) return undefined;
+  const q = dateQualification(m);
+  return q.relation === 'exact' && !q.inferred && !q.derived && !q.approximate ? m.date : undefined;
+}
+
+// Trips left out of the factory-to-depot trend because their own notes say the stored dates don't
+// measure the journey. Keyed to the stored date, so an exclusion lapses if that date is corrected.
+const tripExclusions: Record<string, { key: 'factory_dispatch' | 'depot_arrival'; date: string; reason: string }> = {
+  'bmrcl-4rs-dm-ts002': { key: 'factory_dispatch', date: '2025-01-06', reason: 'dispatch date is the flag-off ceremony; the coaches left in late January' },
+  'bmrcl-4rs-dm-ts011': { key: 'factory_dispatch', date: '2026-04-13', reason: 'dispatch only known as on or after 13 Apr' },
+  'bmrcl-4rs-dm-ts018': { key: 'depot_arrival', date: '2026-04-14', reason: 'arrival only known as on or before 14 Apr, and it left in two halves' }
+};
+export const excludedTrips = Object.keys(tripExclusions);
+
+function tripOf(t: ResolvedTrainset, today: string): { days: number; approx: boolean } | undefined {
+  const dispatch = t.milestones.find((m) => m.key === 'factory_dispatch');
+  const arrival = t.milestones.find((m) => m.key === 'depot_arrival');
+  if (!dispatch || !arrival || arrival.date > today) return undefined;
+  const ex = tripExclusions[t.id];
+  if (ex && (ex.key === 'factory_dispatch' ? dispatch : arrival).date === ex.date) return undefined;
+  const approx = !exactDate(t, 'factory_dispatch', today) || !exactDate(t, 'depot_arrival', today);
+  return { days: daysBetween(dispatch.date, arrival.date), approx };
+}
+
 /** First passenger opening of any section of each line, from the reviewed timelines. */
 function firstOpenings(today: string): Record<string, string> {
   const out: Record<string, string> = {};
@@ -142,6 +173,9 @@ function fleetTrains(today: string, openings: Record<string, string>): FleetTrai
     const dispatchedOn = reportedDate(t, 'factory_dispatch', today);
     const arrivedOn = reportedDate(t, 'depot_arrival', today);
     const servedOn = reportedDate(t, 'revenue_induction', today);
+    // Factory to depot is a short trip, so a loose date on either end can swamp it: both must be exact.
+    const exactDispatch = exactDate(t, 'factory_dispatch', today);
+    const exactArrival = exactDate(t, 'depot_arrival', today);
     const served = t.milestones.some((m) => m.key === 'revenue_induction' && m.date <= today);
     const opening = openings[t.displayLine];
     return {
@@ -155,7 +189,8 @@ function fleetTrains(today: string, openings: Record<string, string>): FleetTrai
       dispatchedOn,
       arrivedOn,
       servedOn,
-      transitDays: dispatchedOn && arrivedOn ? daysBetween(dispatchedOn, arrivedOn) : undefined,
+      transitDays: exactDispatch && exactArrival ? daysBetween(exactDispatch, exactArrival) : undefined,
+      trip: tripOf(t, today),
       depotDays: arrivedOn && (servedOn || !served) ? daysBetween(arrivedOn, servedOn ?? today) : undefined,
       waiting: Boolean(arrived) && !served,
       beforeOpening: Boolean(arrived) && (!opening || arrived! < opening)
@@ -249,19 +284,22 @@ function deliveryTiles(trains: FleetTrain[], today: string): Tile[] {
   }
 
   // Titagarh factory to depot
-  const transit = trains.filter((t) => t.maker === TITAGARH && t.transitDays !== undefined).sort((a, b) => a.dispatchedOn!.localeCompare(b.dispatchedOn!));
+  const dispatchOf = (t: FleetTrain) => resolvedTrainsets.find((r) => r.id === t.id)!.milestones.find((m) => m.key === 'factory_dispatch')!.date;
+  const transit = trains.filter((t) => t.maker === TITAGARH && t.trip).sort((a, b) => dispatchOf(a).localeCompare(dispatchOf(b)));
   if (transit.length >= 4) {
-    const firstT = transit[0].transitDays!, lastT = transit.at(-1)!.transitDays!;
-    const recentT = transit.slice(-4).map((t) => t.transitDays!);
-    const times = lastT > 0 ? Math.round(firstT / lastT) : 0;
+    const firstT = transit[0].trip!.days, lastT = transit.at(-1)!.trip!.days;
+    const recentT = transit.slice(-4).map((t) => t.trip!.days);
+    // Only claim "N times faster" when it really is at least double; 1.75× is not "about 2 times".
+    const times = lastT > 0 && firstT / lastT >= 2 ? Math.round(firstT / lastT) : 0;
     tiles.push({
       id: 'titagarh-transit', size: 'w2', kicker: 'Titagarh · factory to depot',
       route: { from: 'kolkata', to: 'bengaluru', label: 'Route from the Kolkata area to Bengaluru' },
       big: { parts: [{ n: `${firstT}` }, { n: `${lastT}`, unit: 'days' }], arrow: true },
       text: `The road trip from ${makerPlaces[TITAGARH]} to the Bengaluru depot now takes **${range(Math.min(...recentT), Math.max(...recentT))} days**${times >= 2 ? `, about ${times} times faster than the first` : ''}.`,
-      share: `Trains from Titagarh's factory now reach Bengaluru in ${range(Math.min(...recentT), Math.max(...recentT))} days. The first took ${firstT}.`,
+      note: 'Hollow dots indicate approximate dates. Some trains with ambiguous data are excluded.',
+      share: `Titagarh's trains now reach the Bengaluru depot ${range(Math.min(...recentT), Math.max(...recentT))} days after leaving the factory. The first took ${firstT}.`,
       link: { href: '/lifecycle', label: 'Lifecycle' },
-      viz: { type: 'line', points: transit.map((t) => ({ days: t.transitDays!, label: `${t.number}: ${t.transitDays} days` })), scale: { fast: 12, slow: 20 }, ends: [transit[0].number, transit.at(-1)!.number] }
+      viz: { type: 'line', points: transit.map((t) => ({ days: t.trip!.days, approx: t.trip!.approx, label: `${t.number}: ${t.trip!.days} days${t.trip!.approx ? ' (approximate date)' : ''}` })), scale: { fast: 12, slow: 20 }, ends: [transit[0].number, transit.at(-1)!.number] }
     });
   }
 

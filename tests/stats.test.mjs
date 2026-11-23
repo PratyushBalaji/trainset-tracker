@@ -70,4 +70,12 @@ test('durations ignore inferred dates and stay plausible', () => {
   }
   // BEML 5RS-DM dispatch dates are mostly inferred a day before arrival; they must not count as measured transit.
   assert.equal(stats.trains.find((t) => t.id === 'bmrcl-5rs-dm-ts003').transitDays, undefined);
+  // Factory to depot needs exact dates on both ends: TS002's dispatch is the flag-off ceremony, TS011's
+  // dispatch is only "on or after", TS018's arrival only "on or before".
+  for (const n of ['ts002', 'ts011', 'ts018']) {
+    assert.equal(stats.trains.find((t) => t.id === `bmrcl-4rs-dm-${n}`).transitDays, undefined, n);
+    assert.equal(stats.trains.find((t) => t.id === `bmrcl-4rs-dm-${n}`).trip, undefined, `${n} should stay out of the trend chart while its date is unchanged`);
+  }
+  // Approximate dates still count on the trend chart; only the reviewed exclusions are left out.
+  assert.ok(stats.trains.filter((t) => t.maker === 'Titagarh Rail Systems' && t.trip).length >= 14);
 });
