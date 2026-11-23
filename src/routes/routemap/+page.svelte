@@ -216,6 +216,7 @@
     .info-card { position: static; width: auto; border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--border); padding: 16px; }
     .map-viewer { display: flex; flex-direction: column; height: auto; }
     .map-viewport { position: relative; height: 62svh; flex: none; }
-    .map-toolbar { bottom: 16px; right: 16px; }
+    /* Map above, layers card below: pin zoom controls to the map's bottom-right corner, not the section's. */
+    .map-toolbar { top: calc(62svh - 16px); bottom: auto; right: 16px; transform: translateY(-100%); }
   }
 </style>
