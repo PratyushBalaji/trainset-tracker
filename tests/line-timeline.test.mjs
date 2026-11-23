@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import ts from 'typescript';
+import { loadModule } from './helpers/load-module.mjs';
 
 test('Blue research preserves approvals, date precision and limited trial extents', () => {
   const { blue } = JSON.parse(readFileSync(new URL('../lines.json', import.meta.url), 'utf8')).lines;
@@ -40,23 +40,15 @@ test('Blue research preserves approvals, date precision and limited trial extent
   }
 });
 
-const compile = (file) => ts.transpileModule(readFileSync(new URL(file, import.meta.url), 'utf8'), {
-  compilerOptions: { module: ts.ModuleKind.ESNext }
-}).outputText;
-const moduleUrl = (code) => `data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
-const dateModule = moduleUrl(compile('../src/lib/data/date.ts'));
-const evidenceModule = moduleUrl(compile('../src/lib/data/evidence.ts').replace("'./date'", JSON.stringify(dateModule)));
-const { buildLineTimeline, historyDateLabel, trainMilestoneGroups } = await import(moduleUrl(
-  compile('../src/lib/data/line-timeline.ts').replace("'./date'", JSON.stringify(dateModule)).replace("'./evidence'", JSON.stringify(evidenceModule))
-));
-const { todayIsoDate } = await import(dateModule);
-const { milestoneDateLabel, referenceCount } = await import(evidenceModule);
-const { createChartDrag } = await import(moduleUrl(compile('../src/lib/data/chart-drag.ts').replace("'./date'", JSON.stringify(dateModule))));
-const { getCurrentStage, buildTimelineSegments, timelineStageDefinitions } = await import(moduleUrl(compile('../src/lib/data/lifecycle.ts').replace("'./date'", JSON.stringify(dateModule))));
-const { reviewedQualification } = await import(moduleUrl(compile('../src/lib/data/reviewed-qualifications.ts')));
-const { togglePinned, emphasizedStage } = await import(moduleUrl(compile('../src/lib/data/chart-interaction.ts')));
-const { percentageBetween } = await import(dateModule);
-const { buildServiceBands } = await import(moduleUrl(compile('../src/lib/data/service-chart.ts').replace("'./date'", JSON.stringify(dateModule))));
+const load = (file) => loadModule(new URL(file, import.meta.url));
+const { buildLineTimeline, historyDateLabel, trainMilestoneGroups } = await import(load('../src/lib/data/line-timeline.ts'));
+const { todayIsoDate, percentageBetween } = await import(load('../src/lib/data/date.ts'));
+const { milestoneDateLabel, referenceCount } = await import(load('../src/lib/data/evidence.ts'));
+const { createChartDrag } = await import(load('../src/lib/data/chart-drag.ts'));
+const { getCurrentStage, buildTimelineSegments, timelineStageDefinitions } = await import(load('../src/lib/data/lifecycle.ts'));
+const { reviewedQualification } = await import(load('../src/lib/data/reviewed-qualifications.ts'));
+const { togglePinned, emphasizedStage } = await import(load('../src/lib/data/chart-interaction.ts'));
+const { buildServiceBands } = await import(load('../src/lib/data/service-chart.ts'));
 
 test('Gantt includes only dispatch, testing and service without changing historical statuses', () => {
   const milestones = [
@@ -216,10 +208,7 @@ test('line records have unique IDs, dates or periods, and usable citations', () 
   }
 });
 
-const reviewedTargetsModule = moduleUrl(compile('../src/lib/data/reviewed-targets.ts'));
-const { buildDelayStory, monthsBetween, timelineGaps } = await import(moduleUrl(
-  compile('../src/lib/data/delay-story.ts').replace("'./date'", JSON.stringify(dateModule)).replace("'./reviewed-targets'", JSON.stringify(reviewedTargetsModule))
-));
+const { buildDelayStory, monthsBetween, timelineGaps } = await import(load('../src/lib/data/delay-story.ts'));
 
 test('delay story counts missed opening targets only while reviewed target text still matches', () => {
   const lines = JSON.parse(readFileSync(new URL('../lines.json', import.meta.url), 'utf8'));

@@ -16,11 +16,39 @@ export interface OrderAllocation {
   trainsets: number;
 }
 
+export interface Money { amount: number; currency: string; unit: string }
+
+export interface ContractVariation {
+  ordered_on?: string;
+  additional_trainsets?: number;
+  additional_cars?: number;
+  contract_value?: Money;
+  intended_line?: LineId;
+  allocations?: OrderAllocation[];
+  comments?: string;
+  sources?: string[];
+}
+
 export interface RawContract {
   tracked?: boolean;
   uid: string;
   awardee: string;
   rolling_stock: string[];
+  year?: string;
+  description: string;
+  manufacturers?: string[];
+  lines?: LineId[];
+  tendered_on?: string;
+  awarded_on?: string;
+  signed_on?: string;
+  base_trainsets?: number;
+  base_cars?: number;
+  order_description?: string;
+  base_contract_value?: Money;
+  contract_period: string;
+  comments?: string;
+  sources: string[];
+  variations?: ContractVariation[];
   base_allocations?: OrderAllocation[];
   allocation_sources?: string[];
   allocation_comments?: string;

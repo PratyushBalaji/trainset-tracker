@@ -1,17 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import ts from 'typescript';
+import { loadModule } from './helpers/load-module.mjs';
 
-const compile = (file) => ts.transpileModule(readFileSync(new URL(file, import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.ESNext } }).outputText;
-const moduleUrl = (code) => `data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
-const dateModule = moduleUrl(compile('../src/lib/data/date.ts'));
-const targetsModule = moduleUrl(compile('../src/lib/data/reviewed-targets.ts'));
-const { buildDelayStory } = await import(moduleUrl(
-  compile('../src/lib/data/delay-story.ts').replace("'./date'", JSON.stringify(dateModule)).replace("'./reviewed-targets'", JSON.stringify(targetsModule))
-));
-const { reviewedLineStories } = await import(targetsModule);
-const { hiddenMilestones, visibleMilestones } = await import(moduleUrl(compile('../src/lib/data/timeline-curation.ts')));
+const load = (file) => loadModule(new URL(file, import.meta.url));
+const { buildDelayStory } = await import(load('../src/lib/data/delay-story.ts'));
+const { reviewedLineStories } = await import(load('../src/lib/data/reviewed-targets.ts'));
+const { hiddenMilestones, visibleMilestones } = await import(load('../src/lib/data/timeline-curation.ts'));
 const { lines } = JSON.parse(readFileSync(new URL('../lines.json', import.meta.url), 'utf8'));
 
 test('curated-off timeline entries still exist in lines.json', () => {

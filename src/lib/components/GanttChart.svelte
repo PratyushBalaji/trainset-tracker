@@ -64,7 +64,7 @@
   let pinnedStage = $state<StageId | null>(null);
   let previewStage = $state<StageId | null>(null);
   let highlightedStageId = $derived(emphasizedStage(pinnedStage, previewStage));
-  type Inspection = { trainId: string; segmentId: string; origin: HTMLElement; top: boolean; left: boolean };
+  type Inspection = { trainId: string; segmentId: string; origin: HTMLElement };
   let pinnedInspection = $state<Inspection | null>(null);
   let previewInspection = $state<Inspection | null>(null);
   let inspected = $derived(pinnedInspection ?? previewInspection);
@@ -96,8 +96,7 @@
     if (!pin && event.type === 'focus' && suppressFocus) { suppressFocus = false; return; }
     keepPreview();
     const element = event.currentTarget as HTMLElement;
-    const rect = element.getBoundingClientRect();
-    const next = { trainId, segmentId, origin: element, top: rect.top > window.innerHeight / 2, left: rect.left + rect.width / 2 > window.innerWidth / 2 };
+    const next = { trainId, segmentId, origin: element };
     if (pin) {
       pinnedInspection = pinnedInspection?.trainId === trainId && pinnedInspection.segmentId === segmentId ? null : next;
       previewInspection = null;

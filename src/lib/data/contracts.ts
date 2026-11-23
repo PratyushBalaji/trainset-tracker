@@ -4,18 +4,7 @@ import { todayIsoDate } from './date';
 import { contractScopes } from './coverage';
 import { lineOrder, rollingStockDesign, type TrainDesign } from './presentation';
 import { dataset, decorateTrainsetForDate, resolvedTrainsets } from './resolve';
-
-interface Money { amount: number; currency: string; unit: string }
-interface RawContractFull extends CatalogueEntry {
-  awardee: string;
-  tendered_on?: string;
-  awarded_on?: string;
-  signed_on?: string;
-  base_trainsets?: number;
-  base_cars?: number;
-  base_contract_value?: Money;
-  rolling_stock: string[];
-}
+import type { Money, RawContract } from './types';
 
 export interface ContractLineStat { line: string; delivered: number; inService: number; ordered?: number }
 
@@ -46,29 +35,11 @@ export interface ContractSummary {
   sources?: string[];
 }
 
-interface CatalogueEntry {
-  tracked?: boolean;
-  year?: string;
-  description: string;
-  awardee?: string;
-  manufacturers?: string[];
-  lines?: string[];
-  signed_on?: string;
-  base_trainsets?: number;
-  base_cars?: number;
-  order_description?: string;
-  base_contract_value?: Money;
-  contract_period: string;
-  comments?: string;
-  sources: string[];
-  variations?: { ordered_on?: string; additional_trainsets?: number; additional_cars?: number; contract_value?: Money; intended_line?: string; comments?: string; sources?: string[] }[];
-}
-
-const details = dataset.contracts as unknown as Record<string, RawContractFull>;
+const details = dataset.contracts;
 
 const delivered = (key: string) => key === 'factory_dispatch' || key === 'depot_arrival';
 
-function trackedSummary(id: string, c: RawContractFull, today: string): ContractSummary {
+function trackedSummary(id: string, c: RawContract, today: string): ContractSummary {
   const trains = resolvedTrainsets.filter((t) => t.contractId === id);
   const dated = trains.map((t) => decorateTrainsetForDate(t, today));
   const isDelivered = (t: (typeof trains)[number]) => t.milestones.some((m) => delivered(m.key) && m.date <= today);

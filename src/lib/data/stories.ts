@@ -48,8 +48,6 @@ const spanPhrases: Record<string, string> = {
   'Civil work done → passengers': 'civil works completion and the first revenue service'
 };
 
-type ContractRaw ={ awarded_on?: string; base_trainsets?: number; base_cars?: number; contract_period?: string; rolling_stock: string[] };
-
 function deadlineStory(lineId: string, today: string): Story | null {
   const story = buildDelayStory(lineId, lines[lineId]?.milestones ?? [], today);
   const first = story?.sections[0];
@@ -123,7 +121,7 @@ function partsStory(lineId: string, today: string): Story | null {
 }
 
 function contractStory(id: string, today: string): Story | null {
-  const c = dataset.contracts[id] as unknown as ContractRaw | undefined;
+  const c = dataset.contracts[id];
   const reading = deliveryReadings[id];
   if (!c || !reading || c.contract_period !== reading.matches) return null;
   const trains = resolvedTrainsets.filter((t) => t.contractId === id);

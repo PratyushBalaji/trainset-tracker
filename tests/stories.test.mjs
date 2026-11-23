@@ -3,39 +3,12 @@
 // This test fails instead, so the change has to be looked at before it ships.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import ts from 'typescript';
+import { loadModule } from './helpers/load-module.mjs';
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const cache = new Map();
-const toUrl = (code) => `data:text/javascript;base64,${Buffer.from(code).toString('base64')}`;
-
-/** Compile a src module and its relative imports (TS and JSON) into importable data URLs. */
-function load(file) {
-  if (cache.has(file)) return cache.get(file);
-  let url;
-  if (file.endsWith('.json')) {
-    url = toUrl(`export default ${readFileSync(file, 'utf8')};`);
-  } else {
-    let code = ts.transpileModule(readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText;
-    code = code.replace(/from\s+(['"])(\.{1,2}\/[^'"]+)\1/g, (_, q, spec) => {
-      const base = resolve(dirname(file), spec);
-      const target = [base, `${base}.ts`, `${base}.svelte.ts`].find((p) => existsSync(p) && !p.endsWith('/'));
-      if (!target) throw new Error(`Cannot resolve ${spec} from ${file}`);
-      return `from ${JSON.stringify(load(target))}`;
-    });
-    url = toUrl(code);
-  }
-  cache.set(file, url);
-  return url;
-}
-
-const { buildStories } = await import(load(resolve(root, 'src/lib/data/stories.ts')));
-const { todayIsoDate } = await import(load(resolve(root, 'src/lib/data/date.ts')));
-const { buildDelayStory } = await import(load(resolve(root, 'src/lib/data/delay-story.ts')));
-const { lines } = await import(load(resolve(root, 'src/lib/data/lines.ts')));
+const { buildStories } = await import(loadModule(new URL('../src/lib/data/stories.ts', import.meta.url)));
+const { todayIsoDate } = await import(loadModule(new URL('../src/lib/data/date.ts', import.meta.url)));
+const { buildDelayStory } = await import(loadModule(new URL('../src/lib/data/delay-story.ts', import.meta.url)));
+const { lines } = await import(loadModule(new URL('../src/lib/data/lines.ts', import.meta.url)));
 
 // Every slide the Home carousel is expected to show. Adding a slide: add its id here.
 const EXPECTED = [

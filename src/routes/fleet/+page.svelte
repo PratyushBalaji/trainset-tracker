@@ -45,7 +45,7 @@
         return `${family} · ${makers}`;
       });
       // Orders placed for this line whose trains haven't arrived yet (a top-up naming the line).
-      for (const [id, c] of Object.entries(dataset.contracts as Record<string, { awardee: string; rolling_stock: string[]; variations?: { intended_line?: string; additional_trainsets?: number }[] }>)) {
+      for (const [id, c] of Object.entries(dataset.contracts)) {
         if (byContract.has(id)) continue;
         const ordered = (c.variations ?? []).filter((v) => v.intended_line === line).reduce((sum, v) => sum + (v.additional_trainsets ?? 0), 0);
         if (!ordered) continue;

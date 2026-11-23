@@ -5,10 +5,7 @@
   import { page } from '$app/state';
   import { onMount } from 'svelte';
   import { lineColors, lineOrder } from '$lib/data/presentation';
-  import brandSvg from '../../static/icons/trains/beml-og-small.svg?raw';
   import '../app.css';
-
-  const brandIcon = brandSvg.replace(/<title>.*?<\/title>/, '').replace('role="img"', 'aria-hidden="true" focusable="false"');
 
   if (browser && !dev) {
     injectAnalytics({ mode: 'production', debug: false });
@@ -37,7 +34,7 @@
 <header class="site-header" class:condensed>
   <a class="site-brand" href="/" aria-label="Namma Metro Trainset Tracker home">
     <span class="brand-mark" aria-hidden="true">
-      <span class="brand-icon" aria-hidden="true" title="BEML original">{@html brandIcon}</span>
+      <span class="brand-icon" aria-hidden="true" title="BEML original"><svg aria-hidden="true" focusable="false"><use href="/icons/trains/beml-og-small.svg#train" width="100%" height="100%" /></svg></span>
       <span class="brand-track">{#each lineOrder as line}<span style={`background: ${lineColors[line]}`}></span>{/each}</span>
     </span>
     <span class="brand-name"><span>Namma Metro</span> <span>Trainset Tracker</span></span>

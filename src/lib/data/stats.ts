@@ -209,7 +209,7 @@ function deliveryTiles(trains: FleetTrain[], today: string): Tile[] {
   const contractTrains = (id: string) => trains.filter((t) => t.contractId === id);
 
   for (const [id, reading] of Object.entries(deliveryReadings)) {
-    const c = dataset.contracts[id] as unknown as { awarded_on?: string; contract_period?: string; base_trainsets?: number; base_cars?: number; rolling_stock: string[] } | undefined;
+    const c = dataset.contracts[id];
     if (!c || c.contract_period !== reading.matches) continue;
     const own = contractTrains(id);
     const arrivals = own.flatMap((t) => (t.arrived ? [t.arrived] : [])).sort();
@@ -239,7 +239,7 @@ function deliveryTiles(trains: FleetTrain[], today: string): Tile[] {
       tiles.push({
         id: `due-${code.toLowerCase()}`, size: 'w3', dark: true, kicker, icon,
         big: { parts: [{ n: `${arrivals.length}`, unit: `of ${ordered} delivered` }] },
-        text: `${makerName((dataset.contracts[id] as { awardee: string }).awardee)} was to deliver between **${monthLabel(from)} and ${monthLabel(to)}**. Its first train came in **${monthLabel(first)}**, and ${ordered - arrivals.length} are still to come${left > 0 ? ` with ${plural(left, 'month')} of that window left` : ' after that window closed'}.`,
+        text: `${makerName(dataset.contracts[id].awardee)} was to deliver between **${monthLabel(from)} and ${monthLabel(to)}**. Its first train came in **${monthLabel(first)}**, and ${ordered - arrivals.length} are still to come${left > 0 ? ` with ${plural(left, 'month')} of that window left` : ' after that window closed'}.`,
         note: 'Dashed box: the original delivery schedule. Each tick: one train delivered.',
         share: `BEML was to deliver Namma Metro's ${ordered} ${code} trains between ${monthLabel(from)} and ${monthLabel(to)}. ${arrivals.length} have arrived so far; the first came in ${monthLabel(first)}.`,
         link: { href: `/fleet?maker=${builderOf(id).toLowerCase()}`, label: `View ${builderOf(id)}'s fleet` },
@@ -305,7 +305,7 @@ function deliveryTiles(trains: FleetTrain[], today: string): Tile[] {
 
   // When will each order be done, at the recent pace?
   const estimates = Object.entries(deliveryReadings).flatMap(([id, reading]) => {
-    const c = dataset.contracts[id] as unknown as { awarded_on?: string; base_trainsets?: number; base_cars?: number; rolling_stock: string[] } | undefined;
+    const c = dataset.contracts[id];
     if (!c) return [];
     const own = contractTrains(id).filter((t) => t.arrived).sort((a, b) => a.arrived!.localeCompare(b.arrived!));
     const ordered = c.base_trainsets ?? (c.base_cars ? c.base_cars / (dataset.rolling_stock[c.rolling_stock[0]]?.cars_per_trainset ?? 6) : 0);
