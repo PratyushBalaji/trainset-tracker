@@ -64,6 +64,8 @@ export interface Tile {
   kicker: string;
   /** Train drawn in the tile's top corner. */
   icon?: TrainDesign;
+  /** Small India map in the top corner with a route traced between two places (keys of indiaOutline.places). */
+  route?: { from: string; to: string; label: string };
   big?: { parts: { n: string; unit?: string; struck?: boolean }[]; arrow?: boolean };
   /** Plain text; **double asterisks** mark emphasis and a newline starts a new line. */
   text: string;
@@ -254,6 +256,7 @@ function deliveryTiles(trains: FleetTrain[], today: string): Tile[] {
     const times = lastT > 0 ? Math.round(firstT / lastT) : 0;
     tiles.push({
       id: 'titagarh-transit', size: 'w2', kicker: 'Titagarh · factory to depot',
+      route: { from: 'kolkata', to: 'bengaluru', label: 'Route from the Kolkata area to Bengaluru' },
       big: { parts: [{ n: `${firstT}` }, { n: `${lastT}`, unit: 'days' }], arrow: true },
       text: `The road trip from ${makerPlaces[TITAGARH]} to the Bengaluru depot now takes **${range(Math.min(...recentT), Math.max(...recentT))} days**${times >= 2 ? `, about ${times} times faster than the first` : ''}.`,
       share: `Trains from Titagarh's factory now reach Bengaluru in ${range(Math.min(...recentT), Math.max(...recentT))} days. The first took ${firstT}.`,

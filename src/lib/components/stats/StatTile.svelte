@@ -4,6 +4,7 @@
   import NoticeChart from './NoticeChart.svelte';
   import PromiseBoard from './PromiseBoard.svelte';
   import NetworkMap from '$lib/components/NetworkMap.svelte';
+  import IndiaRoute from './IndiaRoute.svelte';
   import { monthLabel, yearFraction, type SpeedScale, type Tile } from '$lib/data/stats';
 
   let { tile }: { tile: Tile } = $props();
@@ -15,7 +16,8 @@
   const years = (start: string, end: string) => Array.from({ length: Number(end.slice(0, 4)) - Number(start.slice(0, 4)) }, (_, i) => Number(start.slice(0, 4)) + i + 1);
 </script>
 
-<article class="tile {tile.size}" class:dark={tile.dark} id={tile.id}>
+<article class="tile {tile.size}" class:dark={tile.dark} class:has-route={tile.route} id={tile.id}>
+  {#if tile.route}<div class="route-map"><IndiaRoute {...tile.route} size={0} /></div>{/if}
   <div class="head">
     <p class="kicker">{tile.kicker}</p>
     {#if tile.icon}<TrainIcon design={tile.icon} size={34} color={tile.dark ? '#eef1ea' : 'var(--ink)'} />{/if}
@@ -187,6 +189,12 @@
   .w2 { grid-column: span 2; } .w3 { grid-column: span 3; } .w4 { grid-column: span 4; } .w6 { grid-column: span 6; }
   .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
   .head :global(.train-icon) { margin: -4px -2px -12px 0; opacity: 0.9; }
+  /* The route map sits in its own top-right corner; the headline and text stop short of it. */
+  .has-route { --map-w: clamp(84px, 26%, 136px); }
+  /* Top edge lines up with the big number (kicker line + its margin), so the kicker keeps the full width. */
+  .route-map { position: absolute; top: 46px; right: 18px; width: var(--map-w); }
+  .route-map :global(.india-route) { width: 100%; }
+  .has-route .big, .has-route .text { max-width: calc(100% - var(--map-w) - 12px); }
   .kicker { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-3); }
   .big { margin: 10px 0 4px; font: 800 clamp(40px, 4.6vw, 62px)/0.95 var(--font-display); letter-spacing: -0.04em; }
   .w2 .big { font-size: clamp(36px, 3.6vw, 50px); }
