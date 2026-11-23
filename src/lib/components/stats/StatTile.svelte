@@ -72,16 +72,11 @@
         </svg>
       {:else if v.type === 'columns'}
         {@const max = Math.max(...v.bars.map((b) => b.days))}
-        <svg viewBox="0 0 300 100" role="img" aria-label={`Days from depot to passengers, ${v.ends[0]} to ${v.ends[1]}`}>
-          {#each v.bars as b, i}
-            {@const cx = 12 + (i / Math.max(1, v.bars.length - 1)) * 276}
-            {@const h = Math.max(3, (b.days / max) * 66)}
-            <rect x={cx - 6} y={76 - h} width="12" height={h} rx="3" fill={speed(b.days, v.scale)}><title>{b.label}</title></rect>
-          {/each}
-          <line x1="0" x2="300" y1="76" y2="76" stroke="var(--border)" />
-          <text x="6" y="92" font-size="10" fill="var(--muted)">{v.ends[0]}</text>
-          <text x="294" y="92" font-size="10" text-anchor="end" fill="var(--muted)">{v.ends[1]}</text>
-        </svg>
+        <!-- HTML bars rather than a fixed-shape SVG, so the chart grows to fill a tall tile. -->
+        <div class="columns" role="img" aria-label={`Days from depot to passengers, ${v.ends[0]} to ${v.ends[1]}`}>
+          <div class="cols">{#each v.bars as b}<span class="col" style={`height: ${Math.max(2, (b.days / max) * 100)}%; background: ${speed(b.days, v.scale)}`} title={b.label}></span>{/each}</div>
+          <div class="col-ends"><span>{v.ends[0]}</span><span>{v.ends[1]}</span></div>
+        </div>
         <div class="key"><span><i style="--c: var(--fast)"></i>{v.legend[0]}</span><span><i style="--c: var(--mid)"></i>{v.legend[1]}</span><span><i style="--c: var(--slow)"></i>{v.legend[2]}</span></div>
       {:else if v.type === 'compare'}
         <div class="compare">{#each v.items as c}<div>{#if c.design}<TrainIcon design={c.design} size={26} color="var(--on)" />{/if}<span>{c.label}</span><b class="tnum">{c.value}</b>{#if c.sub}<span>{c.sub}</span>{/if}</div>{/each}</div>
@@ -230,7 +225,7 @@
   .lbl small { margin-left: 6px; color: var(--on-3); }
   .track { height: 14px; border-radius: 4px; background: var(--soft); display: flex; overflow: hidden; }
   .track i { display: block; height: 100%; }
-  .hbar b { text-align: right; color: var(--on); font-variant-numeric: tabular-nums; }
+  .hbar b { text-align: right; white-space: nowrap; color: var(--on); font-variant-numeric: tabular-nums; }
 
   .compare { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .compare div { display: flex; flex-direction: column; justify-content: center; gap: 2px; padding: 14px 12px; border-radius: 12px; background: var(--soft); }
@@ -247,6 +242,10 @@
   .spans b.r:nth-last-child(-n + 1), .spans .bar-name ~ b.r { margin-top: 6px; }
 
   .icons { display: flex; flex-wrap: wrap; gap: 3px; }
+  .columns { flex: 1; display: flex; flex-direction: column; min-height: 150px; }
+  .cols { flex: 1; display: flex; align-items: flex-end; justify-content: space-between; gap: 6px; padding: 0 2px; border-bottom: 1px solid var(--border); }
+  .col { flex: 1; max-width: 22px; border-radius: 4px 4px 0 0; }
+  .col-ends { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--on-3); }
   .icons.fill { flex: 1; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); align-content: center; gap: 6px 4px; }
   .icons.fill :global(.train-icon) { width: 100% !important; height: auto !important; }
   .orders { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; gap: 18px; }
