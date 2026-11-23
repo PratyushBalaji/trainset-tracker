@@ -35,12 +35,6 @@
       <div class="grid">{#each chapter.tiles as tile (tile.id)}<StatTile {tile} />{/each}</div>
     </section>
   {/each}
-
-  <section class="method" aria-label="How these numbers are made">
-    <div><h2>Where the numbers come from</h2><p>The train dates, contracts and line records on this site, each with its sources. Nothing here is typed in by hand; it updates when the data does.</p></div>
-    <div><h2>What counts as missed</h2><p>An opening date is missed when the line opened after it. A date replaced before it arrived counts as moved, not missed.</p></div>
-    <div><h2>Which dates count</h2><p>Times like "factory to depot" use reported dates only. Dates the site marks as inferred or approximate are left out here.</p></div>
-  </section>
 </main>
 
 <style>
@@ -63,13 +57,8 @@
   .summary { margin: 10px 0 0; max-width: 62ch; color: var(--ink-3); font-size: 16px; line-height: 1.5; }
   .grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
 
-  .method { margin-top: 84px; padding: 24px; border-radius: 18px; background: #e7ebe2; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; font-size: 13px; color: var(--ink-3); }
-  .method h2 { margin: 0 0 6px; font-size: 14px; color: var(--ink); }
-  .method p { margin: 0; line-height: 1.5; }
-
   @media (max-width: 980px) {
     .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .method { grid-template-columns: 1fr; }
   }
   @media (max-width: 760px) { .topics { top: 0; } }
   @media (max-width: 520px) {
