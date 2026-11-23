@@ -19,10 +19,9 @@
 <article class="tile {tile.size}" class:dark={tile.dark} class:has-route={tile.route} id={tile.id}>
   <div class="head">
     <p class="kicker">{tile.kicker}</p>
-    {#if tile.icon}<TrainIcon design={tile.icon} size={34} color={tile.dark ? '#eef1ea' : 'var(--ink)'} />{/if}
   </div>
   <!-- With a route map, headline and text share a row with it, so the chart always starts below the map. -->
-  <div class="intro" class:with-route={tile.route}>
+  <div class="intro" class:with-side={tile.route || tile.icon} class:side-icon={tile.icon && !tile.route}>
   <div>
   {#if tile.big}
     <p class="big tnum">
@@ -31,7 +30,8 @@
   {/if}
   <p class="text">{#each parts(tile.text) as p}{#if p.strong}<strong>{p.t}</strong>{:else}{p.t}{/if}{/each}</p>
   </div>
-  {#if tile.route}<div class="route-map"><IndiaRoute {...tile.route} size={0} /></div>{/if}
+  {#if tile.route}<div class="route-map"><IndiaRoute {...tile.route} size={0} /></div>
+  {:else if tile.icon}<div class="intro-icon"><TrainIcon design={tile.icon} size={64} color={tile.dark ? '#eef1ea' : 'var(--ink)'} /></div>{/if}
   </div>
 
   {#if tile.viz}
@@ -202,7 +202,11 @@
   /* The route map sits in its own top-right corner; the headline and text stop short of it. */
   .has-route { --map-w: clamp(84px, 26%, 136px); }
   /* Top edge lines up with the big number (kicker line + its margin), so the kicker keeps the full width. */
-  .intro.with-route { display: grid; grid-template-columns: minmax(0, 1fr) var(--map-w); gap: 12px; align-items: start; }
+  .intro.with-side { --side-w: var(--map-w, 0px); display: grid; grid-template-columns: minmax(0, 1fr) var(--side-w); gap: 12px; align-items: start; }
+  /* A big train beside the headline, like the route map, instead of a small one tucked in the corner. */
+  .intro.side-icon { --side-w: clamp(56px, 18%, 92px); }
+  .intro-icon { margin-top: 6px; opacity: 0.92; }
+  .intro-icon :global(.train-icon) { width: 100% !important; height: auto !important; }
   .route-map { margin-top: 6px; }
   .route-map :global(.india-route) { width: 100%; }
   .kicker { margin: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--on-3); }
