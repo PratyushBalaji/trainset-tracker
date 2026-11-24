@@ -142,7 +142,8 @@
     .group-summary { margin-left: 0; width: 100%; }
     .detail-wrap.sheet { position: fixed; inset: 0; top: auto; z-index: 50; max-height: none; display: block; }
     .scrim { position: fixed; inset: 0; border: 0; background: #17211d55; }
-    .sheet :global(.detail-header) { top: 0; }
+    /* Minus the panel's top padding: flush with the sheet's edge, so content can't show above it. */
+    .sheet :global(.detail-header) { top: -18px; }
     .sheet :global(.detail-panel) { position: relative; max-height: 82svh; overflow: auto; border-radius: 18px 18px 0 0; box-shadow: 0 -8px 30px #17211d30; }
   }
 </style>

@@ -147,7 +147,8 @@
 
   .detail-header {
     position: sticky;
-    top: -14px;
+    /* Minus the panel's top padding, so the stuck header meets the panel's edge and nothing scrolls past above it. */
+    top: -18px;
     z-index: 3;
     background: #fffdfa;
     padding: 12px 0;
