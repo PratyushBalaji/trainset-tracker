@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy, onMount, tick } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import { afterNavigate } from '$app/navigation';
   import { page } from '$app/state';
   import FleetToolbar from '$lib/components/FleetToolbar.svelte';
@@ -7,13 +7,16 @@
   import TrainsetCard from '$lib/components/TrainsetCard.svelte';
   import TrainsetDetail from '$lib/components/TrainsetDetail.svelte';
   import { lineColors, lineLabels, lineOrder, manufacturerCodes } from '$lib/data/presentation';
-  import { dataset, getTrainsetTimelineBounds, timelineBounds } from '$lib/data/resolve';
-  import { tracker } from '$lib/tracker-state.svelte';
+  import { dataset, decorateTrainsetForDate } from '$lib/data/resolve';
+  import { formatDate } from '$lib/data/date';
+  import { tracker, trackerToday } from '$lib/tracker-state.svelte';
   import type { DatedTrainset } from '$lib/data/types';
 
   const contractCode = (id: string) => id.replace('bmrcl-', '').toUpperCase();
   let selectedId = $state<string | null>(null);
   let mobile = $state(false);
+  // The sticky toolbar's height (it grows when the filter notice shows), so the detail panel sits just under it.
+  let toolbarHeight = $state(150);
   let origin: HTMLElement | null = null;
 
   afterNavigate(() => {
@@ -25,12 +28,14 @@
     const update = () => { mobile = query.matches; };
     update();
     query.addEventListener('change', update);
-    return () => query.removeEventListener('change', update);
+    const toolbar = document.querySelector('.toolbar');
+    const observer = new ResizeObserver(() => { if (toolbar) toolbarHeight = toolbar.getBoundingClientRect().height; });
+    if (toolbar) observer.observe(toolbar);
+    return () => { query.removeEventListener('change', update); observer.disconnect(); };
   });
-  onDestroy(() => tracker.stop());
 
-  const playFrom = getTrainsetTimelineBounds(tracker.fleet, timelineBounds).start;
-  let dated = $derived(tracker.dated);
+  // Fleet is always today's status; going back in time is Lifecycle's job.
+  let dated = $derived(tracker.fleet.map((t) => decorateTrainsetForDate(t, trackerToday)));
   let counts = $derived(dated.reduce((acc, t) => { acc[t.currentStage.id] = (acc[t.currentStage.id] ?? 0) + 1; return acc; }, {} as Record<string, number>));
   let groups = $derived(lineOrder.concat([...new Set(dated.map((t) => t.displayLine))].filter((l) => !lineOrder.includes(l)))
     .map((line) => {
@@ -82,10 +87,10 @@
 </svelte:head>
 <svelte:window onkeydown={(e) => { if (e.key === 'Escape' && selectedId && mobile) void clear(); }} />
 
-<main class="fleet-page">
-  <FleetToolbar title="Fleet" {playFrom}>
+<main class="fleet-page" style={`--toolbar-height: ${toolbarHeight}px`}>
+  <FleetToolbar title="Fleet">
     {#snippet summary()}
-      <span class="tnum"><strong class="svc">{counts.service ?? 0}</strong> in service · <strong class="tst">{counts.testing ?? 0}</strong> undergoing testing{#if counts.dispatch} · <strong class="dsp">{counts.dispatch}</strong> in transit{/if} · {tracker.dateLabel}</span>
+      <span class="tnum"><strong class="svc">{counts.service ?? 0}</strong> in service · <strong class="tst">{counts.testing ?? 0}</strong> undergoing testing{#if counts.dispatch} · <strong class="dsp">{counts.dispatch}</strong> in transit{/if} · as of {formatDate(trackerToday)}</span>
     {/snippet}
   </FleetToolbar>
 
@@ -113,7 +118,7 @@
     {#if selected}
       <div class="detail-wrap" class:sheet={mobile}>
         {#if mobile}<button type="button" class="scrim" aria-label="Close details" onclick={clear}></button>{/if}
-        <TrainsetDetail trainset={selected as DatedTrainset} asOf={tracker.selectedDate} chartHref={`/lifecycle?trainset=${selected.id}`} onClear={clear} />
+        <TrainsetDetail trainset={selected as DatedTrainset} asOf={trackerToday} chartHref={`/lifecycle?trainset=${selected.id}`} onClear={clear} />
       </div>
     {/if}
   </div>
@@ -132,9 +137,9 @@
   .families { font-size: 13px; color: var(--muted); }
   .group-summary { margin-left: auto; font-size: 13px; color: var(--ink-3); }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 10px; }
-  .detail-wrap { position: sticky; top: calc(var(--site-header-height) + 200px); display: flex; }
+  .detail-wrap { position: sticky; top: calc(var(--site-header-height) + var(--toolbar-height) + 16px); display: flex; }
   /* The cap sits on the panel itself (a percentage max-height of the wrapper resolves to nothing), so it scrolls on its own. */
-  .detail-wrap :global(.detail-panel) { width: 100%; max-height: calc(100svh - var(--site-header-height) - 220px); }
+  .detail-wrap :global(.detail-panel) { width: 100%; max-height: calc(100svh - var(--site-header-height) - var(--toolbar-height) - 32px); }
   .empty { padding: 40px; text-align: center; border: 1px dashed var(--border); border-radius: var(--radius-lg); color: var(--muted); }
   .empty button { margin-left: 8px; }
   @media (max-width: 860px) {

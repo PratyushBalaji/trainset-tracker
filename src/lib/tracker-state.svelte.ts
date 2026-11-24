@@ -1,5 +1,5 @@
-// Shared Fleet / Lifecycle state. Kept in a module so the selected date, filters and
-// hidden trains survive moving between the two pages.
+// Shared Fleet / Lifecycle state, kept in a module so filters and hidden trains survive moving between
+// the two pages. The selected date is only used by Lifecycle; Fleet always shows today.
 import { addDays, clampIsoDate, compareIsoDate, daysBetween, formatDate, todayIsoDate } from '$lib/data/date';
 import { decorateTrainsetForDate, lineOptions, manufacturerOptions, resolvedTrainsets, timelineBounds } from '$lib/data/resolve';
 import { lineOrder, lineShortLabels, makerSlug, manufacturerShortLabels } from '$lib/data/presentation';

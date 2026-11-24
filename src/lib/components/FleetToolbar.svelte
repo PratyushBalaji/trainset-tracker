@@ -8,7 +8,8 @@
   import { dateSliderMax, tracker } from '$lib/tracker-state.svelte';
   import { daysBetween } from '$lib/data/date';
 
-  let { title, playFrom, summary }: { title: string; playFrom: string; summary?: Snippet } = $props();
+  // Without `playFrom` the page has no date controls and always shows today (Fleet); Lifecycle passes it.
+  let { title, playFrom, summary }: { title: string; playFrom?: string; summary?: Snippet } = $props();
 
   const lines = [...lineOptions].sort((a, b) => lineOrder.indexOf(a) - lineOrder.indexOf(b));
   const years = (() => {
@@ -48,22 +49,26 @@
         <h1 class="page-heading">{title}</h1>
         {#if summary}<div class="summary">{@render summary()}</div>{/if}
       </div>
+      {#if playFrom}
       <div class="date-control">
         <label for="status-date">Status on</label>
         <input id="status-date" class="tnum" type="date" value={tracker.selectedDate} min={timelineBounds.start} max={timelineBounds.end} onchange={(e) => { const v = e.currentTarget.value; if (v) tracker.setDate(v); }} />
-        <button type="button" class="play" aria-label={tracker.playing ? 'Pause history playback' : 'Play history from the first record'} title={tracker.playing ? 'Pause' : 'Play history'} onclick={() => tracker.togglePlay(playFrom)}>
+        <button type="button" class="play" aria-label={tracker.playing ? 'Pause history playback' : 'Play history from the first record'} title={tracker.playing ? 'Pause' : 'Play history'} onclick={() => tracker.togglePlay(playFrom!)}>
           {#if tracker.playing}<Pause size={15} fill="currentColor" />{:else}<Play size={15} fill="currentColor" />{/if}
         </button>
         <button type="button" class="today" disabled={tracker.isToday} onclick={() => tracker.resetDate()}>Today</button>
       </div>
+      {/if}
     </div>
 
+    {#if playFrom}
     <div class="scrubber" style={`--progress: ${progress}%`}>
       <input type="range" min="0" max={dateSliderMax} value={sliderValue} aria-label="Status date" aria-valuetext={tracker.dateLabel} oninput={(e) => tracker.setDateFromOffset(Number(e.currentTarget.value))} />
       <div class="scale tnum" aria-hidden="true">
         {#each years as year}<span style={`left: ${year.left}%`}>{year.label}</span>{/each}
       </div>
     </div>
+    {/if}
 
     {#if tracker.filtersActive}
       <div class="active-filter" role="status">
