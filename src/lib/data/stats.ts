@@ -589,7 +589,7 @@ export function buildStats(today: string): Stats {
   const chapters: Chapter[] = [
     { id: 'deliveries', short: 'Deliveries', title: 'Getting the trains here', summary: 'When the new trains were due, when they actually came, and how the pace has changed.', tiles: deliveryTiles(trains, today) },
     { id: 'waiting', short: 'Waiting time', title: 'Waiting to carry passengers', summary: 'A delivered train still has to be tested and cleared before anyone can ride it. That is quick on a line that is already running, and very slow when the line itself is not ready.', tiles: waitingTiles(trains, today) },
-    { id: 'opening-dates', short: 'Opening dates', title: 'Opening dates', summary: 'Every opening date given out by BMRCL and officials, and what happened to it. A date counts as missed when the line opened after it.', tiles: datesTiles(today) }
+    { id: 'opening-dates', short: 'Deadlines', title: 'Opening dates', summary: 'Every opening date given out by BMRCL and officials, and what happened to it. A date counts as missed when the line opened after it.', tiles: datesTiles(today) }
   ];
   return { today, trains, chapters: chapters.filter((c) => c.tiles.length) };
 }
