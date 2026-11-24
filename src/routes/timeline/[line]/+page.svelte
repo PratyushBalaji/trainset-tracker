@@ -199,7 +199,8 @@
     .rail-mobile.shown { display: block; position: fixed; z-index: 15; right: 0; top: calc(var(--site-header-height) + var(--timeline-dock-height, 60px)); bottom: 0; width: 46px; padding: 4px 0; background: color-mix(in srgb, #f4f6f1 92%, transparent); border-left: 1px solid #d8ded4; }
     .line-sidebar { position: static; display: grid; grid-template-columns: minmax(0, 1fr) 110px; gap: 4px 14px; }
     .sidebar-title { grid-column: 1 / -1; }
-    nav { display: flex; flex-wrap: wrap; align-content: start; gap: 4px; }
+    /* One line per row, like desktop; wrapping put Pink beside Yellow. */
+    nav { display: grid; align-content: start; gap: 2px; }
     nav a { padding: 8px 10px; font-size: 12px; }
     .mini-map { margin: 0; } .mini-map :global(figure) { margin: 0; }
     .timeline-dock { margin-right: -46px; padding-right: 46px; }
