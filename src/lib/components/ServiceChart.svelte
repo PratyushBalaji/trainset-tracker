@@ -16,7 +16,7 @@
     delivered: { key: 'depot_arrival', label: 'Delivered', first: 'First delivered', aria: 'delivered to depot' },
     service: { key: 'revenue_induction', label: 'In service', first: 'First inducted', aria: 'in passenger service' }
   } as const;
-  let mode = $state<keyof typeof modes>('service');
+  let mode = $state<keyof typeof modes>('delivered');
   let m = $derived(modes[mode]);
   let inductions = $derived(trainsets.flatMap((t) => {
     const m = t.milestones.find((x) => x.key === modes[mode].key && x.date <= bounds.end);
