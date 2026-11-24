@@ -132,8 +132,9 @@
   .families { font-size: 13px; color: var(--muted); }
   .group-summary { margin-left: auto; font-size: 13px; color: var(--ink-3); }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 10px; }
-  .detail-wrap { position: sticky; top: calc(var(--site-header-height) + 200px); max-height: calc(100svh - var(--site-header-height) - 220px); display: flex; }
-  .detail-wrap :global(.detail-panel) { width: 100%; }
+  .detail-wrap { position: sticky; top: calc(var(--site-header-height) + 200px); display: flex; }
+  /* The cap sits on the panel itself (a percentage max-height of the wrapper resolves to nothing), so it scrolls on its own. */
+  .detail-wrap :global(.detail-panel) { width: 100%; max-height: calc(100svh - var(--site-header-height) - 220px); }
   .empty { padding: 40px; text-align: center; border: 1px dashed var(--border); border-radius: var(--radius-lg); color: var(--muted); }
   .empty button { margin-left: 8px; }
   @media (max-width: 860px) {
