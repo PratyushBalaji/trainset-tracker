@@ -122,7 +122,7 @@
 </main>
 
 <style>
-  .hero { max-width: 1240px; margin: 0 auto; padding: 64px 32px 48px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 56px; align-items: center; }
+  .hero { max-width: 1240px; margin: 0 auto; padding: 64px 32px 48px; display: grid; /* The intro never gets narrower than the unwrapped title + map; the panel and gap give way instead. */ grid-template-columns: minmax(min-content, 1fr) minmax(360px, 480px); gap: clamp(32px, 4vw, 56px); align-items: center; }
   .intro { display: flex; flex-direction: column; gap: 20px; }
   /* | title | map |  then  | description | trains | */
   .title-grid { display: grid; grid-template-columns: auto var(--map-w); column-gap: 32px; row-gap: 18px; align-items: end; width: fit-content; --map-w: clamp(110px, 11vw, 160px); }
