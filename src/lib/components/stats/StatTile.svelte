@@ -219,6 +219,8 @@
   .big .to { color: var(--on-3); font-weight: 600; margin: 0 0.1em; }
   .big s { text-decoration-thickness: 0.07em; text-decoration-color: var(--slow); color: var(--on-3); }
   .text { margin: 0; white-space: pre-line; font-size: 15px; line-height: 1.45; color: var(--on-2); max-width: 62ch; }
+  /* Tiles with no big number: give the text the same gap under the kicker that the number would have. */
+  .intro > div > .text:first-child { margin-top: 10px; }
   .text strong { color: var(--on); font-weight: 650; white-space: nowrap; }
   .viz { margin-top: 16px; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; }
   .viz.top { justify-content: flex-start; }
