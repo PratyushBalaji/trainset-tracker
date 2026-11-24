@@ -32,9 +32,7 @@
   }
 
   // Match ServiceChart's 230px plot start and 20px outer inset.
-  const labelColumnWidth = 210;
   const axisHeight = 32;
-  const canvasSidePadding = 12;
   const canvasBottomPadding = 10;
   const plotSidePadding = 8;
   const plotVerticalPadding = 28;
@@ -51,6 +49,19 @@
     onDragBoundsChange,
     headingExtra
   }: Props = $props();
+
+  // Phones get a compact chart: the whole timeline fits the screen width (no sideways scrolling) and the
+  // label column shows only the train number. Tapping it still opens the train's details.
+  let compact = $state(false);
+  $effect(() => {
+    const query = matchMedia('(max-width: 640px)');
+    const update = () => (compact = query.matches);
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  });
+  let labelColumnWidth = $derived(compact ? 64 : 210);
+  let canvasSidePadding = $derived(compact ? 4 : 12);
 
   let canvasElement = $state<HTMLDivElement | null>(null);
   let canvasWidth = $state(1100);
@@ -281,7 +292,7 @@
       {/each}
     </div>
   </div>
-  <div class="chart-links"><span class="pan-hint">Scroll to pan · Drag the date pill to scrub</span></div>
+  <div class="chart-links"><span class="pan-hint">{compact ? 'Tap a train for details · Drag the date pill to scrub' : 'Scroll to pan · Drag the date pill to scrub'}</span></div>
 
   <!-- svelte-ignore a11y_no_noninteractive_tabindex (Native keyboard scrolling needs a focusable chart region.) -->
   <div class="timeline-shell" role="region" aria-label="Scrollable lifecycle chart" tabindex="0" onfocus={(event) => { const frame = event.currentTarget; requestAnimationFrame(() => { if (document.activeElement === frame) frame.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'instant' }); }); }}>
@@ -289,6 +300,7 @@
       bind:this={canvasElement}
       bind:clientWidth={canvasWidth}
       class:dragging={isDraggingDate}
+      class:compact
       class="timeline-canvas"
       data-range-start={bounds.start}
       data-range-end={bounds.end}
@@ -303,7 +315,7 @@
       onpointerleave={handlePointerLeave}
     >
       <div class="axis-row" aria-hidden="true">
-        <span class="axis-label">Trainset</span>
+        <span class="axis-label">{compact ? 'Train' : 'Trainset'}</span>
         <div class="axis-track">
           <div class="axis-plot">
             {#each visibleTicks as tick}
@@ -796,6 +808,17 @@
   .stage-testing {
     background: var(--stage-color);
   }
+
+  /* Phones: fit to the screen, train numbers only (see `compact` in the script). */
+  .timeline-canvas.compact { min-width: 0; }
+  .compact .row-label { grid-template-columns: minmax(0, 1fr); }
+  .compact .row-select-button small,
+  .compact .row-hide-button { display: none; }
+  .compact .row-select-button { padding-left: 6px; }
+  .compact .group-row { padding-left: 6px; }
+  /* Edge labels sit inside the plot so the first one isn't hidden behind the "Train" column. */
+  .compact .tick:first-child { translate: 0 0; }
+  .compact .tick:last-child { translate: -100% 0; }
 
   @media (max-width: 860px) {
     .pan-hint { display: inline; }
