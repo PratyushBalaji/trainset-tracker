@@ -229,9 +229,9 @@ function waitingNowStory(today: string): Story | null {
 export function buildStories(today: string): Story[] {
   return [
     deadlineStory('yellow', today),
+    contractStory('bmrcl-4rs-dm', today),
     deadlineStory('pink', today),
     partsStory('purple', today),
-    contractStory('bmrcl-4rs-dm', today),
     waitedStory(today),
     waitingNowStory(today)
   ].filter((s): s is Story => s !== null);

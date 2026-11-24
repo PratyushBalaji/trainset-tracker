@@ -13,9 +13,9 @@ const { lines } = await import(loadModule(new URL('../src/lib/data/lines.ts', im
 // Every slide the Home carousel is expected to show. Adding a slide: add its id here.
 const EXPECTED = [
   'yellow-deadlines',
+  'bmrcl-4rs-dm-delivery',
   'pink-deadlines',
   'purple-parts',
-  'bmrcl-4rs-dm-delivery',
   'delivery-to-passengers',
   'waiting-now'
 ];
