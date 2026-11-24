@@ -112,7 +112,10 @@
       <p><strong>This project is not affiliated with BMRCL and is built to serve the public interest.</strong></p>    </div>
     <div>
       <h2>Acknowledgements</h2>
-      <p>Thank you to journalists like Christin Mathew Philip (<a href="https://x.com/ChristinMP_" target="_blank" rel="noreferrer">@ChristinMP_</a>) and Muthi-ur-Rahman Siddiqui (<a href="https://x.com/ever_pessimist" target="_blank" rel="noreferrer">@ever_pessimist</a>), enthusiasts like BLR Metro Tracker (<a href="https://x.com/blrmetrotracker" target="_blank" rel="noreferrer">@blrmetrotracker</a>), and all the news outlets and insiders who share this information with us Bengalureans.</p>
+      <p>Thank you to journalists like Christin Mathew Philip (<a href="https://x.com/ChristinMP_" target="_blank" rel="noreferrer">@ChristinMP_</a>) and Muthi-ur-Rahman Siddiqui (<a href="https://x.com/ever_pessimist" target="_blank" rel="noreferrer">@ever_pessimist</a>).</p>
+      <p>Thank you to enthusiasts like BLR Metro Tracker (<a href="https://x.com/blrmetrotracker" target="_blank" rel="noreferrer">@blrmetrotracker</a>) and The Metro Rail Guy (<a href="https://themetrorailguy.com" target="_blank" rel="noreferrer">themetrorailguy.com</a>).</p>
+      <p>Thank you to news outlets like Moneycontrol, The Times of India, The Indian Express and Deccan Herald.</p>
+      <p>And finally, thank you to the citizen insiders who share this information with us Bengalureans.</p>
       <p>Their reporting and groundwork allow us to stay informed and enable hobbyists like myself to make projects like this tracker possible.</p>
     </div>
   </section>
