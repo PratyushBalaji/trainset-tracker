@@ -17,6 +17,8 @@
 ><svg aria-hidden="true" focusable="false"><use {href} width="100%" height="100%" /></svg></span>
 
 <style>
-  .train-icon { display: inline-block; flex: none; line-height: 0; }
-  .train-icon :global(svg) { width: 100%; height: 100%; display: block; }
+  /* The drawings are square. Keeping the box square means an icon stretched to a width (height: auto)
+     stays as tall as it is wide, instead of the browser's default 150px SVG height. */
+  .train-icon { display: inline-block; flex: none; line-height: 0; aspect-ratio: 1 / 1; }
+  .train-icon :global(svg) { width: 100%; height: 100%; display: block; aspect-ratio: 1 / 1; }
 </style>
