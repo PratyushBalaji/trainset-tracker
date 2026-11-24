@@ -124,7 +124,7 @@
 
     <div class="info-card" bind:this={card}>
       <h1 class="page-heading">Route Map</h1>
-      <p class="about">My artistic rendition of the official Namma Metro map, extended with upcoming metro lines and our city's natural features.</p>
+      <p class="about">My artistic rendition of the official Namma Metro map, extended with upcoming metro lines and our city's natural features. <em class="wip">(Work in progress)</em></p>
       <p class="revision tnum">Revision 22 Nov 2026</p>
       <p class="license"><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="license noreferrer">CC BY-NC 4.0</a>: free to share and modify, not for commercial use.</p>
       <a class="download" href="/maps/namma-metro-download.svg" download="namma-metro-map-2026-11-22.svg"><Download size={15} />Download SVG</a>
@@ -200,6 +200,7 @@
   .info-card { position: absolute; z-index: 2; top: 20px; left: 20px; width: 300px; display: flex; flex-direction: column; gap: 8px; padding: 18px 18px 16px; border-radius: var(--radius-lg); background: var(--surface); box-shadow: 0 1px 2px #17211d14, 0 8px 24px #17211d1a; }
   .info-card .page-heading { font-size: 26px; }
   .about { margin: 0; font-size: 13px; line-height: 1.55; color: var(--ink-3); }
+  .wip { font-style: normal; font-weight: 600; color: var(--muted); white-space: nowrap; }
   .revision { margin: 0; font-size: 11px; color: var(--muted); }
   .license { margin: 0; font-size: 11px; line-height: 1.5; color: var(--muted); }
   .license a { font-weight: 600; color: var(--ink-2); text-underline-offset: 2px; }
