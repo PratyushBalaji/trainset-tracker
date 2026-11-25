@@ -219,9 +219,10 @@
   @media (max-width: 860px) {
     .map-viewer { height: calc(100svh - var(--site-header-height) - 150px); min-height: 380px; }
     .info-card { position: static; width: auto; border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--border); padding: 16px; }
-    .map-viewer { display: flex; flex-direction: column; height: auto; }
-    .map-viewport { position: relative; height: 62svh; flex: none; }
+    /* Only as tall as the fitted map needs (map aspect 977.229 / 1126.2992, plus 16px padding each side), up to 62svh. */
+    .map-viewer { display: flex; flex-direction: column; height: auto; --map-h: min(62svh, calc((100vw - 32px) * 0.86765 + 32px)); }
+    .map-viewport { position: relative; height: var(--map-h); flex: none; }
     /* Map above, layers card below: pin zoom controls to the map's bottom-right corner, not the section's. */
-    .map-toolbar { top: calc(62svh - 16px); bottom: auto; right: 16px; transform: translateY(-100%); }
+    .map-toolbar { top: calc(var(--map-h) - 16px); bottom: auto; right: 16px; transform: translateY(-100%); }
   }
 </style>
