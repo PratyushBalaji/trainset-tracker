@@ -7,17 +7,16 @@
   let { stories, interval = 8000 }: { stories: Story[]; interval?: number } = $props();
 
   let index = $state(0);
+  // Only the pause button stops the rotation (hovering or focusing doesn't). A paused bar stays where it
+  // stopped and Play carries on from there. Picking a story by hand starts its bar from 0 and keeps
+  // whatever state it was in: still playing if it was playing, still paused if it was paused.
   let playing = $state(true);
-  let hovering = $state(false);
-  let focused = $state(false);
   let elapsed = $state(0);
-  let paused = $derived(!playing || hovering || focused);
   let story = $derived(stories[index]);
 
-  function go(i: number, user = true) {
+  function go(i: number) {
     index = (i + stories.length) % stories.length;
     elapsed = 0;
-    if (user) playing = false; // a deliberate choice stops the rotation
   }
 
   onMount(() => {
@@ -27,9 +26,9 @@
     const tick = (now: number) => {
       const dt = now - last;
       last = now;
-      if (!paused && !document.hidden && stories.length > 1) {
+      if (playing && !document.hidden && stories.length > 1) {
         elapsed += dt;
-        if (elapsed >= interval) go(index + 1, false);
+        if (elapsed >= interval) go(index + 1);
       }
       frame = requestAnimationFrame(tick);
     };
@@ -40,17 +39,13 @@
   const x = (date: string, start: string, end: string) => Math.min(100, Math.max(0, percentageBetween(date, start, end)));
 </script>
 
-<!-- Pause while pointed at or focused inside; arrow keys move between stories when focus is within. -->
+<!-- Arrow keys move between stories when focus is within. -->
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <section
   class="carousel"
   aria-roledescription="carousel"
   aria-label="Stories from the data"
   style={`--accent: ${story.color}`}
-  onpointerenter={() => (hovering = true)}
-  onpointerleave={() => (hovering = false)}
-  onfocusin={() => (focused = true)}
-  onfocusout={() => (focused = false)}
   onkeydown={(e) => { if (e.key === 'ArrowRight') go(index + 1); if (e.key === 'ArrowLeft') go(index - 1); }}
 >
   {#key story.id}
@@ -110,12 +105,12 @@
     <div class="dots" role="group" aria-label="Choose a story">
       {#each stories as s, i (s.id)}
         <button type="button" class="dot-btn" aria-label={`Story ${i + 1}: ${s.kicker}`} aria-current={i === index ? 'true' : undefined} onclick={() => go(i)}>
-          <span class="fill" style={i === index ? `width: ${paused ? (playing ? (elapsed / interval) * 100 : 100) : (elapsed / interval) * 100}%` : i < index ? 'width: 100%' : 'width: 0%'}></span>
+          <span class="fill" style={i === index ? `width: ${(elapsed / interval) * 100}%` : i < index ? 'width: 100%' : 'width: 0%'}></span>
         </button>
       {/each}
     </div>
     <button type="button" class="nav" aria-label="Next story" onclick={() => go(index + 1)}><ChevronRight size={18} /></button>
-    <button type="button" class="nav" aria-label={playing ? 'Pause stories' : 'Play stories'} onclick={() => { playing = !playing; }}>{#if playing}<Pause size={15} />{:else}<Play size={15} />{/if}</button>
+    <button type="button" class="nav" aria-label={playing ? 'Pause stories' : 'Play stories'} onclick={() => (playing = !playing)}>{#if playing}<Pause size={15} />{:else}<Play size={15} />{/if}</button>
   </div>
 </section>
 
